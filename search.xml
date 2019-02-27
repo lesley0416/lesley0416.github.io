@@ -4,6 +4,9 @@
     <title><![CDATA[My Real Hello World]]></title>
     <url>%2F2019%2F02%2F27%2FmyHello%2F</url>
     <content type="text"><![CDATA[This is my real hello world from hexo.测试测试测试]]></content>
+      <categories>
+        <category>hello</category>
+      </categories>
       <tags>
         <tag>test</tag>
       </tags>

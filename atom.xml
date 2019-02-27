@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-02-27T15:17:05.066Z</updated>
+  <updated>2019-02-27T15:51:21.348Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://yoursite.com/2019/02/27/myHello/"/>
     <id>http://yoursite.com/2019/02/27/myHello/</id>
     <published>2019-02-27T15:13:59.000Z</published>
-    <updated>2019-02-27T15:17:05.066Z</updated>
+    <updated>2019-02-27T15:51:21.348Z</updated>
     
     <content type="html"><![CDATA[<p><img src="/image/bengchuang.GIF" alt="bengchuang"><br>This is my real hello world from hexo.<br>测试测试测试</p>]]></content>
     
@@ -34,6 +34,8 @@
       
     
     </summary>
+    
+      <category term="hello" scheme="http://yoursite.com/categories/hello/"/>
     
     
       <category term="test" scheme="http://yoursite.com/tags/test/"/>

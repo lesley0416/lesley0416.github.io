@@ -85,7 +85,7 @@
     root: '/',
     scheme: 'Muse',
     version: '7.0.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false,"dimmer":false},
     fancybox: false,
     fastclick: false,
     lazyload: false,
@@ -112,7 +112,7 @@
 <meta property="og:url" content="http://yoursite.com/categories/index.html">
 <meta property="og:site_name" content="Lesley&#39;s 博客">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-27T09:57:36.305Z">
+<meta property="og:updated_time" content="2019-02-27T15:49:35.570Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="categories">
 
@@ -416,10 +416,14 @@
             <div class="category-all-title">
               
               
-              暂无分类
+                
+                  
+                
+              
+              目前共计 1 个分类
             </div>
             <div class="category-all">
-              
+              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/hello/">hello</a><span class="category-list-count">1</span></li></ul>
             </div>
           </div>
         
@@ -468,6 +472,8 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+              <img class="site-author-image" itemprop="image" src="/image/touxiang.JPG" alt="Lesley Shi">
+            
               <p class="site-author-name" itemprop="name">Lesley Shi</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
@@ -485,6 +491,19 @@
                 </div>
               
 
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
               
 
               
@@ -606,6 +625,8 @@
     
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
         
       </div>
     
