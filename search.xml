@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[newHello]]></title>
-    <url>%2F2019%2F02%2F28%2FnewHello%2F</url>
-    <content type="text"><![CDATA[testtesttest 测试测试]]></content>
-      <tags>
-        <tag>test</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[My Real Hello World]]></title>
     <url>%2F2019%2F02%2F27%2FmyHello%2F</url>
     <content type="text"><![CDATA[This is my real hello world from hexo.测试测试测试]]></content>
