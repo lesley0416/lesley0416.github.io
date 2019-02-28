@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-02-27T15:51:21.348Z</updated>
+  <updated>2019-02-28T14:30:37.041Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,19 +17,45 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>My Real Hello World</title>
-    <link href="http://yoursite.com/2019/02/27/myHello/"/>
-    <id>http://yoursite.com/2019/02/27/myHello/</id>
-    <published>2019-02-27T15:13:59.000Z</published>
-    <updated>2019-02-27T15:51:21.348Z</updated>
+    <title>newHello</title>
+    <link href="http://yoursite.com/2019/02/28/newHello/"/>
+    <id>http://yoursite.com/2019/02/28/newHello/</id>
+    <published>2019-02-28T14:27:36.000Z</published>
+    <updated>2019-02-28T14:30:37.041Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="/image/bengchuang.GIF" alt="bengchuang"><br>This is my real hello world from hexo.<br>测试测试测试</p>]]></content>
+    <content type="html"><![CDATA[<p>testtesttest</p><p><img src="/2019/02/28/newHello/bengchuang.GIF" alt></p><p>测试测试</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;&lt;img src=&quot;/image/bengchuang.GIF&quot; alt=&quot;bengchuang&quot;&gt;&lt;br&gt;This is my real hello world from hexo.&lt;br&gt;测试测试测试&lt;/p&gt;
+        &lt;p&gt;testtesttest&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/2019/02/28/newHello/bengchuang.GIF&quot; alt&gt;&lt;/p&gt;
+&lt;p&gt;测试测试&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+    
+      <category term="test" scheme="http://yoursite.com/tags/test/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>My Real Hello World</title>
+    <link href="http://yoursite.com/2019/02/27/myHello/"/>
+    <id>http://yoursite.com/2019/02/27/myHello/</id>
+    <published>2019-02-27T15:13:59.000Z</published>
+    <updated>2019-02-28T14:07:26.047Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/2019/02/27/myHello/image/bengchuang.GIF" alt="bengchuang"><br>This is my real hello world from hexo.<br>测试测试测试</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;img src=&quot;/2019/02/27/myHello/image/bengchuang.GIF&quot; alt=&quot;bengchuang&quot;&gt;&lt;br&gt;This is my real hello world from hexo.&lt;br&gt;测试测试测试&lt;/p&gt;
 
       
     
