@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[若干Python性能优化小tips]]></title>
-    <url>%2F2019%2F03%2F04%2Ffasterpython%2F</url>
-    <content type="text"><![CDATA[若干简单易实现的Python性能优化小tips。 部分参考：https://segmentfault.com/a/1190000000666603 一些tips在刷题过程确实得到验证，尚有一些未验证但在实际简单测试中效率有提升。 优化算法时间复杂度 不论什么语言，算法的时间复杂度对程序的执行效率都有决定性影响，在Python中可以通过选择合适的数据结构来优化时间复杂度，如list和set查找指定元素的时间复杂度分别为O(n)和O(1)。同时，可以根据具体情况，采用分治、贪心、动态规划等算法思想。（不过优化算法有些有时候也不是很容易实现，，，） 在算法的常见时间复杂度上排序如下： O(1)]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>性能优化</tag>
-        <tag>刷题</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[%time,%timeit魔法命令]]></title>
     <url>%2F2019%2F03%2F04%2Fjupyter_timeit%2F</url>
     <content type="text"><![CDATA[在Jupyter-notebook中有几个用于计时的魔法命令%time、%%time、%timeit、%%timeit，可以非常简单的获取部分代码的运行耗时。 所有以%开头的方法，都是所谓的魔法命令（Magic function），也就是IPython内置的一些方法。魔法方法要区分%和%%，以%开头的叫做line magic，是专门针对一行的命令，以%%开头的叫做cell magic，是针对多行（一个cell）的命令。 以%%开头的魔法命令，必须放在一个cell的第一行，并且统计该cell中剩余的所有代码。分别来看： %time 给出当前行的代码运行一次所花费的时间； 123456a,b = 1,2%time a,b = b,a# output:# CPU times: user 2 µs, sys: 1 µs, total: 3 µs# Wall time: 5.01 µs 其中： user：表示执行用户代码（内核外）消耗的CPU时间； sys：表示进程在内核中消耗的CPU时间； 所以，CPU总耗时看total即可，也就是uset和sys之和。 Wall time是最终总耗时，包括IO、排队的耗时，也就是感知到的总耗时。 Wall time $&lt;$ CPU 表明进程是计算密集型（CPU bound），利用多核处理器的并行执行优势； Wall time $\approx$ CPU 表明进程是计算密集型，未并行执行； Wall time $&gt;​$ CPU 表明进程是I/O密集型（I/O bound），多核并行执行优势并不明显； %%time 给出当前cell的代码运行一次所花费的时间； 1234567%%timea,b = 1,2a,b = b,a# output:# CPU times: user 2 µs, sys: 1e+03 ns, total: 3 µs# Wall time: 5.96 µs %timeit -n 1000 给出当前行的代码运行n次所花费的时间（取最快三次的平均用时）； 1234%timeit -n 10000 c = pow(2,20)# output:# 10000 loops, best of 3: 198 ns per loop %%timeit -n 1000 给出当前cell的代码运行n次所花费的时间（取最快三次的平均用时）； 12345678%%timeit -n 10000a,b = 1,2c=aa=bb=c# output:# 10000 loops, best of 3: 68.5 ns per loop]]></content>
@@ -34,6 +21,19 @@
       </categories>
       <tags>
         <tag>LeetCode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[若干Python性能优化小tips]]></title>
+    <url>%2F2019%2F03%2F04%2Ffasterpython%2F</url>
+    <content type="text"><![CDATA[若干简单易实现的Python性能优化小tips。 部分参考：https://segmentfault.com/a/1190000000666603 一些tips在刷题过程确实得到验证，尚有一些未验证但在实际简单测试中效率有提升。 优化算法时间复杂度 不论什么语言，算法的时间复杂度对程序的执行效率都有决定性影响，在Python中可以通过选择合适的数据结构来优化时间复杂度，如list和set查找指定元素的时间复杂度分别为O(n)和O(1)。同时，可以根据具体情况，采用分治、贪心、动态规划等算法思想。（不过优化算法有些有时候也不是很容易实现，，，） 在算法的常见时间复杂度上排序如下： O(1)]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>性能优化</tag>
+        <tag>刷题</tag>
       </tags>
   </entry>
   <entry>
