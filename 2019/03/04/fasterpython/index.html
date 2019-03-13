@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="pufZm21A3BmHUXXeFbh5D4nwCt7ZDl8GQkMO23QOsJc">
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="kygZ90QCYp">
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="若干简单易实现的Python性能优化小tips。 部分参考：https://segmentfault.com/a/1190000000666603 一些tips在刷题过程确实得到验证，尚有一些未验证但在实际简单测试中效率有提升。">
+<meta name="keywords" content="Python,性能优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="若干Python性能优化小tips">
+<meta property="og:url" content="https://lesley0416.github.io/2019/03/04/fasterpython/index.html">
+<meta property="og:site_name" content="Lesley&#39;s 博客">
+<meta property="og:description" content="若干简单易实现的Python性能优化小tips。 部分参考：https://segmentfault.com/a/1190000000666603 一些tips在刷题过程确实得到验证，尚有一些未验证但在实际简单测试中效率有提升。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-13T15:21:14.369Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="若干Python性能优化小tips">
+<meta name="twitter:description" content="若干简单易实现的Python性能优化小tips。 部分参考：https://segmentfault.com/a/1190000000666603 一些tips在刷题过程确实得到验证，尚有一些未验证但在实际简单测试中效率有提升。">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Lesley's 博客" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="https://lesley0416.github.io/2019/03/04/fasterpython/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>若干Python性能优化小tips | Lesley's 博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/lesley0416" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lesley's 博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home //首页"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user //关于"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags //标签"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th //分类"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive //归档"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lesley0416.github.io/2019/03/04/fasterpython/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lesley Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/image/touxiang.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lesley's 博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">若干Python性能优化小tips
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-04 21:30:50" itemprop="dateCreated datePublished" datetime="2019-03-04T21:30:50+08:00">2019-03-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-13 23:21:14" itemprop="dateModified" datetime="2019-03-13T23:21:14+08:00">2019-03-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/03/04/fasterpython/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/03/04/fasterpython/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/03/04/fasterpython/" class="leancloud_visitors" data-flag-title="若干Python性能优化小tips">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>若干简单易实现的Python性能优化小tips。</p>
+<p>部分参考：<a href="https://segmentfault.com/a/1190000000666603" target="_blank" rel="noopener">https://segmentfault.com/a/1190000000666603</a></p>
+<p>一些tips在刷题过程确实得到验证，尚有一些未验证但在实际简单测试中效率有提升。<br><a id="more"></a></p>
+<h3 id="优化算法时间复杂度"><a href="#优化算法时间复杂度" class="headerlink" title="优化算法时间复杂度"></a>优化算法时间复杂度</h3></blockquote>
+<p>不论什么语言，算法的时间复杂度对程序的执行效率都有决定性影响，在Python中可以通过选择合适的数据结构来优化时间复杂度，如list和set查找指定元素的时间复杂度分别为O(n)和O(1)。同时，可以根据具体情况，采用分治、贪心、动态规划等算法思想。（不过优化算法有些有时候也不是很容易实现，，，）</p>
+<p>在算法的常见时间复杂度上排序如下：</p>
+<script type="math/tex; mode=display">
+O(1)<O(\log n)<O(n\log n)<O(n^2)<O(n^3)<O(n^k)<O(k^n)<O(n!)</script><h3 id="使用dict或set查找元素"><a href="#使用dict或set查找元素" class="headerlink" title="使用dict或set查找元素"></a>使用dict或set查找元素</h3><p>Python中的dict和set是使用hash表实现的，因此查找元素的最优时间复杂度为O(1)，而list是线性表结构，其查询时间复杂度为O(n)。</p>
+<p>因此，<strong>在需要频繁查找或访问的时候，依据实际情况使用dict或set，要比使用list更快</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># run on jupyter-notebook</span></span><br><span class="line">a = range(<span class="number">1000</span>)</span><br><span class="line">s = set(a)</span><br><span class="line">d = dict((i,<span class="number">1</span>) <span class="keyword">for</span> i <span class="keyword">in</span> a)</span><br><span class="line">%timeit -n <span class="number">10000</span> <span class="number">100</span> <span class="keyword">in</span> d</span><br><span class="line">%timeit -n <span class="number">10000</span> <span class="number">100</span> <span class="keyword">in</span> s</span><br><span class="line"></span><br><span class="line"><span class="comment"># result:</span></span><br><span class="line"><span class="comment"># 10000 loops, best of 3: 56.5 ns per loop</span></span><br><span class="line"><span class="comment"># 10000 loops, best of 3: 38.8 ns per loop</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用set进行交并差运算"><a href="#使用set进行交并差运算" class="headerlink" title="使用set进行交并差运算"></a>使用set进行交并差运算</h3><p>set的union、intersection、difference操作要比使用list迭代快，因此涉及list求交集、并集、差集的问题，可以通过转换为set来操作。</p>
+<p>set的交并差操作语法：</p>
+<ul>
+<li>交集：<code>set(list1)&amp;set(list2)</code></li>
+<li>并集：<code>set(list1)|set(list2)</code></li>
+<li>差集：<code>set(list1)-set(list2)</code></li>
+</ul>
+<p>使用list迭代方法求两个list交集：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">%%timeit -n <span class="number">1000</span></span><br><span class="line">lista=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">13</span>,<span class="number">34</span>,<span class="number">53</span>,<span class="number">42</span>,<span class="number">44</span>] </span><br><span class="line">listb=[<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">9</span>,<span class="number">23</span>] </span><br><span class="line">intersection=[] </span><br><span class="line"><span class="keyword">for</span> a <span class="keyword">in</span> lista: </span><br><span class="line">    <span class="keyword">for</span> b <span class="keyword">in</span> listb: </span><br><span class="line">        <span class="keyword">if</span> a == b:</span><br><span class="line">            intersection.append(a)</span><br><span class="line"></span><br><span class="line"><span class="comment"># result:</span></span><br><span class="line"><span class="comment"># 1000 loops, best of 3: 3.58 µs per loop</span></span><br></pre></td></tr></table></figure>
+<p>将list转为set后求交集：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">%%timeit -n <span class="number">1000</span></span><br><span class="line">lista=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">13</span>,<span class="number">34</span>,<span class="number">53</span>,<span class="number">42</span>,<span class="number">44</span>] </span><br><span class="line">listb=[<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">9</span>,<span class="number">23</span>] </span><br><span class="line">intersection=[] </span><br><span class="line">list(set(lista)&amp;set(listb))</span><br><span class="line"></span><br><span class="line"><span class="comment"># result:</span></span><br><span class="line"><span class="comment"># 1000 loops, best of 3: 1.58 µs per loop</span></span><br></pre></td></tr></table></figure>
+<h3 id="优化循环"><a href="#优化循环" class="headerlink" title="优化循环"></a>优化循环</h3><p>对循环的优化遵循的原则是<strong>尽量减少循环过程中计算量</strong>，循环外可以做的事情不要放到循环内做，多重循环尽量将内层的计算提到上一层。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># run on jupyter-notebook</span></span><br><span class="line">a = range(<span class="number">10000</span>)</span><br><span class="line">size_a = len(a)</span><br><span class="line">%timeit -n <span class="number">1000</span> <span class="keyword">for</span> i <span class="keyword">in</span> a: k = len(a)</span><br><span class="line">%timeit -n <span class="number">1000</span> <span class="keyword">for</span> i <span class="keyword">in</span> a: k = size_a</span><br><span class="line"></span><br><span class="line"><span class="comment"># result:</span></span><br><span class="line"><span class="comment"># 1000 loops, best of 3: 361 µs per loop</span></span><br><span class="line"><span class="comment"># 1000 loops, best of 3: 161 µs per loop</span></span><br></pre></td></tr></table></figure>
+<h3 id="优化多个判断表达式的顺序"><a href="#优化多个判断表达式的顺序" class="headerlink" title="优化多个判断表达式的顺序"></a>优化多个判断表达式的顺序</h3><p><strong>对于and，把满足条件少的表达式放在前面判断；对于or，把满足条件多的表达式放在后面判断。</strong></p>
+<p>Python中的条件表达式是<code>lazy evaluation</code>的，也就是说对于表达式<code>if a and b</code>，在<code>a 为 false</code>的情况下，<code>b</code>表达式的值将不再计算。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># run on jupyter-notebook</span></span><br><span class="line">a = range(<span class="number">2000</span>)  </span><br><span class="line">%timeit -n <span class="number">100</span> [i <span class="keyword">for</span> i <span class="keyword">in</span> a <span class="keyword">if</span> i &lt; <span class="number">20</span> <span class="keyword">or</span> <span class="number">1000</span> &lt; i &lt; <span class="number">2000</span>]</span><br><span class="line">%timeit -n <span class="number">100</span> [i <span class="keyword">for</span> i <span class="keyword">in</span> a <span class="keyword">if</span> <span class="number">1000</span> &lt; i &lt; <span class="number">2000</span> <span class="keyword">or</span> i &lt; <span class="number">20</span>]     </span><br><span class="line">%timeit -n <span class="number">100</span> [i <span class="keyword">for</span> i <span class="keyword">in</span> a <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">and</span> i &gt; <span class="number">1900</span>]</span><br><span class="line">%timeit -n <span class="number">100</span> [i <span class="keyword">for</span> i <span class="keyword">in</span> a <span class="keyword">if</span> i &gt; <span class="number">1900</span> <span class="keyword">and</span> i % <span class="number">2</span> == <span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># result:</span></span><br><span class="line"><span class="number">100</span> loops, best of <span class="number">3</span>: <span class="number">98.1</span> µs per loop</span><br><span class="line"><span class="number">100</span> loops, best of <span class="number">3</span>: <span class="number">78.9</span> µs per loop</span><br><span class="line"><span class="number">100</span> loops, best of <span class="number">3</span>: <span class="number">88.1</span> µs per loop</span><br><span class="line"><span class="number">100</span> loops, best of <span class="number">3</span>: <span class="number">37.4</span> µs per loop</span><br></pre></td></tr></table></figure>
+<h3 id="字符串的优化"><a href="#字符串的优化" class="headerlink" title="字符串的优化"></a>字符串的优化</h3><p><strong>Python中的字符串对象是不可改变的</strong>，因此对字符串的操作如拼接、修改等都会产生一个新的字符串对象，而不是基于原字符串，这种持续的copy过程会在一定程度上影响Python的性能，特别是处理文本较多的情况下。</p>
+<h4 id="字符串连接尽量使用join，而不是"><a href="#字符串连接尽量使用join，而不是" class="headerlink" title="字符串连接尽量使用join，而不是+"></a>字符串连接尽量使用join，而不是+</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">%%timeit -n <span class="number">100</span></span><br><span class="line">a = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'b'</span>,<span class="string">'d'</span>,<span class="string">'e'</span>,<span class="string">'f'</span>,<span class="string">'g'</span>,<span class="string">'h'</span>,<span class="string">'i'</span>,<span class="string">'j'</span>,<span class="string">'k'</span>,<span class="string">'l'</span>,<span class="string">'m'</span>,<span class="string">'n'</span>]  </span><br><span class="line">s = <span class="string">""</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> a:</span><br><span class="line">    s += i</span><br><span class="line"></span><br><span class="line"><span class="comment"># result:</span></span><br><span class="line"><span class="comment"># 100 loops, best of 3: 880 ns per loop</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%%timeit -n <span class="number">100</span></span><br><span class="line">a = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'b'</span>,<span class="string">'d'</span>,<span class="string">'e'</span>,<span class="string">'f'</span>,<span class="string">'g'</span>,<span class="string">'h'</span>,<span class="string">'i'</span>,<span class="string">'j'</span>,<span class="string">'k'</span>,<span class="string">'l'</span>,<span class="string">'m'</span>,<span class="string">'n'</span>]</span><br><span class="line">s = <span class="string">""</span>.join(a)</span><br><span class="line"></span><br><span class="line"><span class="comment"># result:</span></span><br><span class="line"><span class="comment"># 100 loops, best of 3: 570 ns per loop</span></span><br></pre></td></tr></table></figure>
+<h4 id="尽量使用内置函数判断，而不是正则表达式"><a href="#尽量使用内置函数判断，而不是正则表达式" class="headerlink" title="尽量使用内置函数判断，而不是正则表达式"></a>尽量使用内置函数判断，而不是正则表达式</h4><p>在对字符串可以使用正则表达式或者内置函数进行判断时，尽量使用内置函数，如<code>str.isalpha(), str.isdigit(), str.startswith((&quot;x&quot;,&quot;y&quot;)), str.endswith((&quot;x&quot;,&quot;y&quot;))</code>。</p>
+<h3 id="不使用中间变量交换两个变量的值"><a href="#不使用中间变量交换两个变量的值" class="headerlink" title="不使用中间变量交换两个变量的值"></a>不使用中间变量交换两个变量的值</h3><p>使用<code>a,b=b,a</code>的形式来交换<code>a,b</code>两个变量的值。</p>
+<p>（实际简单测试过程中，时间差距并不总是很大，还没深究速度差异的内在原因。）</p>
+<p>借助中间变量：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">%%timeit -n <span class="number">10000</span></span><br><span class="line">a,b = <span class="number">1</span>,<span class="number">2</span></span><br><span class="line">c=a</span><br><span class="line">a=b</span><br><span class="line">b=c</span><br><span class="line"></span><br><span class="line"><span class="comment"># result:</span></span><br><span class="line"><span class="comment"># 10000 loops, best of 3: 68.5 ns per loop</span></span><br></pre></td></tr></table></figure>
+<p>不借助中间变量：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%%timeit -n <span class="number">10000</span></span><br><span class="line">a,b = <span class="number">1</span>,<span class="number">2</span></span><br><span class="line">a,b = b,a</span><br><span class="line"></span><br><span class="line"><span class="comment"># result:</span></span><br><span class="line"><span class="comment"># 10000 loops, best of 3: 38.3 ns per loop</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用if-is，而不是"><a href="#使用if-is，而不是" class="headerlink" title="使用if is，而不是=="></a>使用<code>if is</code>，而不是<code>==</code></h3><p>使用<code>if a is True</code>要比使用<code>if a == True</code>快，同理<code>if a is not Noe</code>要比<code>if a != None</code>快。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a = range(<span class="number">10000</span>)</span><br><span class="line">%timeit -n <span class="number">100</span> [i <span class="keyword">for</span> i <span class="keyword">in</span> a <span class="keyword">if</span> i == <span class="literal">True</span>]</span><br><span class="line">%timeit -n <span class="number">100</span> [i <span class="keyword">for</span> i <span class="keyword">in</span> a <span class="keyword">if</span> i <span class="keyword">is</span> <span class="literal">True</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># result:</span></span><br><span class="line"><span class="comment"># 100 loops, best of 3: 370 µs per loop</span></span><br><span class="line"><span class="comment"># 100 loops, best of 3: 248 µs per loop</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用级联比较x-lt-y-lt-z"><a href="#使用级联比较x-lt-y-lt-z" class="headerlink" title="使用级联比较x&lt;y&lt;z"></a>使用级联比较<code>x&lt;y&lt;z</code></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x, y, z = <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span></span><br><span class="line">%timeit -n <span class="number">1000000</span> <span class="keyword">if</span> x &lt; y &lt; z:<span class="keyword">pass</span></span><br><span class="line">%timeit -n <span class="number">1000000</span> <span class="keyword">if</span> x &lt; y <span class="keyword">and</span> y &lt; z:<span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># result:</span></span><br><span class="line"><span class="comment"># 1000000 loops, best of 3: 47.8 ns per loop</span></span><br><span class="line"><span class="comment"># 1000000 loops, best of 3: 50.2 ns per loop</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用while-1，而不是while-True"><a href="#使用while-1，而不是while-True" class="headerlink" title="使用while 1，而不是while True"></a>使用<code>while 1</code>，而不是<code>while True</code></h3><p>在Python2.x中，True是全局变量，而不是关键字？</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">while_1</span><span class="params">()</span>:</span></span><br><span class="line">    n = <span class="number">100000</span></span><br><span class="line">    <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">        n -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> n &lt;= <span class="number">0</span>: <span class="keyword">break</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">while_true</span><span class="params">()</span>:</span></span><br><span class="line">    n = <span class="number">100000</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        n -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> n &lt;= <span class="number">0</span>: <span class="keyword">break</span>    </span><br><span class="line"></span><br><span class="line">m, n = <span class="number">1000000</span>, <span class="number">1000000</span> </span><br><span class="line">%timeit -n <span class="number">100</span> while_1()</span><br><span class="line">%timeit -n <span class="number">100</span> while_true()</span><br><span class="line"></span><br><span class="line"><span class="comment"># result:</span></span><br><span class="line"><span class="comment"># 100 loops, best of 3: 2.2 ms per loop</span></span><br><span class="line"><span class="comment"># 100 loops, best of 3: 3.4 ms per loop</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用-，而不是pow"><a href="#使用-，而不是pow" class="headerlink" title="使用**，而不是pow"></a>使用<code>**</code>，而不是<code>pow</code></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%timeit -n <span class="number">10000</span> c = pow(<span class="number">2</span>,<span class="number">20</span>)</span><br><span class="line">%timeit -n <span class="number">10000</span> c = <span class="number">2</span>**<span class="number">20</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># result:</span></span><br><span class="line"><span class="comment"># 10000 loops, best of 3: 207 ns per loop</span></span><br><span class="line"><span class="comment"># 10000 loops, best of 3: 16.4 ns per loop</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+  
+</div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          
+            <a href="/tags/性能优化/" rel="tag"><i class="fa fa-tag"></i> 性能优化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/01/HMM_IM/" rel="next" title="HMM和Viterbi算法">
+                <i class="fa fa-chevron-left"></i> HMM和Viterbi算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/04/jupyter_timeit/" rel="prev" title="%time,%timeit魔法命令">
+                %time,%timeit魔法命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/image/touxiang.JPG" alt="Lesley Shi">
+            
+              <p class="site-author-name" itemprop="name">Lesley Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:shilixin16@163.com" title="E-Mail &rarr; mailto:shilixin16@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#优化算法时间复杂度"><span class="nav-number">1.</span> <span class="nav-text">优化算法时间复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用dict或set查找元素"><span class="nav-number">2.</span> <span class="nav-text">使用dict或set查找元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用set进行交并差运算"><span class="nav-number">3.</span> <span class="nav-text">使用set进行交并差运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化循环"><span class="nav-number">4.</span> <span class="nav-text">优化循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化多个判断表达式的顺序"><span class="nav-number">5.</span> <span class="nav-text">优化多个判断表达式的顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串的优化"><span class="nav-number">6.</span> <span class="nav-text">字符串的优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串连接尽量使用join，而不是"><span class="nav-number">6.1.</span> <span class="nav-text">字符串连接尽量使用join，而不是+</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#尽量使用内置函数判断，而不是正则表达式"><span class="nav-number">6.2.</span> <span class="nav-text">尽量使用内置函数判断，而不是正则表达式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不使用中间变量交换两个变量的值"><span class="nav-number">7.</span> <span class="nav-text">不使用中间变量交换两个变量的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用if-is，而不是"><span class="nav-number">8.</span> <span class="nav-text">使用if is，而不是==</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用级联比较x-lt-y-lt-z"><span class="nav-number">9.</span> <span class="nav-text">使用级联比较x&lt;y&lt;z</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用while-1，而不是while-True"><span class="nav-number">10.</span> <span class="nav-text">使用while 1，而不是while True</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-，而不是pow"><span class="nav-number">11.</span> <span class="nav-text">使用**，而不是pow</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lesley Shi</span>
+
+  
+
+  
+</div>
+
+<!-- 隐藏底部 由hexo强力驱动，主题next
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+-->
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共13.1k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+  
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+
+<script src="//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'rj24gpfj5X7r5bXpsBTb1Hm5-gzGzoHsz',
+    appKey: 'tkke5f1SGYEVh8claojD4gVU',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+</script>
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+  <script>
+    
+    
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
