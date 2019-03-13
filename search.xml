@@ -74,8 +74,8 @@
       </categories>
       <tags>
         <tag>leetcode</tag>
-        <tag>字符串</tag>
         <tag>贪心算法</tag>
+        <tag>字符串</tag>
       </tags>
   </entry>
   <entry>
@@ -92,19 +92,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[若干Python性能优化小tips]]></title>
-    <url>%2F2019%2F03%2F04%2Ffasterpython%2F</url>
-    <content type="text"><![CDATA[若干简单易实现的Python性能优化小tips。 部分参考：https://segmentfault.com/a/1190000000666603 一些tips在刷题过程确实得到验证，尚有一些未验证但在实际简单测试中效率有提升。 优化算法时间复杂度 不论什么语言，算法的时间复杂度对程序的执行效率都有决定性影响，在Python中可以通过选择合适的数据结构来优化时间复杂度，如list和set查找指定元素的时间复杂度分别为O(n)和O(1)。同时，可以根据具体情况，采用分治、贪心、动态规划等算法思想。（不过优化算法有些有时候也不是很容易实现，，，） 在算法的常见时间复杂度上排序如下： O(1)]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>性能优化</tag>
-        <tag>刷题</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[【LeetCode】599、两个列表的最小索引总和]]></title>
     <url>%2F2019%2F03%2F04%2Fleetcode_599%2F</url>
     <content type="text"><![CDATA[599、Minimum Index Sum of Two Lists 两个列表的最小索引总和 难度：简单 题目描述 英文： Suppose Andy and Doris want to choose a restaurant for dinner, and they both have a list of favorite restaurants represented by strings. You need to help them find out their common interest with the least list index sum. If there is a choice tie between answers, output all of them with no order requirement. You could assume there always exists an answer. 中文： 假设Andy和Doris想在晚餐时选择一家餐厅，并且他们都有一个表示最喜爱餐厅的列表，每个餐厅的名字用字符串表示。 你需要帮助他们用最少的索引和找出他们共同喜爱的餐厅。 如果答案不止一个，则输出所有答案并且不考虑顺序。 你可以假设总是存在一个答案。 示例Example 1: 12345Input:[&quot;Shogun&quot;, &quot;Tapioca Express&quot;, &quot;Burger King&quot;, &quot;KFC&quot;][&quot;Piatti&quot;, &quot;The Grill at Torrey Pines&quot;, &quot;Hungry Hunter Steakhouse&quot;, &quot;Shogun&quot;]Output: [&quot;Shogun&quot;]Explanation: The only restaurant they both like is &quot;Shogun&quot;. Example 2: 12345Input:[&quot;Shogun&quot;, &quot;Tapioca Express&quot;, &quot;Burger King&quot;, &quot;KFC&quot;][&quot;KFC&quot;, &quot;Shogun&quot;, &quot;Burger King&quot;]Output: [&quot;Shogun&quot;]Explanation: The restaurant they both like and have the least index sum is &quot;Shogun&quot; with index sum 1 (0+1). 提示 The length of both lists will be in the range of [1, 1000]. The length of strings in both lists will be in the range of [1, 30]. The index is starting from 0 to the list length minus 1. No duplicates in both lists. 代码提交 Python2，用时128ms，内存11.1M 12345678910111213141516171819202122class Solution(object): def findRestaurant(self, list1, list2): """ :type list1: List[str] :type list2: List[str] :rtype: List[str] """ dict1 = &#123;&#125; for index, name in enumerate(list1): dict1[name] = index templist = [] tempsum = 3000 for index, name in enumerate(list2): if name in dict1: cursum = index+dict1[name] if cursum &lt; tempsum: templist = [name] tempsum = cursum elif cursum == tempsum: templist.append(name) return templist TipsPython查找dict的key时，应使用if key in dict，而不是if key in dict.keys()。 前者是在dict中查找，dict对象的存储结构是hash表，最优情况下查询复杂度为O(1)； 后者等于是在list中查找，list对象的存储结构是线性表，查询复杂度为O(n)。]]></content>
@@ -112,7 +99,8 @@
         <category>LeetCode</category>
       </categories>
       <tags>
-        <tag>LeetCode</tag>
+        <tag>leetcode</tag>
+        <tag>哈希表</tag>
       </tags>
   </entry>
   <entry>
@@ -125,6 +113,19 @@
       <tags>
         <tag>python</tag>
         <tag>计时</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[若干Python性能优化小tips]]></title>
+    <url>%2F2019%2F03%2F04%2Ffasterpython%2F</url>
+    <content type="text"><![CDATA[若干简单易实现的Python性能优化小tips。 部分参考：https://segmentfault.com/a/1190000000666603 一些tips在刷题过程确实得到验证，尚有一些未验证但在实际简单测试中效率有提升。 优化算法时间复杂度 不论什么语言，算法的时间复杂度对程序的执行效率都有决定性影响，在Python中可以通过选择合适的数据结构来优化时间复杂度，如list和set查找指定元素的时间复杂度分别为O(n)和O(1)。同时，可以根据具体情况，采用分治、贪心、动态规划等算法思想。（不过优化算法有些有时候也不是很容易实现，，，） 在算法的常见时间复杂度上排序如下： O(1)]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>性能优化</tag>
+        <tag>刷题</tag>
       </tags>
   </entry>
   <entry>
