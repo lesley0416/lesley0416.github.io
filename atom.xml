@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lesley0416.github.io/"/>
-  <updated>2019-03-13T15:21:50.362Z</updated>
+  <updated>2019-03-14T13:34:05.972Z</updated>
   <id>https://lesley0416.github.io/</id>
   
   <author>
@@ -15,6 +15,88 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【LeetCode】121、买卖股票的最佳时机</title>
+    <link href="https://lesley0416.github.io/2019/03/14/leetcode_121/"/>
+    <id>https://lesley0416.github.io/2019/03/14/leetcode_121/</id>
+    <published>2019-03-14T07:11:00.000Z</published>
+    <updated>2019-03-14T13:34:05.972Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>121、<a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/" target="_blank" rel="noopener">Best Time to Buy and Sell Stock</a>买卖股票的最佳时机</p><p>难度：简单</p></blockquote><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><ul><li><p>英文：</p><p>Say you have an array for which the <em>i</em>th element is the price of a given stock on day <em>i</em>.</p><p>If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit.</p><p>Note that you cannot sell a stock before you buy one.</p></li><li><p>中文：</p><p>给定一个数组，它的第 <em>i</em> 个元素是一支给定股票第 <em>i</em> 天的价格。</p><p>如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。</p><p>注意你不能在买入股票前卖出股票。</p></li></ul><a id="more"></a><ul><li><p>示例</p><p><strong>Example 1:</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Input: [7,1,5,3,6,4]</span><br><span class="line">Output: 5</span><br><span class="line">Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.</span><br><span class="line">             Not 7-1 = 6, as selling price needs to be larger than buying price.</span><br><span class="line">             </span><br><span class="line">输入: [7,1,5,3,6,4]</span><br><span class="line">输出: 5</span><br><span class="line">解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。</span><br><span class="line">     注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。</span><br></pre></td></tr></table></figure><p><strong>Example 2:</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: [7,6,4,3,1]</span><br><span class="line">Output: 0</span><br><span class="line">Explanation: In this case, no transaction is done, i.e. max profit = 0.</span><br><span class="line"></span><br><span class="line">输入: [7,6,4,3,1]</span><br><span class="line">输出: 0</span><br><span class="line">解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。</span><br></pre></td></tr></table></figure></li></ul><h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><p>动态规划问题，第$i$天的最高利润，要么等于前$i-1$天的最高利润，要么等于第$i$天的卖出价减去前$i-1$天的最低买入价。</p><p>用$f (i)$表示第$i$天的最高利润，$p_i$表示第$i$天的价格，则$f (i) = \max ( f(i-1) , p_i - \min (p_1,p_2,…,p_{i-1}) )$。</p><p>要注意卖出价高于买入价的限制。</p><h4 id="代码提交"><a href="#代码提交" class="headerlink" title="代码提交"></a>代码提交</h4><blockquote><p>Python3，用时6040ms，内存14.2M</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxProfit</span><span class="params">(self, prices: List[int])</span> -&gt; int:</span></span><br><span class="line">        length = len(prices)</span><br><span class="line">        <span class="keyword">if</span> length &lt;= <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">        temp = [prices[<span class="number">1</span>]-prices[<span class="number">0</span>]]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, length):</span><br><span class="line">            temp.append(max(temp[i<span class="number">-1</span>], prices[i]-min(prices[:i]), <span class="number">0</span>))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> temp[<span class="number">-1</span>]</span><br></pre></td></tr></table></figure><p>每次都会判断前$i-1$天的最低价，可以将最低价进行保存。</p><blockquote><p>Python3，用时104ms，内存14M</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span>    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxProfit</span><span class="params">(self, prices: List[int])</span> -&gt; int:</span></span><br><span class="line">        length = len(prices)</span><br><span class="line">        <span class="keyword">if</span> length &lt;= <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">        temp = [prices[<span class="number">1</span>]-prices[<span class="number">0</span>]]</span><br><span class="line">        tempMin = prices[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, length):</span><br><span class="line">            <span class="keyword">if</span> prices[i] &lt; tempMin:</span><br><span class="line">                tempMin = prices[i]</span><br><span class="line">            temp.append(max(temp[i<span class="number">-1</span>], prices[i]-tempMin))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> temp[<span class="number">-1</span>]</span><br></pre></td></tr></table></figure><h3 id="思路二"><a href="#思路二" class="headerlink" title="思路二"></a>思路二</h3><p>遍历数组，寻找最低价之后的最高收益。</p><p>判断第$i$天的价格，是否是当前最低价，不是最低价则判断是否可获得当前最大收益（获得当前最大收益的节点不一定是当前最高价的节点，当前最高价可能出现在最低价之前，所以无法更新最低价的时候，判断收益而不是试图更新最高价）。</p><h4 id="代码提交-1"><a href="#代码提交-1" class="headerlink" title="代码提交"></a>代码提交</h4><blockquote><p>Python3，用时80ms，内存13.8M</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="keyword">import</span> sys</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxProfit</span><span class="params">(self, prices: List[int])</span> -&gt; int:</span></span><br><span class="line">        length = len(prices)</span><br><span class="line">        <span class="keyword">if</span> length &lt;= <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">        tempMin = sys.maxsize</span><br><span class="line">        tempMax = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> prices:</span><br><span class="line">            <span class="keyword">if</span> i &lt; tempMin:</span><br><span class="line">                tempMin = i</span><br><span class="line">            <span class="keyword">elif</span> i-tempMin &gt; tempMax:</span><br><span class="line">                tempMax = i-tempMin</span><br><span class="line">        <span class="keyword">return</span> tempMax</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;121、&lt;a href=&quot;https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Best Time to Buy and Sell Stock&lt;/a&gt;买卖股票的最佳时机&lt;/p&gt;
+&lt;p&gt;难度：简单&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;题目描述&quot;&gt;&lt;a href=&quot;#题目描述&quot; class=&quot;headerlink&quot; title=&quot;题目描述&quot;&gt;&lt;/a&gt;题目描述&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;英文：&lt;/p&gt;
+&lt;p&gt;Say you have an array for which the &lt;em&gt;i&lt;/em&gt;th element is the price of a given stock on day &lt;em&gt;i&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit.&lt;/p&gt;
+&lt;p&gt;Note that you cannot sell a stock before you buy one.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;中文：&lt;/p&gt;
+&lt;p&gt;给定一个数组，它的第 &lt;em&gt;i&lt;/em&gt; 个元素是一支给定股票第 &lt;em&gt;i&lt;/em&gt; 天的价格。&lt;/p&gt;
+&lt;p&gt;如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。&lt;/p&gt;
+&lt;p&gt;注意你不能在买入股票前卖出股票。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="LeetCode" scheme="https://lesley0416.github.io/categories/LeetCode/"/>
+    
+    
+      <category term="动态规划" scheme="https://lesley0416.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
+    
+      <category term="LeetCode" scheme="https://lesley0416.github.io/tags/LeetCode/"/>
+    
+      <category term="数组" scheme="https://lesley0416.github.io/tags/%E6%95%B0%E7%BB%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【LeetCode】70、爬楼梯</title>
+    <link href="https://lesley0416.github.io/2019/03/14/leetcode_70/"/>
+    <id>https://lesley0416.github.io/2019/03/14/leetcode_70/</id>
+    <published>2019-03-14T03:27:00.000Z</published>
+    <updated>2019-03-14T13:34:14.788Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>70、<a href="https://leetcode-cn.com/problems/climbing-stairs/" target="_blank" rel="noopener">Climbing Stairs</a>爬楼梯</p><p>难度：简单</p></blockquote><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><ul><li><p>英文：</p><p>You are climbing a stair case. It takes <em>n</em> steps to reach to the top.</p><p>Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?</p><p><strong>Note:</strong> Given <em>n</em> will be a positive integer.</p></li><li><p>中文：</p><p>假设你正在爬楼梯。需要 <em>n</em> 阶你才能到达楼顶。</p><p>每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？</p><p><strong>注意：</strong>给定 <em>n</em> 是一个正整数。</p></li></ul><a id="more"></a><ul><li><p>示例</p><p><strong>Example 1:</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Input: 2</span><br><span class="line">Output: 2</span><br><span class="line">Explanation: There are two ways to climb to the top.</span><br><span class="line">1. 1 step + 1 step</span><br><span class="line">2. 2 steps</span><br></pre></td></tr></table></figure><p><strong>Example 2:</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Input: 3</span><br><span class="line">Output: 3</span><br><span class="line">Explanation: There are three ways to climb to the top.</span><br><span class="line">1. 1 step + 1 step + 1 step</span><br><span class="line">2. 1 step + 2 steps</span><br><span class="line">3. 2 steps + 1 step</span><br></pre></td></tr></table></figure></li></ul><h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><p>动态规划问题，直接<strong>递归</strong>，用$f (n)$表示到达第$n$阶时的方法数，共有两种爬楼方式（一次一阶，一次两阶），那么到达第$n$阶可以通过“到达第$n-1$阶后再走一次一阶”和“到达第$n-2$阶后再走一次两阶”两种方式，那么只需要考虑到达$n-1$阶和$n-2$阶各有多少种方法即可，即$f(n) = f(n-1) + f(n-2)$，终止条件为$f(1) = 1 , f(2)=2$。</p><h4 id="代码提交"><a href="#代码提交" class="headerlink" title="代码提交"></a>代码提交</h4><blockquote><p>Python3，超时</p><p>时间复杂度：<strong>T(n) = O(1.618 ^ n)</strong>（1.618就是黄金分割，(1+5–√)/2(1+5)/2）。</p><p>空间复杂度取决于递归的深度，显然是<strong>O(n)</strong>。</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">climbStairs</span><span class="params">(self, n: int)</span> -&gt; int:</span></span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">2</span></span><br><span class="line">        <span class="keyword">return</span> self.climbStairs(n<span class="number">-1</span>) + self.climbStairs(n<span class="number">-2</span>)</span><br></pre></td></tr></table></figure><p>直接递归的方法重复计算太多，直接超时，将计算过的结果进行缓存，使用<strong>递归</strong>的方式，如下：</p><blockquote><p>Python3，用时80ms，内存13.2M</p><p>时间复杂度是<strong>O(n)</strong></p><p>空间复杂度是<strong>O(1)</strong></p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">climbStairs</span><span class="params">(self, n: int)</span> -&gt; int:</span></span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">2</span></span><br><span class="line">        tempNum = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>, n+<span class="number">1</span>):</span><br><span class="line">            tempNum.append(tempNum[i<span class="number">-1</span>] + tempNum[i<span class="number">-2</span>])</span><br><span class="line">        <span class="keyword">return</span> tempNum[n]</span><br></pre></td></tr></table></figure><h3 id="思路二"><a href="#思路二" class="headerlink" title="思路二"></a>思路二</h3><p>递归表达式及终止条件值符合斐波那契数列。其实跟上面的方法差不多。</p><h4 id="代码提交-1"><a href="#代码提交-1" class="headerlink" title="代码提交"></a>代码提交</h4><blockquote><p>Python3，用时52ms，内存13.1M</p><p>时间复杂性：$O (n)​$</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">climbStairs</span><span class="params">(self, n: int)</span> -&gt; int:</span></span><br><span class="line">        a = <span class="number">0</span></span><br><span class="line">        b = <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n+<span class="number">1</span>):</span><br><span class="line">            a, b = a + b, a</span><br><span class="line">        <span class="keyword">return</span> a</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;70、&lt;a href=&quot;https://leetcode-cn.com/problems/climbing-stairs/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Climbing Stairs&lt;/a&gt;爬楼梯&lt;/p&gt;
+&lt;p&gt;难度：简单&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;题目描述&quot;&gt;&lt;a href=&quot;#题目描述&quot; class=&quot;headerlink&quot; title=&quot;题目描述&quot;&gt;&lt;/a&gt;题目描述&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;英文：&lt;/p&gt;
+&lt;p&gt;You are climbing a stair case. It takes &lt;em&gt;n&lt;/em&gt; steps to reach to the top.&lt;/p&gt;
+&lt;p&gt;Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Given &lt;em&gt;n&lt;/em&gt; will be a positive integer.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;中文：&lt;/p&gt;
+&lt;p&gt;假设你正在爬楼梯。需要 &lt;em&gt;n&lt;/em&gt; 阶你才能到达楼顶。&lt;/p&gt;
+&lt;p&gt;每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt;给定 &lt;em&gt;n&lt;/em&gt; 是一个正整数。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="LeetCode" scheme="https://lesley0416.github.io/categories/LeetCode/"/>
+    
+    
+      <category term="动态规划" scheme="https://lesley0416.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
+    
+      <category term="LeetCode" scheme="https://lesley0416.github.io/tags/LeetCode/"/>
+    
+      <category term="斐波那契数列" scheme="https://lesley0416.github.io/tags/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/"/>
+    
+  </entry>
   
   <entry>
     <title>【LeetCode】53、最大子序和</title>
@@ -43,11 +125,11 @@
       <category term="LeetCode" scheme="https://lesley0416.github.io/categories/LeetCode/"/>
     
     
+      <category term="动态规划" scheme="https://lesley0416.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
+    
       <category term="LeetCode" scheme="https://lesley0416.github.io/tags/LeetCode/"/>
     
       <category term="数组" scheme="https://lesley0416.github.io/tags/%E6%95%B0%E7%BB%84/"/>
-    
-      <category term="动态规划" scheme="https://lesley0416.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
     
       <category term="分治算法" scheme="https://lesley0416.github.io/tags/%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95/"/>
     
@@ -291,33 +373,6 @@
   </entry>
   
   <entry>
-    <title>%time,%timeit魔法命令</title>
-    <link href="https://lesley0416.github.io/2019/03/04/jupyter_timeit/"/>
-    <id>https://lesley0416.github.io/2019/03/04/jupyter_timeit/</id>
-    <published>2019-03-04T13:30:50.000Z</published>
-    <updated>2019-03-13T15:21:24.362Z</updated>
-    
-    <content type="html"><![CDATA[<p>在Jupyter-notebook中有几个用于计时的魔法命令<code>%time</code>、<code>%%time</code>、<code>%timeit</code>、<code>%%timeit</code>，可以非常简单的获取部分代码的运行耗时。</p><blockquote><p>所有以<code>%</code>开头的方法，都是所谓的魔法命令（Magic function），也就是IPython内置的一些方法。魔法方法要区分<code>%</code>和<code>%%</code>，以<code>%</code>开头的叫做<code>line magic</code>，是专门针对一行的命令，以<code>%%</code>开头的叫做<code>cell magic</code>，是针对多行（一个cell）的命令。</p><p><strong>以<code>%%</code>开头的魔法命令，必须放在一个cell的第一行，并且统计该cell中剩余的所有代码。</strong><br><a id="more"></a><br>分别来看：</p></blockquote><ul><li><p><code>%time</code></p><p>给出<strong>当前行的代码运行一次</strong>所花费的时间；</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a,b = <span class="number">1</span>,<span class="number">2</span></span><br><span class="line">%time a,b = b,a</span><br><span class="line"></span><br><span class="line"><span class="comment"># output:</span></span><br><span class="line"><span class="comment"># CPU times: user 2 µs, sys: 1 µs, total: 3 µs</span></span><br><span class="line"><span class="comment"># Wall time: 5.01 µs</span></span><br></pre></td></tr></table></figure><p>其中：</p><ul><li>user：表示执行用户代码（内核外）消耗的CPU时间；</li><li>sys：表示进程在内核中消耗的CPU时间；</li></ul><p>所以，CPU总耗时看<code>total</code>即可，也就是<code>uset</code>和<code>sys</code>之和。</p><p><code>Wall time</code>是最终总耗时，包括IO、排队的耗时，也就是感知到的总耗时。</p><blockquote><p>Wall time $&lt;$ CPU 表明进程是计算密集型（CPU bound），利用多核处理器的并行执行优势；</p><p>Wall time $\approx$ CPU 表明进程是计算密集型，未并行执行；</p><p>Wall time $&gt;​$ CPU 表明进程是I/O密集型（I/O bound），多核并行执行优势并不明显；</p></blockquote></li><li><p><code>%%time</code></p><p>给出<strong>当前cell的代码运行一次</strong>所花费的时间；</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%%time</span><br><span class="line">a,b = <span class="number">1</span>,<span class="number">2</span></span><br><span class="line">a,b = b,a</span><br><span class="line"></span><br><span class="line"><span class="comment"># output:</span></span><br><span class="line"><span class="comment"># CPU times: user 2 µs, sys: 1e+03 ns, total: 3 µs</span></span><br><span class="line"><span class="comment"># Wall time: 5.96 µs</span></span><br></pre></td></tr></table></figure></li><li><p><code>%timeit -n 1000</code></p><p>给出<strong>当前行的代码运行n次</strong>所花费的时间（取最快三次的平均用时）；</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%timeit -n <span class="number">10000</span> c = pow(<span class="number">2</span>,<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># output:</span></span><br><span class="line"><span class="comment"># 10000 loops, best of 3: 198 ns per loop</span></span><br></pre></td></tr></table></figure></li><li><p><code>%%timeit -n 1000</code></p><p>给出<strong>当前cell的代码运行n次</strong>所花费的时间（取最快三次的平均用时）；</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">%%timeit -n <span class="number">10000</span></span><br><span class="line">a,b = <span class="number">1</span>,<span class="number">2</span></span><br><span class="line">c=a</span><br><span class="line">a=b</span><br><span class="line">b=c</span><br><span class="line"></span><br><span class="line"><span class="comment"># output:</span></span><br><span class="line"><span class="comment"># 10000 loops, best of 3: 68.5 ns per loop</span></span><br></pre></td></tr></table></figure></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在Jupyter-notebook中有几个用于计时的魔法命令&lt;code&gt;%time&lt;/code&gt;、&lt;code&gt;%%time&lt;/code&gt;、&lt;code&gt;%timeit&lt;/code&gt;、&lt;code&gt;%%timeit&lt;/code&gt;，可以非常简单的获取部分代码的运行耗时。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;所有以&lt;code&gt;%&lt;/code&gt;开头的方法，都是所谓的魔法命令（Magic function），也就是IPython内置的一些方法。魔法方法要区分&lt;code&gt;%&lt;/code&gt;和&lt;code&gt;%%&lt;/code&gt;，以&lt;code&gt;%&lt;/code&gt;开头的叫做&lt;code&gt;line magic&lt;/code&gt;，是专门针对一行的命令，以&lt;code&gt;%%&lt;/code&gt;开头的叫做&lt;code&gt;cell magic&lt;/code&gt;，是针对多行（一个cell）的命令。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;以&lt;code&gt;%%&lt;/code&gt;开头的魔法命令，必须放在一个cell的第一行，并且统计该cell中剩余的所有代码。&lt;/strong&gt;&lt;br&gt;&lt;/p&gt;&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="Python" scheme="https://lesley0416.github.io/categories/Python/"/>
-    
-    
-      <category term="Python" scheme="https://lesley0416.github.io/tags/Python/"/>
-    
-      <category term="计时" scheme="https://lesley0416.github.io/tags/%E8%AE%A1%E6%97%B6/"/>
-    
-  </entry>
-  
-  <entry>
     <title>若干Python性能优化小tips</title>
     <link href="https://lesley0416.github.io/2019/03/04/fasterpython/"/>
     <id>https://lesley0416.github.io/2019/03/04/fasterpython/</id>
@@ -341,6 +396,33 @@
       <category term="Python" scheme="https://lesley0416.github.io/tags/Python/"/>
     
       <category term="性能优化" scheme="https://lesley0416.github.io/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>%time,%timeit魔法命令</title>
+    <link href="https://lesley0416.github.io/2019/03/04/jupyter_timeit/"/>
+    <id>https://lesley0416.github.io/2019/03/04/jupyter_timeit/</id>
+    <published>2019-03-04T13:30:50.000Z</published>
+    <updated>2019-03-13T15:21:24.362Z</updated>
+    
+    <content type="html"><![CDATA[<p>在Jupyter-notebook中有几个用于计时的魔法命令<code>%time</code>、<code>%%time</code>、<code>%timeit</code>、<code>%%timeit</code>，可以非常简单的获取部分代码的运行耗时。</p><blockquote><p>所有以<code>%</code>开头的方法，都是所谓的魔法命令（Magic function），也就是IPython内置的一些方法。魔法方法要区分<code>%</code>和<code>%%</code>，以<code>%</code>开头的叫做<code>line magic</code>，是专门针对一行的命令，以<code>%%</code>开头的叫做<code>cell magic</code>，是针对多行（一个cell）的命令。</p><p><strong>以<code>%%</code>开头的魔法命令，必须放在一个cell的第一行，并且统计该cell中剩余的所有代码。</strong><br><a id="more"></a><br>分别来看：</p></blockquote><ul><li><p><code>%time</code></p><p>给出<strong>当前行的代码运行一次</strong>所花费的时间；</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a,b = <span class="number">1</span>,<span class="number">2</span></span><br><span class="line">%time a,b = b,a</span><br><span class="line"></span><br><span class="line"><span class="comment"># output:</span></span><br><span class="line"><span class="comment"># CPU times: user 2 µs, sys: 1 µs, total: 3 µs</span></span><br><span class="line"><span class="comment"># Wall time: 5.01 µs</span></span><br></pre></td></tr></table></figure><p>其中：</p><ul><li>user：表示执行用户代码（内核外）消耗的CPU时间；</li><li>sys：表示进程在内核中消耗的CPU时间；</li></ul><p>所以，CPU总耗时看<code>total</code>即可，也就是<code>uset</code>和<code>sys</code>之和。</p><p><code>Wall time</code>是最终总耗时，包括IO、排队的耗时，也就是感知到的总耗时。</p><blockquote><p>Wall time $&lt;$ CPU 表明进程是计算密集型（CPU bound），利用多核处理器的并行执行优势；</p><p>Wall time $\approx$ CPU 表明进程是计算密集型，未并行执行；</p><p>Wall time $&gt;​$ CPU 表明进程是I/O密集型（I/O bound），多核并行执行优势并不明显；</p></blockquote></li><li><p><code>%%time</code></p><p>给出<strong>当前cell的代码运行一次</strong>所花费的时间；</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%%time</span><br><span class="line">a,b = <span class="number">1</span>,<span class="number">2</span></span><br><span class="line">a,b = b,a</span><br><span class="line"></span><br><span class="line"><span class="comment"># output:</span></span><br><span class="line"><span class="comment"># CPU times: user 2 µs, sys: 1e+03 ns, total: 3 µs</span></span><br><span class="line"><span class="comment"># Wall time: 5.96 µs</span></span><br></pre></td></tr></table></figure></li><li><p><code>%timeit -n 1000</code></p><p>给出<strong>当前行的代码运行n次</strong>所花费的时间（取最快三次的平均用时）；</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%timeit -n <span class="number">10000</span> c = pow(<span class="number">2</span>,<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># output:</span></span><br><span class="line"><span class="comment"># 10000 loops, best of 3: 198 ns per loop</span></span><br></pre></td></tr></table></figure></li><li><p><code>%%timeit -n 1000</code></p><p>给出<strong>当前cell的代码运行n次</strong>所花费的时间（取最快三次的平均用时）；</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">%%timeit -n <span class="number">10000</span></span><br><span class="line">a,b = <span class="number">1</span>,<span class="number">2</span></span><br><span class="line">c=a</span><br><span class="line">a=b</span><br><span class="line">b=c</span><br><span class="line"></span><br><span class="line"><span class="comment"># output:</span></span><br><span class="line"><span class="comment"># 10000 loops, best of 3: 68.5 ns per loop</span></span><br></pre></td></tr></table></figure></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在Jupyter-notebook中有几个用于计时的魔法命令&lt;code&gt;%time&lt;/code&gt;、&lt;code&gt;%%time&lt;/code&gt;、&lt;code&gt;%timeit&lt;/code&gt;、&lt;code&gt;%%timeit&lt;/code&gt;，可以非常简单的获取部分代码的运行耗时。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;所有以&lt;code&gt;%&lt;/code&gt;开头的方法，都是所谓的魔法命令（Magic function），也就是IPython内置的一些方法。魔法方法要区分&lt;code&gt;%&lt;/code&gt;和&lt;code&gt;%%&lt;/code&gt;，以&lt;code&gt;%&lt;/code&gt;开头的叫做&lt;code&gt;line magic&lt;/code&gt;，是专门针对一行的命令，以&lt;code&gt;%%&lt;/code&gt;开头的叫做&lt;code&gt;cell magic&lt;/code&gt;，是针对多行（一个cell）的命令。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;以&lt;code&gt;%%&lt;/code&gt;开头的魔法命令，必须放在一个cell的第一行，并且统计该cell中剩余的所有代码。&lt;/strong&gt;&lt;br&gt;&lt;/p&gt;&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="Python" scheme="https://lesley0416.github.io/categories/Python/"/>
+    
+    
+      <category term="Python" scheme="https://lesley0416.github.io/tags/Python/"/>
+    
+      <category term="计时" scheme="https://lesley0416.github.io/tags/%E8%AE%A1%E6%97%B6/"/>
     
   </entry>
   
