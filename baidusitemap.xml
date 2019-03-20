@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://lesley0416.github.io/2019/03/19/python_zip/</loc>
+    <lastmod>2019-03-20</lastmod>
+  </url>  <url>
     <loc>https://lesley0416.github.io/2019/03/01/HMM_IM/</loc>
     <lastmod>2019-03-20</lastmod>
   </url>  <url>
@@ -38,9 +41,6 @@
     <lastmod>2019-03-20</lastmod>
   </url>  <url>
     <loc>https://lesley0416.github.io/2019/03/20/python_list_tips/</loc>
-    <lastmod>2019-03-20</lastmod>
-  </url>  <url>
-    <loc>https://lesley0416.github.io/2019/03/19/python_zip/</loc>
     <lastmod>2019-03-20</lastmod>
   </url>  <url>
     <loc>https://lesley0416.github.io/2019/03/13/python_lambda_sorted/</loc>
