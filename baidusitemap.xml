@@ -1,31 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://lesley0416.github.io/2019/03/01/HMM_IM/</loc>
+    <lastmod>2019-03-20</lastmod>
+  </url>  <url>
     <loc>https://lesley0416.github.io/2019/03/14/leetcode_70/</loc>
-    <lastmod>2019-03-14</lastmod>
+    <lastmod>2019-03-20</lastmod>
   </url>  <url>
     <loc>https://lesley0416.github.io/2019/03/14/leetcode_121/</loc>
-    <lastmod>2019-03-14</lastmod>
-  </url>  <url>
-    <loc>https://lesley0416.github.io/2019/03/13/python_lambda_sorted/</loc>
-    <lastmod>2019-03-13</lastmod>
+    <lastmod>2019-03-20</lastmod>
   </url>  <url>
     <loc>https://lesley0416.github.io/2019/03/13/leetcode_937/</loc>
-    <lastmod>2019-03-13</lastmod>
+    <lastmod>2019-03-20</lastmod>
   </url>  <url>
     <loc>https://lesley0416.github.io/2019/03/12/leetcode_936/</loc>
-    <lastmod>2019-03-13</lastmod>
+    <lastmod>2019-03-20</lastmod>
   </url>  <url>
     <loc>https://lesley0416.github.io/2019/03/04/leetcode_599/</loc>
-    <lastmod>2019-03-13</lastmod>
-  </url>  <url>
-    <loc>https://lesley0416.github.io/2019/03/13/leetcode_53/</loc>
-    <lastmod>2019-03-13</lastmod>
+    <lastmod>2019-03-20</lastmod>
   </url>  <url>
     <loc>https://lesley0416.github.io/2019/03/13/leetcode_414/</loc>
-    <lastmod>2019-03-13</lastmod>
+    <lastmod>2019-03-20</lastmod>
+  </url>  <url>
+    <loc>https://lesley0416.github.io/2019/03/15/leetcode_213/</loc>
+    <lastmod>2019-03-20</lastmod>
+  </url>  <url>
+    <loc>https://lesley0416.github.io/2019/03/19/leetcode_5/</loc>
+    <lastmod>2019-03-20</lastmod>
+  </url>  <url>
+    <loc>https://lesley0416.github.io/2019/03/15/leetcode_198/</loc>
+    <lastmod>2019-03-20</lastmod>
   </url>  <url>
     <loc>https://lesley0416.github.io/2019/03/13/leetcode_136/</loc>
+    <lastmod>2019-03-20</lastmod>
+  </url>  <url>
+    <loc>https://lesley0416.github.io/2019/03/13/leetcode_53/</loc>
+    <lastmod>2019-03-20</lastmod>
+  </url>  <url>
+    <loc>https://lesley0416.github.io/2019/03/20/python_list_tips/</loc>
+    <lastmod>2019-03-20</lastmod>
+  </url>  <url>
+    <loc>https://lesley0416.github.io/2019/03/19/python_zip/</loc>
+    <lastmod>2019-03-20</lastmod>
+  </url>  <url>
+    <loc>https://lesley0416.github.io/2019/03/13/python_lambda_sorted/</loc>
     <lastmod>2019-03-13</lastmod>
   </url>  <url>
     <loc>https://lesley0416.github.io/2019/03/04/jupyter_timeit/</loc>
@@ -41,9 +59,6 @@
     <lastmod>2019-03-04</lastmod>
   </url>  <url>
     <loc>https://lesley0416.github.io/2019/02/27/hello-world/</loc>
-    <lastmod>2019-03-04</lastmod>
-  </url>  <url>
-    <loc>https://lesley0416.github.io/2019/03/01/HMM_IM/</loc>
     <lastmod>2019-03-04</lastmod>
   </url>
 </urlset>
