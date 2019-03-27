@@ -1,0 +1,1989 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="pufZm21A3BmHUXXeFbh5D4nwCt7ZDl8GQkMO23QOsJc">
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="kygZ90QCYp">
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="主要翻译自LeetCode上Explore模块的Recursion I，有直译，也有非直译的个人理解。 其中涉及的题目附有相应的解答。  Overview 综述Recursion（递归）是计算机科学中一个重要的概念，是很多算法和数据结构的基础。但是对于很多初学者都比较难把握。">
+<meta name="keywords" content="LeetCode,递归,recursion">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【LeetCode】Explore：Recursion I 递归—1">
+<meta property="og:url" content="https://lesley0416.github.io/2019/03/21/leetcode_explore_recursion/index.html">
+<meta property="og:site_name" content="Lesley&#39;s blog">
+<meta property="og:description" content="主要翻译自LeetCode上Explore模块的Recursion I，有直译，也有非直译的个人理解。 其中涉及的题目附有相应的解答。  Overview 综述Recursion（递归）是计算机科学中一个重要的概念，是很多算法和数据结构的基础。但是对于很多初学者都比较难把握。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/21/leetcode_explore_recursion/344_reverse_string.png">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/21/leetcode_explore_recursion/210px-PascalTriangleAnimated2.gif">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/21/leetcode_explore_recursion/PascalTriangleAnimatedDemo.gif">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/21/leetcode_explore_recursion/fibonacci.png">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/21/leetcode_explore_recursion/70_Climbing_Stairs_rt.jpg">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/21/leetcode_explore_recursion/climbStairsAnimation.gif">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/21/leetcode_explore_recursion/70_Climbing_Stairs.PNG">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/21/leetcode_explore_recursion/fibonacci.png">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/21/leetcode_explore_recursion/card_recursion_stack.png">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/21/leetcode_explore_recursion/card_recursion_tail.png">
+<meta property="og:updated_time" content="2019-03-27T14:08:40.112Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【LeetCode】Explore：Recursion I 递归—1">
+<meta name="twitter:description" content="主要翻译自LeetCode上Explore模块的Recursion I，有直译，也有非直译的个人理解。 其中涉及的题目附有相应的解答。  Overview 综述Recursion（递归）是计算机科学中一个重要的概念，是很多算法和数据结构的基础。但是对于很多初学者都比较难把握。">
+<meta name="twitter:image" content="https://lesley0416.github.io/2019/03/21/leetcode_explore_recursion/344_reverse_string.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Lesley's blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="https://lesley0416.github.io/2019/03/21/leetcode_explore_recursion/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【LeetCode】Explore：Recursion I 递归—1 | Lesley's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/lesley0416" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lesley's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home //首页"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user //关于"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags //标签"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th //分类"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive //归档"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lesley0416.github.io/2019/03/21/leetcode_explore_recursion/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lesley Shi">
+      <meta itemprop="description" content="fighting~~~">
+      <meta itemprop="image" content="/image/touxiang.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lesley's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【LeetCode】Explore：Recursion I 递归—1
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-21 11:03:50" itemprop="dateCreated datePublished" datetime="2019-03-21T11:03:50+08:00">2019-03-21</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-27 22:08:40" itemprop="dateModified" datetime="2019-03-27T22:08:40+08:00">2019-03-27</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/基础/" itemprop="url" rel="index"><span itemprop="name">基础</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/03/21/leetcode_explore_recursion/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/03/21/leetcode_explore_recursion/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/03/21/leetcode_explore_recursion/" class="leancloud_visitors" data-flag-title="【LeetCode】Explore：Recursion I 递归—1">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>主要翻译自LeetCode上Explore模块的<a href="https://leetcode.com/explore/learn/card/recursion-i/" target="_blank" rel="noopener">Recursion I</a>，有直译，也有非直译的个人理解。</p>
+<p>其中涉及的题目附有相应的解答。</p>
+</blockquote>
+<h1 id="Overview-综述"><a href="#Overview-综述" class="headerlink" title="Overview 综述"></a>Overview 综述</h1><p><code>Recursion</code>（递归）是计算机科学中一个重要的概念，是很多算法和数据结构的基础。但是对于很多初学者都比较难把握。</p>
+<a id="more"></a>
+<p>在开始本节探索之前，我们强烈建议先完成<a href="https://leetcode.com/explore/learn/card/data-structure-tree/" target="_blank" rel="noopener">二叉树</a>和<a href="https://leetcode.com/explore/learn/card/queue-stack/" target="_blank" rel="noopener">堆栈</a>两个探索页。</p>
+<p>在这个探索页，我们将回答以下几个问题：</p>
+<ol>
+<li>什么是<code>recursion</code>？它是如何工作的？</li>
+<li>如何递归的解决一个问题？</li>
+<li>如何分析递归算法的时间和空间复杂度（time and space complexity）？</li>
+<li>如何更好的应用递归？</li>
+</ol>
+<p>完成本探索页后，你在解决递归问题和分析复杂度时会变得更加自信。</p>
+<h1 id="一、Principle-of-Recursion-递归原理"><a href="#一、Principle-of-Recursion-递归原理" class="headerlink" title="一、Principle of Recursion 递归原理"></a>一、Principle of Recursion 递归原理</h1><p>在这章，我们将会：</p>
+<ol>
+<li>解释递归的基本概念；</li>
+<li>演示如何应用递归解决确切的问题；</li>
+<li>最后提供一些练习题来练习递归；</li>
+</ol>
+<h2 id="递归原理"><a href="#递归原理" class="headerlink" title="递归原理"></a>递归原理</h2><blockquote>
+<p>递归是一种将函数本身作为子程序调用来解决问题的方法。</p>
+</blockquote>
+<p>你可能想知道一个函数怎样调用其自身。诀窍在于每次递归的调用其本身时，都将给定的问题缩小成其子问题，这样持续的递归调用，直到子问题可以不用递归就能解决的时候停止。</p>
+<p>一个递归函数应该有以下属性，这样才不会导致无限循环：</p>
+<ol>
+<li>具有简单的基本情况，即递归出口、递归结束条件，即不使用递归即可获得答案的情况；</li>
+<li>一系列规则，称为<code>recurrence relation</code>递归关系，可以将问题逐步缩小直至递归出口；</li>
+</ol>
+<p>注意，可能会有多个可以调用函数本身的地方。</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>从一个简单的问题开始：逆序输出字符串。</p>
+<blockquote>
+<p>倒序输出一个字符串。</p>
+</blockquote>
+<p>你可以很容易的迭代解决这个问题，例如从字符串的结尾开始遍历字符串。但是如何递归的解决呢？</p>
+<p>首先，我们定义函数<code>printReverse(str[0...n-1])</code>，其中<code>str[0]</code>表示字符串的第一个字符，然后我们通过以下两个步骤解决这个问题：</p>
+<ol>
+<li><code>printReverse(str[1...n-1])</code>：逆序输出子串<code>strp[1...n-1]</code>；</li>
+<li><code>print(str[0])</code>：输出字符串的首字符；</li>
+</ol>
+<p>我们在第一步中定义了递归关系。</p>
+<p>代码如下（C++）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printReverse</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *str)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!*str)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    printReverse(str+<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; *str;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来，来处理一个和示例略有不同的练习，尽量用递归来解决。</p>
+<h2 id="练习：反转字符串"><a href="#练习：反转字符串" class="headerlink" title="练习：反转字符串"></a>练习：反转字符串</h2><a href="/2019/03/21/leetcode_344/" title="【LeetCode】344、Reverse String">【LeetCode】344、Reverse String</a>
+<p>写一个反转字符串的函数，输入字符数组<code>char[]</code>。</p>
+<p>不要开辟额外的控件，必须使用$O(1)​$的空间复杂度就地修改输入的数组。</p>
+<p>假定所有的字符都是可打印的ASCII码字符。</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: [&quot;h&quot;,&quot;e&quot;,&quot;l&quot;,&quot;l&quot;,&quot;o&quot;]</span><br><span class="line">Output: [&quot;o&quot;,&quot;l&quot;,&quot;l&quot;,&quot;e&quot;,&quot;h&quot;]</span><br></pre></td></tr></table></figure>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: [&quot;H&quot;,&quot;a&quot;,&quot;n&quot;,&quot;n&quot;,&quot;a&quot;,&quot;h&quot;]</span><br><span class="line">Output: [&quot;h&quot;,&quot;a&quot;,&quot;n&quot;,&quot;n&quot;,&quot;a&quot;,&quot;H&quot;]</span><br></pre></td></tr></table></figure>
+<p>递归代码如下（自己写的，C++）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&amp; s, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (left &gt;= right) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">char</span> temp = s[left];</span><br><span class="line">        s[left] = s[right];</span><br><span class="line">        s[right] = temp;</span><br><span class="line">        swap(s, left+<span class="number">1</span>, right<span class="number">-1</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">reverseString</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&amp; s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s.size() &lt;= <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        swap(s, <span class="number">0</span>, s.size()<span class="number">-1</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="解答：反转字符串"><a href="#解答：反转字符串" class="headerlink" title="解答：反转字符串"></a>解答：反转字符串</h2><p>本章，我们给出反转字符串问题的一个简单的解决方案。</p>
+<blockquote>
+<p>问题并不难，关键在于有一个额外的约束条件，即使用$O(1)$的额外空间进行修改。</p>
+</blockquote>
+<p>定义函数<code>reverseString(str[0...n-1])</code>，其中<code>str[0...n-1]</code>是一个首字符为<code>str[0]</code>的字符数组。</p>
+<p>下面，我们讨论如何利用递归的思想来解决这个问题。</p>
+<h3 id="初次尝试"><a href="#初次尝试" class="headerlink" title="初次尝试"></a>初次尝试</h3><p>如果我们按照上文逆序输出字符串的思路，我们可以有以下的方法：</p>
+<ol>
+<li>从输入字符串中取首字符<code>str[0]</code>；</li>
+<li>对于剩下的子字符串，调用函数自身来递归解决，如<code>reverseString(str[1...n-1])</code>；</li>
+<li>在步骤2返回的结果中添加首字符；</li>
+</ol>
+<p>这个方法可以实现题意效果，但是不满足约束条件。因为需要额外的空间来保存步骤2的中间结果，所需空间大小和字符串长度成正比（即需要$O(n)$的空间复杂度），这一点不满足$O(1)$空间复杂度的要求。</p>
+<h3 id="另一种分治的方法"><a href="#另一种分治的方法" class="headerlink" title="另一种分治的方法"></a>另一种分治的方法</h3><p>考虑题目中的约束条件，将其放入到递归的问题中，可以理解为在两次连续的递归调用之间不使用额外的空间消耗，也就是说，我们应该把问题分解成独立的子问题。</p>
+<p>分解成独立子问题的一个思路是将每次输入的字符串分成两部分：1、首尾字符；2、去掉首位字符后剩下的子字符串。然后可以独立的解决两部分内容。</p>
+<p>按照上述方法，可以有以下的方法：</p>
+<ol>
+<li>从输入的字符串中取首尾字符<code>str[0]</code>和<code>str[n-1]</code>；</li>
+<li>就地交换首尾字符；</li>
+<li>递归调用函数来反转剩余的子字符串，即<code>reverseString(str[1...n-2])</code>；</li>
+</ol>
+<p>注意：步骤2、3可以交换，因为是两个独立的任务。但最好保持现状的顺序，这样可以使用尾递归优化调用。我们会在后面的章节详细了解尾递归。（先简单理解一下，尾递归是指函数运行的最后一步是调用其自身，尾递归由于递归在最后一步，不再需要考虑外层函数的信息，因此可以把这个函数的调用栈给优化掉，从而避免栈溢出的风险。）</p>
+<p>代码如下（示例代码，Python3）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reverseString</span><span class="params">(self, s)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type s: List[str]</span></span><br><span class="line"><span class="string">        :rtype: void Do not return anything, modify s in-place instead.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(start, end, ls)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> start &gt;= end:</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">        </span><br><span class="line">            <span class="comment"># swap the first and last element</span></span><br><span class="line">            ls[start], ls[end] = ls[end], ls[start]        </span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> helper(start+<span class="number">1</span>, end<span class="number">-1</span>, ls)</span><br><span class="line">    </span><br><span class="line">        helper(<span class="number">0</span>, len(s)<span class="number">-1</span>, s)</span><br></pre></td></tr></table></figure>
+<p>如图，用字符数组<code>[&quot;h&quot;, &quot;e&quot;, &quot;l&quot;, &quot;l&quot;, &quot;o&quot;]</code>举例，可以看到如何进行分解并解决的。</p>
+<p><img src="/2019/03/21/leetcode_explore_recursion/344_reverse_string.png" style="zoom:50%"></p>
+<p>使用这种方法，在每次递归调用的时候只需要常数级内存空间用来交换首尾字符即可，满足题目的约束条件。</p>
+<h2 id="递归函数"><a href="#递归函数" class="headerlink" title="递归函数"></a>递归函数</h2><p>对于一个问题而言，如果可以用递归的思路来解决的话，那我们一定可以遵循如下的思路来实现。</p>
+<p>举例来说，我们用一个待实现的函数$F(X)$来表示问题，其中$X$表示函数的输入，也就是问题的范围。</p>
+<p>那么，在函数$F (X)$中，我们将做如下操作：</p>
+<ol>
+<li>把问题分解为更小的范围，如$x_0\in X , x_1\in X , … , x_n\in X$；</li>
+<li>递归调用函数$F(x_0),F(x_1),…,F(x_n)$来解决$X$的子问题；</li>
+<li>最后，处理递归调用的结果，从而解决$X$对应的问题；</li>
+</ol>
+<h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><p>通过递归解决另一个问题来展示上述思路。</p>
+<blockquote>
+<p>给定一个链表，交换其中每两个相邻节点，并返回头结点。</p>
+<p>例如：给定列表<code>1-&gt;2-&gt;3-&gt;4</code>，应该返回交换后的列表<code>2-&gt;1-&gt;4-&gt;3</code>的头结点。</p>
+</blockquote>
+<p>定义函数<code>swap(head)</code>，其中输入参数<code>head</code>表示链表的头结点。函数应该返回相邻节点交换后的新链表的头结点。</p>
+<p>按照上述思路，我们可以按如下步骤实现这个函数：</p>
+<ol>
+<li>首先，我们交换链表的前两个节点，即<code>head</code>和<code>head.next</code>；</li>
+<li>然后，我们递归调用函数<code>swap(head.next.next)</code>来处理链表的剩余部分；</li>
+<li>最后，获得步骤2返回的子链表的头结点，并将其和步骤1的新链表相连接；</li>
+</ol>
+<p>作为练习，可以按照上文提供的步骤试着实现该问题的完整代码。</p>
+<h2 id="练习：两两交换链表中的节点"><a href="#练习：两两交换链表中的节点" class="headerlink" title="练习：两两交换链表中的节点"></a>练习：两两交换链表中的节点</h2><p>详见<a href="/2019/03/21/leetcode_24/" title="【LeetCode】24、Swap Nodes in Pairs">【LeetCode】24、Swap Nodes in Pairs</a></p>
+<p><strong>Swap Nodes in Pairs </strong></p>
+<p>Given a linked list, swap every two adjacent nodes and return its head.</p>
+<p>You may <strong>not</strong> modify the values in the list’s nodes, only nodes itself may be changed.</p>
+<p>给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。</p>
+<p><strong>你不能只是单纯的改变节点内部的值</strong>，而是需要实际的进行节点交换。</p>
+<p><strong>Example:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Given 1-&gt;2-&gt;3-&gt;4, you should return the list as 2-&gt;1-&gt;4-&gt;3.</span><br></pre></td></tr></table></figure>
+<p>代码如下（C++，用时4ms，内存9M）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">swapPairs</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!head || !head-&gt;next) <span class="keyword">return</span> head;</span><br><span class="line">        ListNode *t = head-&gt;next;</span><br><span class="line">        head-&gt;next = swapPairs(head-&gt;next-&gt;next);</span><br><span class="line">        t-&gt;next = head;</span><br><span class="line">        <span class="keyword">return</span> t;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="二、Recurrence-Relation-递归关系"><a href="#二、Recurrence-Relation-递归关系" class="headerlink" title="二、Recurrence Relation 递归关系"></a>二、Recurrence Relation 递归关系</h1><p>上一章我们了解了递归的基本概念。</p>
+<p>在实现递归函数之前，有两个重要的点需要注意：<strong>基本情况</strong>和<strong>递归关系</strong>。</p>
+<p>在这章，我们将：</p>
+<ul>
+<li>通过详细的例子来了解如何定义基本情况和递归关系；</li>
+<li>做一些练习；</li>
+</ul>
+<h2 id="递归关系"><a href="#递归关系" class="headerlink" title="递归关系"></a>递归关系</h2><p>在实现递归函数之前，要注意两个重要的点：</p>
+<ul>
+<li>递归关系：总问题结果和子问题结果之间的关系；</li>
+<li>基本情况：不需要继续递归调用就能够计算结果的情况，就是递归结束情况。（有时基本情况也被叫做<code>bottom cases</code>，因为如果我们用自顶向下的方式对问题进行分解的话，那么基本情况通常出现在问题已经被分解到最小范围的时候，即<code>bottom</code>）</li>
+</ul>
+<blockquote>
+<p>一旦我们有了上述两方面内容，那么我们只需要按照<strong>递归关系</strong>不断的调用函数本身，直到到达<strong>基本情况</strong>。</p>
+</blockquote>
+<p>为了解释上述内容，我们来看一个经典问题：杨辉三角（也叫 帕斯卡三角）。</p>
+<blockquote>
+<p>杨辉三角是由一系列数字组成的三角形。其中，每一行的最左边和最右边永远是1，剩余的其他数字，每个数是其上面两个数的和。</p>
+</blockquote>
+<h3 id="示例：杨辉三角"><a href="#示例：杨辉三角" class="headerlink" title="示例：杨辉三角"></a>示例：杨辉三角</h3><p>下图是一个五层的杨辉三角示意图：</p>
+<p><img src="/2019/03/21/leetcode_explore_recursion/210px-PascalTriangleAnimated2.gif"></p>
+<p>基于以上定义，我们的问题就是生成指定层数的杨辉三角。</p>
+<p><strong>递归关系</strong></p>
+<p>我们从定义杨辉三角的递归关系开始。</p>
+<p>首先，定义函数$f(i,j)$，表示杨辉三角中第$i$行$j$列的值，之后可以将递归关系表示如下：</p>
+<script type="math/tex; mode=display">
+f(i,j)=f(i-1,j-1)+f(i-1,j)</script><p><strong>基本情况</strong></p>
+<p>在杨辉三角中，每行的最左和最右数字是这个问题的基本情况，值总是为1.</p>
+<p>所以，我们可以定义基本情况如下：</p>
+<script type="math/tex; mode=display">
+f(i,j)=1\qquad where\qquad j=1\ or\ j=i</script><p><strong>示例</strong></p>
+<p>可以看到，一旦定义了递归关系和基本情况之后，就可以很直观的实现递归函数了，特别是定义好数学公式以后。</p>
+<p>如下是应用上述公式计算$f(5,3)$，即第5行第3列的值的过程。</p>
+<p><img src="/2019/03/21/leetcode_explore_recursion/PascalTriangleAnimatedDemo.gif"></p>
+<p>要计算$f(5,3)$，我们按照递归关系将问题分解$f(5,3)=f(4,2)+f(4,3)$，之后递归计算$f(4,2)$和$f(4,3)$的值：</p>
+<ul>
+<li><p>对于$f(4,2)$，我们可以继续分解，直至基本情况，如下所示：</p>
+<script type="math/tex; mode=display">
+f(4,2)=f(3,1)+f(3,2)=f(3,1)+(f(2,1)+f(2,2))=1+(1+1)=3</script></li>
+<li><p>对于$f(4,3)$，同样的，我们可以将其分解如下：</p>
+<script type="math/tex; mode=display">
+f(4,3)=f(3,2)+f(3,3)=(f(2,1)+f(2,2))+f(3,3)=(1+1)+1=3</script></li>
+<li><p>最后我们组合上述子问题的结果：</p>
+<script type="math/tex; mode=display">
+f(5,3)=f(4,2)+f(4,3)=3+3=6</script></li>
+</ul>
+<p><strong>下一步</strong></p>
+<p>在上面的示例中，可以注意到在递归解决方案中有一些重复的计算，就是说，我们为了计算最后一行的值，重复的计算了很多中间结果。例如，为了计算$f(5,3)$，我们在计算$f(4,2)$和$f(4,3)$的过程中重复计算了两边$f(3,2)$的值。</p>
+<p>我们将在下一章讨论如何避免这些重复计算。</p>
+<p>按照本章的内容，可以做一些和杨辉三角相关的练习题。</p>
+<p>详见<a href="/2019/03/22/leetcode_118/" title="【LeetCode】118、杨辉三角">【LeetCode】118、杨辉三角</a>，<a href="/2019/03/22/leetcode_119/" title="【LeetCode】119、杨辉三角2">【LeetCode】119、杨辉三角2</a>，<a href="/2019/03/22/leetcode_206/" title="【LeetCode】206、反转链表">【LeetCode】206、反转链表</a>。</p>
+<h2 id="练习：杨辉三角"><a href="#练习：杨辉三角" class="headerlink" title="练习：杨辉三角"></a>练习：杨辉三角</h2><p><strong>Pascal’s Triangle</strong></p>
+<p>Given a non-negative integer <em>numRows</em>, generate the first <em>numRows</em>of Pascal’s triangle.</p>
+<p>给定一个非负整数 <em>numRows，</em>生成杨辉三角的前 <em>numRows</em> 行。</p>
+<p><strong>示例:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">输入: 5</span><br><span class="line">输出:</span><br><span class="line">[</span><br><span class="line">     [1],</span><br><span class="line">    [1,1],</span><br><span class="line">   [1,2,1],</span><br><span class="line">  [1,3,3,1],</span><br><span class="line"> [1,4,6,4,1]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>代码如下（C++，用时4ms，内存8.8M）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:    </span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; generate(<span class="keyword">int</span> numRows) &#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; result;</span><br><span class="line">        <span class="keyword">if</span> (numRows &lt;= <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; temp;</span><br><span class="line">        <span class="keyword">if</span> (numRows == <span class="number">1</span>) &#123;</span><br><span class="line">            temp.push_back(<span class="number">1</span>);</span><br><span class="line">            result.push_back(temp);</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        temp.push_back(<span class="number">1</span>);</span><br><span class="line">        result.push_back(temp);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> row = <span class="number">1</span>; row &lt; numRows; row++) &#123;</span><br><span class="line">            temp.clear();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> col = <span class="number">0</span>; col &lt;= row; col++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (col == <span class="number">0</span> || col == row) &#123;</span><br><span class="line">                    temp.push_back(<span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    temp.push_back(result[row - <span class="number">1</span>][col - <span class="number">1</span>] + result[row - <span class="number">1</span>][col]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            result.push_back(temp);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="练习：杨辉三角2"><a href="#练习：杨辉三角2" class="headerlink" title="练习：杨辉三角2"></a>练习：杨辉三角2</h2><p><strong>Pascal’s Triangle II</strong></p>
+<p>Given a non-negative index <em>k</em> where <em>k</em> ≤ 33, return the <em>k</em>th index row of the Pascal’s triangle.</p>
+<p>Note that the row index starts from 0.</p>
+<p><strong>Example:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 3</span><br><span class="line">Output: [1,3,3,1]</span><br></pre></td></tr></table></figure>
+<p><strong>Follow up:</strong></p>
+<p>Could you optimize your algorithm to use only <em>O</em>(<em>k</em>) extra space?</p>
+<p>代码如下（C++，用时4ms，内存8.3M）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; getRow(<span class="keyword">int</span> rowIndex) &#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; temp;</span><br><span class="line">        temp.push_back(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (rowIndex == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> temp;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; result;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> row = <span class="number">1</span>; row &lt;= rowIndex; row++) &#123;</span><br><span class="line">            result.clear();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> col = <span class="number">0</span>; col &lt;= row; col++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (col == <span class="number">0</span> || col == row) &#123;</span><br><span class="line">                    result.push_back(<span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    result.push_back(temp[col - <span class="number">1</span>] + temp[col]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            temp = result;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="练习：反转链表"><a href="#练习：反转链表" class="headerlink" title="练习：反转链表"></a>练习：反转链表</h2><p><strong>Reverse Linked List</strong></p>
+<p>Reverse a singly linked list.</p>
+<p><strong>Example:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL</span><br><span class="line">Output: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL</span><br></pre></td></tr></table></figure>
+<p><strong>Follow up:</strong></p>
+<p>A linked list can be reversed either iteratively or recursively. Could you implement both?</p>
+<p>代码如下（C++，用时8ms，内存9M）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">reverse</span><span class="params">(ListNode* pre, ListNode* cur)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (cur-&gt;next == <span class="literal">NULL</span>) &#123; <span class="comment">// 递归结束的判断</span></span><br><span class="line">            cur-&gt;next = pre;</span><br><span class="line">            <span class="keyword">return</span> cur;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode* next = cur-&gt;next;</span><br><span class="line">        cur-&gt;next = pre;</span><br><span class="line">        pre = cur;</span><br><span class="line">        cur = next;</span><br><span class="line">        <span class="keyword">return</span> reverse(pre, cur);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">ListNode* <span class="title">reverseList</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">        ListNode* pre = <span class="literal">NULL</span>, *cur = head;</span><br><span class="line">        <span class="keyword">return</span> head ? reverse(pre, cur) : head; <span class="comment">// 如果head为空的话，我们直接返回head/NULL</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="解答：反转链表"><a href="#解答：反转链表" class="headerlink" title="解答：反转链表"></a>解答：反转链表</h2><h3 id="方法1、迭代法"><a href="#方法1、迭代法" class="headerlink" title="方法1、迭代法"></a>方法1、迭代法</h3><p>假设有链表$1\rightarrow 2\rightarrow 3\rightarrow \emptyset$，要将其转为$\emptyset \leftarrow 1\leftarrow 2\leftarrow 3$。</p>
+<p>遍历链表，将当前节点的<code>next</code>指针指向其前一个节点。由于链表没有指向前一个节点的指针，所以需要提前保存前一个节点的信息。同时还需要一个指针，在改变<code>next</code>指向时用来保存当前<code>next</code>的节点。最后不要忘了返回新的头结点。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseList</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">    ListNode prev = <span class="keyword">null</span>;</span><br><span class="line">    ListNode curr = head;</span><br><span class="line">    <span class="keyword">while</span> (curr != <span class="keyword">null</span>) &#123;</span><br><span class="line">        ListNode nextTemp = curr.next;</span><br><span class="line">        curr.next = prev;</span><br><span class="line">        prev = curr;</span><br><span class="line">        curr = nextTemp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> prev;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li>时间复杂度：$O (n)$。$n$是链表长度。</li>
+<li>空间复杂度：$O (1)$。</li>
+</ul>
+<h3 id="方法2、递归法"><a href="#方法2、递归法" class="headerlink" title="方法2、递归法"></a>方法2、递归法</h3><p>递归方法要考虑回退工作，略难一点。假设链表的剩余部分已经反转好了，怎么反转其前半部分呢？</p>
+<p>对于链表$n_1\rightarrow …\rightarrow n_{k-1} \rightarrow n_k \rightarrow n_{k+1} \rightarrow … \rightarrow n_m \rightarrow \emptyset​$，假设从节点$n_{k+1}​$到节点$n_m​$已经反转好了，并且当前在节点$n_k​$处：$n_1 \rightarrow … \rightarrow n_{k-1} \rightarrow \mathbf{n_k} \rightarrow n_{k+1} \leftarrow … \leftarrow n_m​$。</p>
+<p>我们想让$n_{k+1}$的下一个节点指向$n_k$，所以：$n_k .next.next=n_k$。</p>
+<p>要注意的是$n_1$节点的<code>next</code>必须指向$\emptyset​$。如果忽略这一步的话，那就把链表变成首尾相接的圆形的了。如果测试链表长度为2的情况，可能会触发这个bug。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseList</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>) <span class="keyword">return</span> head;</span><br><span class="line">    ListNode p = reverseList(head.next); <span class="comment">// 保留头结点，递归反转剩余部分</span></span><br><span class="line">    head.next.next = head; <span class="comment">// 把剩余部分的头结点指向到保留的头结点上，类似上文说的 n(k+1) 的next指向到 nk ，实现反转</span></span><br><span class="line">    head.next = <span class="keyword">null</span>; <span class="comment">// 把保留的头结点反转，指向空，即 n(k+1) 指向 nk 后，再将 nk 指向空</span></span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li>时间复杂度：$O (n)$。$n$是链表长度。</li>
+<li>空间复杂度：$O(n)$。额外的空间消耗来源于递归所需的隐藏的栈空间，递归最深为$n$层。</li>
+</ul>
+<h1 id="三、Memoization-缓存计算"><a href="#三、Memoization-缓存计算" class="headerlink" title="三、Memoization 缓存计算"></a>三、Memoization 缓存计算</h1><p>在上一章，我们提到过递归算法中的<strong>重复计算</strong>问题。在最好的情况下，重复计算只是会增加算法的时间复杂度，但是在最差的情况，重复计算会导致无限循环。</p>
+<p>因此，在这章，我们将：</p>
+<ul>
+<li>用一个例子开始，展示重复计算是如何导致的；</li>
+<li>展示如何用缓存计算的技术来避免重复计算；</li>
+</ul>
+<h2 id="递归中的重复计算"><a href="#递归中的重复计算" class="headerlink" title="递归中的重复计算"></a>递归中的重复计算</h2><p>递归是实现算法的一种强有力的方法，但是如果不好好使用的话，也会带来额外的问题，如重复计算。例如，在上一章的后半部分，我们提到过杨辉三角中的重复计算问题，一些中间结果被反复计算了多次。</p>
+<p>在这章，我们将进一步的讨论递归中可能发生的重复计算问题，并提出一种叫做<strong>缓存计算</strong>的常用技术手段来避免这个问题。</p>
+<p>为了用另一个例子来演示重复计算问题，我们看一个大部分都熟悉的例子：斐波那契数列。如果我们定义函数$F(n)$来表示索引为$n$的斐波那契数，那可以得到如下所示的递归关系式：</p>
+<script type="math/tex; mode=display">
+F(n)=F(n-1)+F(n-2)</script><p>而基本情况（递归结束条件）为：</p>
+<script type="math/tex; mode=display">
+F(0)=0\ ,\ F(1)=1</script><p>有了斐波那契数的定义之后，可以按如下所示实现代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fibonacci</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    :type n: int</span></span><br><span class="line"><span class="string">    :rtype: int</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">if</span> n &lt; <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> n</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> fibonacci(n<span class="number">-1</span>) + fibonacci(n<span class="number">-2</span>)</span><br></pre></td></tr></table></figure>
+<p>现在，如果想计算$F(4)$，就可以按照上述公式来实现：</p>
+<script type="math/tex; mode=display">
+F(4)=F(3)+F(2)=(F(2)+F(1))+F(2)</script><p>可以看到，按照上述过程，为了计算$F(4)$的结果，我们需要计算两遍$F(2)$。</p>
+<p>如图所示，用一棵树展示了在计算$F(4)​$的过程中进行的所有重复计算（用颜色分类）：</p>
+<p><img src="/2019/03/21/leetcode_explore_recursion/fibonacci.png" style="zoom:30%"></p>
+<h3 id="缓存计算"><a href="#缓存计算" class="headerlink" title="缓存计算"></a>缓存计算</h3><p>为了尽可能多的消除上述情况中的重复计算，一个方法就是将中间结果<strong>保存</strong>在缓存中，这样下次遇到的时候就可以重复使用而不需要再次计算了。</p>
+<p>这个方法就是<strong>缓存计算</strong>方法，是经常和递归一起使用的一种技术。</p>
+<blockquote>
+<p><a href="https://en.wikipedia.org/wiki/Memoization" target="_blank" rel="noopener">Memoization</a> is an optimization technique used primarily to <strong>speed up</strong> computer programs by <strong>storing</strong> the results of expensive function calls and returning the cached result when the same inputs occur again. (Source: wikipedia)</p>
+<p><strong>缓存计算</strong>是通过将高消耗的函数调用结果进行保存，并且在再次遇到相同输入的时候返回缓存结果，从而提升程序运行速度的一种优化技术。</p>
+</blockquote>
+<p>回到斐波那契函数$F(n)$，我们可以用一个哈希表来跟踪每个$F(n)$的值，用$n$做<code>key</code>。哈希表作为缓存使我们避免重复计算。缓存技术是一个很好的用一些额外空间来换取时间减少的例子。</p>
+<p>为了对比，我们提供了如下的用缓存计算实现的斐波那契数。</p>
+<p>作为练习，可以通过更一般性的方法来实现缓存计算，即不改变原来的函数而应用缓存计算。（可以引用设计模式<code>decorator</code>）</p>
+<p>关于<code>decorator</code>设计模式可参考<a href="/2019/03/25/decorator_python/" title="设计模式——decorator">设计模式——decorator</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(self, N)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    :type N: int</span></span><br><span class="line"><span class="string">    :rtype: int</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    cache = &#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">recur_fib</span><span class="params">(N)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> N <span class="keyword">in</span> cache:</span><br><span class="line">            <span class="keyword">return</span> cache[N]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> N &lt; <span class="number">2</span>:</span><br><span class="line">            result = N</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            result = recur_fib(N<span class="number">-1</span>) + recur_fib(N<span class="number">-2</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># put result in cache for later reference.</span></span><br><span class="line">        cache[N] = result</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> recur_fib(N)</span><br></pre></td></tr></table></figure>
+<p>使用<code>decorator</code>模式代码如下（自己实现）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">cache</span><span class="params">(func)</span>:</span> </span><br><span class="line">        caches = &#123;&#125; </span><br><span class="line"><span class="meta">        @wraps(func) </span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrap</span><span class="params">(*args)</span>:</span> </span><br><span class="line">            <span class="keyword">if</span> args <span class="keyword">not</span> <span class="keyword">in</span> caches: </span><br><span class="line">                caches[args] = func(*args)</span><br><span class="line">            <span class="keyword">return</span> caches[args] </span><br><span class="line">        <span class="keyword">return</span> wrap </span><br><span class="line">    </span><br><span class="line"><span class="meta">    @cache </span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(self, n)</span>:</span> </span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type N: int</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> n &lt; <span class="number">2</span>: </span><br><span class="line">            <span class="keyword">return</span> n</span><br><span class="line">        <span class="keyword">return</span> self.fib(n<span class="number">-1</span>) + self.fib(n<span class="number">-2</span>)</span><br></pre></td></tr></table></figure>
+<p>在这章中，可以通过斐波那契数和爬楼梯问题来进行练习。</p>
+<p>详见：<a href="/2019/03/25/leetcode_509/" title="【LeetCode】509、斐波那契数">【LeetCode】509、斐波那契数</a>，<a href="/2019/03/14/leetcode_70/" title="【LeetCode】70、爬楼梯">【LeetCode】70、爬楼梯</a></p>
+<p>在下一章，我们将深入讨论在递归算法中的复杂度分析。</p>
+<h2 id="练习：斐波那契数"><a href="#练习：斐波那契数" class="headerlink" title="练习：斐波那契数"></a>练习：斐波那契数</h2><p>The <strong>Fibonacci numbers</strong>, commonly denoted <code>F(n)</code> form a sequence, called the <strong>Fibonacci sequence</strong>, such that each number is the sum of the two preceding ones, starting from <code>0</code> and <code>1</code>. That is,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">F(0) = 0,   F(1) = 1</span><br><span class="line">F(N) = F(N - 1) + F(N - 2), for N &gt; 1.</span><br></pre></td></tr></table></figure>
+<p>Given <code>N</code>, calculate <code>F(N)</code>.</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: 2</span><br><span class="line">Output: 1</span><br><span class="line">Explanation: F(2) = F(1) + F(0) = 1 + 0 = 1.</span><br></pre></td></tr></table></figure>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: 3</span><br><span class="line">Output: 2</span><br><span class="line">Explanation: F(3) = F(2) + F(1) = 1 + 1 = 2.</span><br></pre></td></tr></table></figure>
+<p><strong>Example 3:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: 4</span><br><span class="line">Output: 3</span><br><span class="line">Explanation: F(4) = F(3) + F(2) = 2 + 1 = 3.</span><br></pre></td></tr></table></figure>
+<p><strong>Note:</strong></p>
+<p>0 ≤ <code>N</code> ≤ 30.</p>
+<p>代码如下（Python，用时20ms，内存11.8M）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(self, N)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type N: int</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        cache = &#123;&#125;</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">recur_fib</span><span class="params">(N)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> N <span class="keyword">in</span> cache:</span><br><span class="line">                <span class="keyword">return</span> cache[N]</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> N &lt; <span class="number">2</span>:</span><br><span class="line">                result = N</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                result = recur_fib(N<span class="number">-1</span>) + recur_fib(N<span class="number">-2</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># put result in cache for later reference.</span></span><br><span class="line">            cache[N] = result</span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> recur_fib(N)</span><br></pre></td></tr></table></figure>
+<h2 id="练习：爬楼梯"><a href="#练习：爬楼梯" class="headerlink" title="练习：爬楼梯"></a>练习：爬楼梯</h2><p>You are climbing a stair case. It takes <em>n</em> steps to reach to the top.</p>
+<p>Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?</p>
+<p><strong>Note:</strong> Given <em>n</em> will be a positive integer.</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Input: 2</span><br><span class="line">Output: 2</span><br><span class="line">Explanation: There are two ways to climb to the top.</span><br><span class="line">1. 1 step + 1 step</span><br><span class="line">2. 2 steps</span><br></pre></td></tr></table></figure>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Input: 3</span><br><span class="line">Output: 3</span><br><span class="line">Explanation: There are three ways to climb to the top.</span><br><span class="line">1. 1 step + 1 step + 1 step</span><br><span class="line">2. 1 step + 2 steps</span><br><span class="line">3. 2 steps + 1 step</span><br></pre></td></tr></table></figure>
+<p>代码如下（Python3，用时80ms，内存13.2M）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">climbStairs</span><span class="params">(self, n: int)</span> -&gt; int:</span></span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">2</span></span><br><span class="line">        tempNum = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>, n+<span class="number">1</span>):</span><br><span class="line">            tempNum.append(tempNum[i<span class="number">-1</span>] + tempNum[i<span class="number">-2</span>])</span><br><span class="line">        <span class="keyword">return</span> tempNum[n]</span><br></pre></td></tr></table></figure>
+<h2 id="解答：爬楼梯"><a href="#解答：爬楼梯" class="headerlink" title="解答：爬楼梯"></a>解答：爬楼梯</h2><blockquote>
+<p>本节代码均为原网页给出的参考代码，均为Java实现。</p>
+</blockquote>
+<h3 id="方法1：暴力法"><a href="#方法1：暴力法" class="headerlink" title="方法1：暴力法"></a>方法1：暴力法</h3><p>暴力法就是计算所有可能的走法组合，也就是每一步爬1层和每一步爬两层。在每一步我们都调用函数$climpStairs$来计算爬一层和爬两层的结果，并返回两个函数返回值的和。</p>
+<script type="math/tex; mode=display">
+climbStairs(i,n)=climbStairs(i+1,n)+climbStairs(i+2,n)</script><p>其中$i$表示当前层数，$n$表示目标层数。</p>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        climb_Stairs(<span class="number">0</span>, n);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">climb_Stairs</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (i &gt; n) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (i == n) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> climb_Stairs(i + <span class="number">1</span>, n) + climb_Stairs(i + <span class="number">2</span>, n);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：$O(2^n)$。递归树的大小是$2^n$。</p>
+<p>如下所示为$n=5$时的递归树：</p>
+<p><img src="/2019/03/21/leetcode_explore_recursion/70_Climbing_Stairs_rt.jpg" style="zoom:50%"></p>
+</li>
+<li><p>空间复杂度：$O(n)$。递归树的最大深度为$n$。</p>
+</li>
+</ul>
+<h3 id="方法2：采用缓存计算的递归法"><a href="#方法2：采用缓存计算的递归法" class="headerlink" title="方法2：采用缓存计算的递归法"></a>方法2：采用缓存计算的递归法</h3><p>在上一种方法中重复计算了很多中间结果。可以用一个<code>memo</code>数组将每一步的结果进行存储，当再次调用这个函数的时候可以直接从<code>memo</code>数组中返回结果。</p>
+<p>通过这种使用<code>memo</code>数组来调整递归树的方法，可以将递归树的大小减少到$n$。</p>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> memo[] = <span class="keyword">new</span> <span class="keyword">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">return</span> climb_Stairs(<span class="number">0</span>, n, memo);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">climb_Stairs</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> n, <span class="keyword">int</span> memo[])</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (i &gt; n) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (i == n) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (memo[i] &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> memo[i];</span><br><span class="line">        &#125;</span><br><span class="line">        memo[i] = climb_Stairs(i + <span class="number">1</span>, n, memo) + climb_Stairs(i + <span class="number">2</span>, n, memo);</span><br><span class="line">        <span class="keyword">return</span> memo[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li>时间复杂度：$O(n)$。递归树的大小为$n$。</li>
+<li>空间复杂度：$O(n)$。递归树的最大深度为$n$。</li>
+</ul>
+<h3 id="方法3：动态规划"><a href="#方法3：动态规划" class="headerlink" title="方法3：动态规划"></a>方法3：动态规划</h3><p>可以看到，这个问题可以分解成多个子问题，并且包含最优子结构性质，也就是说，这个问题的最优解可以通过其子问题的最优解来组合得到，所以我们可以采用动态规划方法来解决这个问题。</p>
+<p>我们可以通过以下两种方法到达第$i$层：</p>
+<ol>
+<li>在第$i-1$层走一步；</li>
+<li>在第$i-2$层走两步；</li>
+</ol>
+<p>所以，到达第$i$层的总方法数等于到达第$i-1$层的方法数和到达第$i-2$层的方法数的总和。</p>
+<p>用$dp[i]$表示到达第$i$层所需的总方法数，则：</p>
+<script type="math/tex; mode=display">
+dp[i]=dp[i-1]+dp[i-2]</script><p>例如：</p>
+<p><img src="/2019/03/21/leetcode_explore_recursion/climbStairsAnimation.gif"></p>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        dp[<span class="number">2</span>] = <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">3</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            dp[i] = dp[i - <span class="number">1</span>] + dp[i - <span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li>时间复杂度：$O(n)$。单层循环到$n$。</li>
+<li>空间复杂度：$O(n)$。使用大小为$n$的$dp$数组。</li>
+</ul>
+<h3 id="方法4：斐波那契数法"><a href="#方法4：斐波那契数法" class="headerlink" title="方法4：斐波那契数法"></a>方法4：斐波那契数法</h3><p>在上面的方法中使用了$dp$数组，并且$dp[i]=dp[i-1]+dp[i-2]$。可以很容易的联想到，$dp[i]$正是斐波那契数的第$i$个值：</p>
+<script type="math/tex; mode=display">
+Fib(n)=Fib(n-1)+Fib(n-2)</script><p>那么，我们只需要找到斐波那契数列的第$n$个值即可，其中前两个值分别为1和2，即$Fib(1)=1$，$Fib(2)=2$。</p>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> first = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> second = <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">3</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> third = first + second;</span><br><span class="line">            first = second;</span><br><span class="line">            second = third;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> second;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li>时间复杂度：$O(n)$。计算第$n$个斐波那契数需要循环到$n$。</li>
+<li>空间复杂度：$O(1)$。使用固定的空间。</li>
+</ul>
+<h3 id="方法5：Binets-Method-（比奈法？）使用矩阵的方法"><a href="#方法5：Binets-Method-（比奈法？）使用矩阵的方法" class="headerlink" title="方法5：Binets Method （比奈法？）使用矩阵的方法"></a>方法5：Binets Method （比奈法？）使用矩阵的方法</h3><p>这是一个非常有趣的使用矩阵乘法来计算第$n$个斐波那契数的方法。矩阵形式如下：</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+   F_{n+1} & F_n \\
+   F_n & F_{n-1}
+\end{bmatrix}
+=
+\begin{bmatrix}
+   1 & 1 \\
+   1 & 0
+\end{bmatrix}</script><p>令$Q= \begin{bmatrix}F_{n+1} &amp; F_n \\ F_n &amp; F_{n-1} \end{bmatrix}​$。按照这个方法，第$n​$个斐波那契数可以由$Q^{n-1}[0,0]​$得到。</p>
+<p>我们来看方法的证明：</p>
+<p>可以使用数学归纳法来证明这个方法。我们知道，这个矩阵给出了第3个斐波那契数（基本情况）的正确结果，$Q^2= \begin{bmatrix}2 &amp; 1 \\ 1 &amp; 1 \end{bmatrix}​$。这证明了基本情况是适用于这个方法的。</p>
+<p>假设这个方法也适用于第$n$个斐波那契数的问题，即$F_n = Q^{n-1}[0,0]$，其中$Q^{n-1}= \begin{bmatrix} F_n &amp; F_{n-1} \\ F_{n-1} &amp; F_{n-2} \end{bmatrix}$。</p>
+<p>现在，我们需要证明在上述两个条件为真的情况下，这个方法对于计算第$n+1​$个斐波那契数也是有效的，即证明$F_{n+1}=Q^n[0,0]​$。</p>
+<p>证明过程：</p>
+<script type="math/tex; mode=display">
+Q^n=
+\begin{bmatrix}
+   F_{n} & F_{n-1} \\
+   F_{n-1} & F_{n-2}
+\end{bmatrix}
+\begin{bmatrix}
+    1 & 1 \\
+    1 & 0
+\end{bmatrix}
+=
+\begin{bmatrix}
+    F_n+F_{n-1} & F_n \\
+    F_{n-1}+F_{n-2} & F_{n-1}
+\end{bmatrix}
+=
+\begin{bmatrix}
+    F_{n+1} & F_n \\
+    F_n & F_{n-1}
+\end{bmatrix}</script><p>所以，$F_{n+1}=Q^n[0,0]$。</p>
+<p>至此，完成了这个方法的证明。</p>
+<p>用这个方法解决爬楼梯问题所要做的唯一的改动就是，修改初始值为2和1（斐波那契数列的初始值是1和0）。或者，另一个方法是不修改初始值，而是使用相同的矩阵，但是用结果$result=Q^n[0,0]$来得到爬楼梯问题的第$n$层最终解。做这种调整的原因是因为爬楼梯问题使用的是斐波那契数列列的第2、3项做基本情况。</p>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[][] q = &#123;&#123;<span class="number">1</span>, <span class="number">1</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;&#125;;</span><br><span class="line">        <span class="keyword">int</span>[][] res = pow(q, n);</span><br><span class="line">        <span class="keyword">return</span> res[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[][] pow(<span class="keyword">int</span>[][] a, <span class="keyword">int</span> n) &#123;</span><br><span class="line">        <span class="keyword">int</span>[][] ret = &#123;&#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125;&#125;;</span><br><span class="line">        <span class="keyword">while</span> (n &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> ((n &amp; <span class="number">1</span>) == <span class="number">1</span>) &#123;</span><br><span class="line">                ret = multiply(ret, a);</span><br><span class="line">            &#125;</span><br><span class="line">            n &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">            a = multiply(a, a);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[][] multiply(<span class="keyword">int</span>[][] a, <span class="keyword">int</span>[][] b) &#123;</span><br><span class="line">        <span class="keyword">int</span>[][] c = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>][<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">2</span>; j++) &#123;</span><br><span class="line">                c[i][j] = a[i][<span class="number">0</span>] * b[<span class="number">0</span>][j] + a[i][<span class="number">1</span>] * b[<span class="number">1</span>][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> c;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li>时间复杂度：$O(\log(n))$。</li>
+<li>空间复杂度：$O(1)$。使用固定的空间。</li>
+</ul>
+<p>时间复杂度证明：</p>
+<p>假设有一个$n$次幂的矩阵$M$，假设$n$是2的幂，那么$n=2^i , i \in \mathbb{N} $，其中$\mathbb {N}$表示自然数集合（包括0）。我们可以用如下形式的树来表示：</p>
+<p><img src="/2019/03/21/leetcode_explore_recursion/70_Climbing_Stairs.PNG"></p>
+<p>图中内容表示：$M^n=M^{n/2}=…=\prod_1^n{M^1}​$。</p>
+<p>所以，为了计算矩阵$M^n$，我们需要计算$M^{n/2}$并且和自己相乘。为了计算$M^{n/2}$需要计算$M^{n/4}$，等等等等。</p>
+<p>显然，树的高度为$\log_2{n}$。</p>
+<p>下面来估计$M^n$的计算时间。矩阵$M$在任意次幂的大小都一样，所以我们可以在$O(1)$的时间内计算任意次幂的两个矩阵相乘。这样的计算需要执行$\log_2{n}$次。所以$M^n$的计算复杂度为$O(\log_2{n})$。</p>
+<p>如果$n$不是2的幂，那么我们可以通过其二进制表示将其分解为用2的次幂表示：</p>
+<script type="math/tex; mode=display">
+n=\sum_{p\in{P}}2^p\ ,\ \text{where}\ P\subset\mathbb{N}</script><p>这样我们可以通过如下公式来得到最终结果：</p>
+<script type="math/tex; mode=display">
+M^n=\prod_{p\in P}M^{2^p}</script><p>这就是在实现中使用的方法？由于乘法的计算次数已经限制在$O(\log_2n)​$，所以总的复杂度就是$O(\log_2n)​$。</p>
+<h3 id="方法6、斐波那契公式"><a href="#方法6、斐波那契公式" class="headerlink" title="方法6、斐波那契公式"></a>方法6、斐波那契公式</h3><blockquote>
+<p>没太仔细理解这个方法。。。</p>
+</blockquote>
+<p>我们可以用如下公式计算得到第$n$个斐波那契数：</p>
+<script type="math/tex; mode=display">
+F_n=\cfrac{1}{\sqrt{5}}\left[\left(\cfrac{1+\sqrt5}{2}\right)^n-\left(\cfrac{1-\sqrt5}{2}\right)^n\right]</script><p>对于给定的问题，斐波那契数列定义为：$F_0=1,F_1=1,F_2=2,F_{n+2}=F_{n+1}+F_n$。解决这种递归公式的一种标准方法是假设$F_n$的形式为$F_n=a^n$。这样的话，显然$F_{n+1}=a^{n+1}$并且$F_{n+2}=a^{n+2}$，所以等式就变为$a^{n+2}=a^{n+1}+a^n$。如果我们将整个等式除以$a^n$，就得到$a^2=a+1$，也就是二次方程$a^2-a-1=0$。</p>
+<p>对这个二次方程求解，可以得到：</p>
+<script type="math/tex; mode=display">
+a=1/\sqrt5\left(\left( \cfrac{1\pm \sqrt5}{2} \right)\right)</script><p>对于一般情况，可以得到等式：</p>
+<script type="math/tex; mode=display">
+F_n=A\left( \cfrac{1+\sqrt 5}{2} \right)^n+B\left( \cfrac{1-\sqrt 5}{2} \right)^n</script><p>对于$n=0$的情况，有$A+B=1$，</p>
+<p>对于$n=1$的情况，有$A\left( \cfrac{1+\sqrt 5}{2} \right)+B\left( \cfrac{1-\sqrt 5}{2} \right)=1$，</p>
+<p>对上述等式求解，可以得到：</p>
+<script type="math/tex; mode=display">
+A=\left( \cfrac{1+\sqrt 5}{2\sqrt 5} \right)\ ,\ B=\left( \cfrac{1-\sqrt 5}{2\sqrt 5} \right)</script><p>将$A$和$B$的值代入到上述的通用等式中，可以得到：</p>
+<script type="math/tex; mode=display">
+F_n=\cfrac{1}{\sqrt{5}}\left[\left(\cfrac{1+\sqrt5}{2}\right)^{n+1}-\left(\cfrac{1-\sqrt5}{2}\right)^{n+1}\right]</script><p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">double</span> sqrt5=Math.sqrt(<span class="number">5</span>);</span><br><span class="line">        <span class="keyword">double</span> fibn=Math.pow((<span class="number">1</span>+sqrt5)/<span class="number">2</span>,n+<span class="number">1</span>)-Math.pow((<span class="number">1</span>-sqrt5)/<span class="number">2</span>,n+<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> (<span class="keyword">int</span>)(fibn/sqrt5);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li>时间复杂度：$O(\log(n))$。$pow$计算需要$\log(n)$的时间。</li>
+<li>空间复杂度：$O(1)​$。使用固定空间。</li>
+</ul>
+<h1 id="四、Complexity-Analysis-复杂度分析"><a href="#四、Complexity-Analysis-复杂度分析" class="headerlink" title="四、Complexity Analysis 复杂度分析"></a>四、Complexity Analysis 复杂度分析</h1><p>在这一章，我们将讨论如何计算递归算法中的时间和空间复杂度。</p>
+<p>特别的是，本章将展示一个非常有用的叫做<code>尾递归</code>的技术，可以用来优化递归问题中的空间复杂度，更重要的是可以避免栈溢出的问题。</p>
+<h2 id="时间复杂度——递归"><a href="#时间复杂度——递归" class="headerlink" title="时间复杂度——递归"></a>时间复杂度——递归</h2><p>这一部分，我们主要讨论如何计算递归问题中的时间复杂度。</p>
+<blockquote>
+<p>给定一个递归问题，其时间复杂度$O(T)$主要是由递归调用的次数（用$R$表示）和每次递归中所需的计算时间（用$O(s)$表示）共同决定的：</p>
+<script type="math/tex; mode=display">
+O(T)=R*O(s)</script></blockquote>
+<p>来看一些例子。</p>
+<h3 id="举例-1"><a href="#举例-1" class="headerlink" title="举例"></a>举例</h3><p>在反转字符串问题中，我们需要将一个字符串逆序输出。解决这个问题的一个递归关系可以表示如下：</p>
+<script type="math/tex; mode=display">
+printReverse(str)=printReverse(str[1...n])+print(str[0])</script><p>其中$str[1…n]$是输入字符串$str$的子串，$str[0]$是首字符。</p>
+<p>可以看到，函数递归调用$n$次，$n$是输入字符串的长度。在每一次递归中，只是简单的输出首字符，所以该操作的时间复杂度是常数级，即$O(1)$。</p>
+<p>所以，递归函数$printReverse(str)$的总时间复杂度就是$O(printReverse)=n*O(1)=O(n)$。</p>
+<h3 id="执行树"><a href="#执行树" class="headerlink" title="执行树"></a>执行树</h3><p>对于递归函数，调用次数刚好和输入成线性关系的情况是很少见的。例如，在上一章讨论过的斐波那契数列问题，递归函数定义为$f(n)=f(n-1)+f(n-2)$。乍一看，斐波那契函数的调用次数并不能够很直观的得到。</p>
+<blockquote>
+<p>在这种情况，最好是采用<code>execution tree 执行树</code>的方式，这种树是用来详细表示递归函数执行过程的。树上的每个节点表示递归函数的一次调用，所以总的节点数就是整个执行过程中递归调用的总次数了。</p>
+</blockquote>
+<p>执行树用一个$n$叉树来表示，其中$n$表示递归关系中出现递归调用的次数。例如，斐波那契数列问题的执行树是一颗二叉树，下图表示了计算斐波那契数$f(4)$的执行树：</p>
+<p><img src="/2019/03/21/leetcode_explore_recursion/fibonacci.png"></p>
+<p>对于一个$n$层的二叉树，其节点总数是$2^n-1$。所以，$f(n)$递归调用次数的上限（虽然不是很严格）就是$2^n-1$。所以，可以得到斐波那契数列问题$f(n)$的时间复杂度是$O(2^n)$。</p>
+<h3 id="缓存计算-1"><a href="#缓存计算-1" class="headerlink" title="缓存计算"></a>缓存计算</h3><p>在上一章，讨论过递归算法中用于优化时间复杂度的方法——缓存计算。通过将中间结果进行缓存和重复使用，缓存计算可以大幅减少递归调用的次数，也就是减少执行树的分支数。所以应该考虑到使用缓存计算的递归算法时间复杂度。</p>
+<p>回到斐波那契数列问题，使用缓存计算的话，可以将每个斐波那契数的结果进行保存。保证对每个斐波那契数的计算只执行一次。由递归关系可以知道，对于斐波那契数$f(n)$，依赖于前$n-1$个斐波那契数，所以，$f(n)$的递归计算过程将会调用$n-1$次，来计算其所依赖的所以前序数值。</p>
+<p>现在可以直接使用本章开始时候给出的公式来计算时间复杂度，即$O(1)*n=O(n)$。缓存计算不仅优化了算法的时间复杂度，也简化了时间复杂度的分析过程。</p>
+<p>接下来，我们讨论如何分析递归算法的空间复杂度。</p>
+<h2 id="空间复杂度——递归"><a href="#空间复杂度——递归" class="headerlink" title="空间复杂度——递归"></a>空间复杂度——递归</h2><p>这一部分，将讨论如何分析递归算法中的空间复杂度。</p>
+<blockquote>
+<p>当讨论递归算法的空间复杂度时，应该考虑两部分的空间消耗：递归相关的空间和非递归相关的空间。</p>
+</blockquote>
+<h3 id="递归相关的空间"><a href="#递归相关的空间" class="headerlink" title="递归相关的空间"></a>递归相关的空间</h3><p>递归相关的空间指的是由递归调用所直接产生内存消耗，即保存递归函数调用所需的栈空间。为了完成一个典型的递归调用，系统需要分配一些空间来保存三部分重要的信息：</p>
+<ol>
+<li>函数的返回地址：一旦函数调用完成，程序应该知道返回到哪里，即函数调用之前的位置；</li>
+<li>函数传递的参数；</li>
+<li>函数的局部变量；</li>
+</ol>
+<p>这个栈空间是函数调用过程中所产生的最小开销，一旦函数执行结束，空间就会被释放。</p>
+<p>对于递归算法，函数调用会链式累积，直到到达基本情况。这意味着每个函数调用所需的空间也会累积。</p>
+<blockquote>
+<p>对于递归算法，如果没有其他内存消耗，那么这个由递归行为本身所引起的空间消耗将会是整个算法的空间上限。</p>
+</blockquote>
+<p>例如，在逆序输出字符串的练习中，由于只是单纯的输出字符，所以在递归调用本身之外没有额外的空间消耗。对于每一个递归调用，我们假设需要一个常数级的空间。递归调用将持续$n$次，$n$是输入字符串的长度。所以这个递归算法的空间复杂度是$O(n)$。</p>
+<p>为了说明这一点，以递归调用$f(x_1)\rightarrow f(x_2)\rightarrow f(x_3)$为例，展示了执行步骤的顺序和堆栈布局。</p>
+<p><img src="/2019/03/21/leetcode_explore_recursion/card_recursion_stack.png"></p>
+<p>为了调用$f(x_2)$，会给$f(x_1)$分配一个栈空间。同理，在$f(x_2)$中也会为了调用$f(x_3)$而分配另一个栈空间。最终在$f(x_3)$中，程序到达基本情况，因此没有在$f(x_3)$中进一步递归。</p>
+<p>由于这些递归相关的空间消耗，有时会导致栈溢出的情况，就是分配给一个程序的栈空间超出了其最大空间限制，导致程序失败。因此，当设计递归算法时，要仔细考虑当输入规模比较大的时候是否可能导致栈溢出。</p>
+<h3 id="非递归相关的空间"><a href="#非递归相关的空间" class="headerlink" title="非递归相关的空间"></a>非递归相关的空间</h3><p>如标题所示，非递归相关的空间主要是指和递归没有直接关系的内存空间，通常包括分配给全局变量的空间（通常为堆）。</p>
+<p>不论是否递归，在任何后续函数调用前都需要将问题的输入作为全局变量保存。同时还需要存储递归调用的中间结果。后者就是我们在前面章节讨论过缓存计算。例如，对于使用缓存计算实现的计算斐波那契数列的递归算法，我们使用一个<code>map</code>来记录递归调用过程中出现的所有斐波那契数。因此，在分析空间复杂度的时候，我们应该考虑到缓存计算的空间成本。</p>
+<h2 id="尾递归"><a href="#尾递归" class="headerlink" title="尾递归"></a>尾递归</h2><p>在之前的页面，讨论过递归调用过程中系统分配栈空间所产生的隐藏空间开销。但是，我们应该学会识别一种递归的特殊情况——尾递归，尾递归避免了这部分空间开销。</p>
+<blockquote>
+<p>尾递归是指在递归函数执行的最后命令是递归调用，并且应该只有一个递归调用。</p>
+</blockquote>
+<p>在反转字符串的问题中我们已经看到了一个尾递归的例子。这里用另一个例子展示非尾递归和尾递归的区别。注意，非尾递归的例子在最后一个递归调用之后有一个额外的计算步骤。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sum_non_tail_recursion</span><span class="params">(ls)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    :type ls: List[int]</span></span><br><span class="line"><span class="string">    :rtype: int, the sum of the input list.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">if</span> len(ls) == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># not a tail recursion because it does some computation after the recursive call returned.</span></span><br><span class="line">    <span class="keyword">return</span> ls[<span class="number">0</span>] + sum_non_tail_recursion(ls[<span class="number">1</span>:])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sum_tail_recursion</span><span class="params">(ls)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    :type ls: List[int]</span></span><br><span class="line"><span class="string">    :rtype: int, the sum of the input list.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(ls, acc)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> len(ls) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> acc</span><br><span class="line">        <span class="comment"># this is a tail recursion because the final instruction is a recursive call.</span></span><br><span class="line">        <span class="keyword">return</span> helper(ls[<span class="number">1</span>:], ls[<span class="number">0</span>] + acc)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> helper(ls, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>尾递归的好处是可以避免递归调用过程中的堆栈开销累积，因为系统在每次递归调用的时候可以重复利用一部分栈空间。</p>
+<p>以递归调用$f(x_1)\rightarrow f(x_2)\rightarrow f(x_3)$为例，其中函数$f(x)$是使用尾递归实现的，如下展示了执行步骤的顺序和堆栈布局。</p>
+<p><img src="/2019/03/21/leetcode_explore_recursion/card_recursion_tail.png"></p>
+<p>注意在尾递归中，一旦递归调用结束，我们就会理解知道返回值，所以图中跳过了递归返回的完整链路，直接返回到原始调用的地方。这意味着，我们不再需要对所有递归调用都分配栈，从而节省了空间。</p>
+<p>例如，在步骤1中，为了调用$f(x_2)$而在$f(x_1)$中分配了栈空间。在步骤2中，$f(x_2)$会递归调用$f(x_3)$，但是系统可以直接重复使用之前为第二次递归调用分配的空间，而不是分配新的空间。最终，在函数$f(x_3)$中，我们到达了基本情况，函数可以直接返回到原始调用的地方，而不需要逐步返回到上一个调用的函数。</p>
+<p>尾递归函数可以当做非尾递归函数执行，也就是调用成堆的栈，而不影响结果。通常，编译器会识别尾递归并优化执行过程。但是，并不是所有语言都支持这种优化。例如，C、C++支持尾递归优化，而Java和Python不支持尾递归优化。</p>
+<h2 id="练习：二叉树的最大深度"><a href="#练习：二叉树的最大深度" class="headerlink" title="练习：二叉树的最大深度"></a>练习：二叉树的最大深度</h2><p>详见<a href="/2019/03/25/leetcode_104/" title="【LeetCode】104、二叉树的最大深度">【LeetCode】104、二叉树的最大深度</a></p>
+<p>Given a binary tree, find its maximum depth.</p>
+<p>The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.</p>
+<p><strong>Note:</strong> A leaf is a node with no children.</p>
+<p><strong>Example:</strong></p>
+<p>Given binary tree <code>[3,9,20,null,null,15,7]</code>,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  3</span><br><span class="line"> / \</span><br><span class="line">9  20</span><br><span class="line">  /  \</span><br><span class="line"> 15   7</span><br></pre></td></tr></table></figure>
+<p>return its depth = 3.</p>
+<p>代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxDepth</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root==<span class="literal">NULL</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;left==<span class="literal">NULL</span> &amp;&amp; root-&gt;right==<span class="literal">NULL</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> leftDepth = maxDepth(root-&gt;left);</span><br><span class="line">        <span class="keyword">int</span> rightDepth = maxDepth(root-&gt;right);</span><br><span class="line">        <span class="keyword">if</span> (leftDepth &gt; rightDepth) &#123;</span><br><span class="line">            <span class="keyword">return</span> leftDepth+<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> rightDepth+<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="解答：二叉树的最大深度"><a href="#解答：二叉树的最大深度" class="headerlink" title="解答：二叉树的最大深度"></a>解答：二叉树的最大深度</h2><p>要花钱才能解锁，没有看:joy:。</p>
+<h2 id="练习：Pow-x-n"><a href="#练习：Pow-x-n" class="headerlink" title="练习：Pow(x, n)"></a>练习：Pow(x, n)</h2><p>详见<a href="/2019/03/25/leetcode_50/" title="【LeetCode】50、Pow(x,n)">【LeetCode】50、Pow(x,n)</a></p>
+<p>Implement <a href="http://www.cplusplus.com/reference/valarray/pow/" target="_blank" rel="noopener">pow(<em>x</em>, <em>n</em>)</a>, which calculates <em>x</em> raised to the power <em>n</em> (xn).</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 2.00000, 10</span><br><span class="line">Output: 1024.00000</span><br></pre></td></tr></table></figure>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 2.10000, 3</span><br><span class="line">Output: 9.26100</span><br></pre></td></tr></table></figure>
+<p><strong>Example 3:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: 2.00000, -2</span><br><span class="line">Output: 0.25000</span><br><span class="line">Explanation: 2-2 = 1/22 = 1/4 = 0.25</span><br></pre></td></tr></table></figure>
+<p><strong>Note:</strong></p>
+<ul>
+<li>-100.0 &lt; <em>x</em> &lt; 100.0</li>
+<li><em>n</em> is a 32-bit signed integer, within the range $[-2^{31},2^{31}-1]​$</li>
+</ul>
+<p>代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">myPow</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">double</span> half = myPow(x, n / <span class="number">2</span>);</span><br><span class="line">        <span class="keyword">if</span> (n % <span class="number">2</span> == <span class="number">0</span>) <span class="keyword">return</span> half * half;</span><br><span class="line">        <span class="keyword">if</span> (n &gt; <span class="number">0</span>) <span class="keyword">return</span> half * half * x;</span><br><span class="line">        <span class="keyword">return</span> half * half / x;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="解答：Pow-x-n"><a href="#解答：Pow-x-n" class="headerlink" title="解答：Pow(x, n)"></a>解答：Pow(x, n)</h2><p>要花钱才能解锁，没有看:joy:。</p>
+<h1 id="五、Conclusion-总结"><a href="#五、Conclusion-总结" class="headerlink" title="五、Conclusion 总结"></a>五、Conclusion 总结</h1><p>在之前的章节，我们了解了递归的概念的原则。</p>
+<p>作为提醒，以下是解决递归问题的共用工作流程：</p>
+<ol>
+<li>定义递归函数；</li>
+<li>总结递归关系和基本情况；</li>
+<li>如果有重复计算问题的话，使用缓存计算来消除；</li>
+<li>如果可能，使用尾递归来优化空间复杂度；</li>
+</ol>
+<p>在本章，将对递归算法做一些总结，并且提供一些在利用递归解决问题的过程中可能用到的tips。</p>
+<h2 id="总结——递归-1"><a href="#总结——递归-1" class="headerlink" title="总结——递归-1"></a>总结——递归-1</h2><p>现在，我们了解到递归确实是一个可以用来解决很多问题的有效方法。但是，由于时间和空间的限制，并不是所有问题都能用递归解决。递归可能会有一些负面效果，如栈溢出问题。</p>
+<p>在这章，将分享一些可以更好的利用递归来解决实际问题的tips：</p>
+<blockquote>
+<p><strong>疑惑的时候，把递归关系写下来。</strong></p>
+</blockquote>
+<p>有时，乍一看，问题能够用递归算法解决并不明显。但是，由于递归算法和我们所熟悉的数学非常接近，所以利用数学公式推导出一些关系式总是有帮助的。通常，可以帮助澄清问题概念并揭示隐藏的递归关系。在本章后面，可以通过一个例子（Unique Binary Search Trees II）来了解在数学公式的辅助下利用递归方法解决问题。</p>
+<blockquote>
+<p><strong>如果可能，使用缓存计算。</strong></p>
+</blockquote>
+<p>在起草递归算法的时候，可以从最简单的策略开始。有时，在递归过程中会存在重复计算，如斐波那契数问题。在这种情况下，应该尝试使用缓存计算技术，将中间结果缓存以后后续重复使用。缓存计算利用空间上的一些折中来换取时间复杂度的大幅提升。</p>
+<blockquote>
+<p><strong>当出现栈溢出问题时，尾递归可能会有帮助。</strong></p>
+</blockquote>
+<p>使用递归算法通常有几种不同的实现。尾递归是其中一个特定的实现形式。和缓存计算不同，尾递归可以通过消除递归算法带来的堆栈开销来优化算法的空间复杂度。更重要的是，使用尾递归可以避免递归算法常出现的栈溢出问题。尾递归的另一个优点是比非尾递归更容易阅读和理解。因为和非尾递归不同，尾递归中不存在递归后调用的问题（即递归操作是函数的最后操作）。所以，只要可能，应该尽量使用尾递归。</p>
+<h3 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h3><p>现在，利用目前为止所了解到的递归知识，可以在LeetCode上解决更多问题。在本章中，还提供了几个练习。</p>
+<h2 id="练习：合并两个有序链表"><a href="#练习：合并两个有序链表" class="headerlink" title="练习：合并两个有序链表"></a>练习：合并两个有序链表</h2><p>详见<a href="/2019/03/26/leetcode_21/" title="【LeetCode】21、合并两个有序链表">【LeetCode】21、合并两个有序链表</a></p>
+<p>Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.</p>
+<p><strong>Example:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 1-&gt;2-&gt;4, 1-&gt;3-&gt;4</span><br><span class="line">Output: 1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4</span><br></pre></td></tr></table></figure>
+<p>代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">mergeTwoLists</span><span class="params">(ListNode* l1, ListNode* l2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (l1==<span class="literal">NULL</span>)</span><br><span class="line">            <span class="keyword">return</span> l2;</span><br><span class="line">        <span class="keyword">if</span> (l2==<span class="literal">NULL</span>)</span><br><span class="line">            <span class="keyword">return</span> l1;</span><br><span class="line">        <span class="keyword">if</span> (l1-&gt;val&lt;l2-&gt;val) &#123;</span><br><span class="line">            l1-&gt;next = mergeTwoLists(l1-&gt;next, l2);</span><br><span class="line">            <span class="keyword">return</span> l1;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            l2-&gt;next = mergeTwoLists(l1, l2-&gt;next);</span><br><span class="line">            <span class="keyword">return</span> l2;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="解答：合并两个有序链表"><a href="#解答：合并两个有序链表" class="headerlink" title="解答：合并两个有序链表"></a>解答：合并两个有序链表</h2><p>要花钱才能解锁，没有看:joy:。</p>
+<h2 id="练习：第k个语法符号"><a href="#练习：第k个语法符号" class="headerlink" title="练习：第k个语法符号"></a>练习：第k个语法符号</h2><p>详见<a href="/2019/03/26/leetcode_779/" title="【LeetCode】779、第k个语法符号">【LeetCode】779、第k个语法符号</a></p>
+<p>On the first row, we write a <code>0</code>. Now in every subsequent row, we look at the previous row and replace each occurrence of <code>0</code>with <code>01</code>, and each occurrence of <code>1</code> with <code>10</code>.</p>
+<p>Given row <code>N</code> and index <code>K</code>, return the <code>K</code>-th indexed symbol in row <code>N</code>. (The values of <code>K</code> are 1-indexed.) (1 indexed).</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Examples:</span><br><span class="line">Input: N = 1, K = 1</span><br><span class="line">Output: 0</span><br><span class="line"></span><br><span class="line">Input: N = 2, K = 1</span><br><span class="line">Output: 0</span><br><span class="line"></span><br><span class="line">Input: N = 2, K = 2</span><br><span class="line">Output: 1</span><br><span class="line"></span><br><span class="line">Input: N = 4, K = 5</span><br><span class="line">Output: 1</span><br><span class="line"></span><br><span class="line">Explanation:</span><br><span class="line">row 1: 0</span><br><span class="line">row 2: 01</span><br><span class="line">row 3: 0110</span><br><span class="line">row 4: 01101001</span><br></pre></td></tr></table></figure>
+<p><strong>Note:</strong></p>
+<ol>
+<li><code>N</code> will be an integer in the range <code>[1, 30]</code>.</li>
+<li><code>K</code> will be an integer in the range <code>[1, 2^(N-1)]</code>.</li>
+</ol>
+<p>代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">kthGrammar</span><span class="params">(<span class="keyword">int</span> N, <span class="keyword">int</span> K)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (N==<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (K%<span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> kthGrammar(N<span class="number">-1</span>, K/<span class="number">2</span>)==<span class="number">0</span> ? <span class="number">1</span>:<span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> kthGrammar(N<span class="number">-1</span>, (K+<span class="number">1</span>)/<span class="number">2</span>)==<span class="number">0</span> ? <span class="number">0</span>:<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="解答：第k个语法符号"><a href="#解答：第k个语法符号" class="headerlink" title="解答：第k个语法符号"></a>解答：第k个语法符号</h2><p>要花钱才能解锁，没有看:joy:。</p>
+<h2 id="练习：不同的二叉搜索树II"><a href="#练习：不同的二叉搜索树II" class="headerlink" title="练习：不同的二叉搜索树II"></a>练习：不同的二叉搜索树II</h2><p>Given an integer <em>n</em>, generate all structurally unique <strong>BST’s</strong> (binary search trees) that store values 1 … <em>n</em>.</p>
+<p><strong>Example:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Input: 3</span><br><span class="line">Output:</span><br><span class="line">[</span><br><span class="line">  [1,null,3,2],</span><br><span class="line">  [3,2,null,1],</span><br><span class="line">  [3,1,null,null,2],</span><br><span class="line">  [2,1,3],</span><br><span class="line">  [1,null,2,null,3]</span><br><span class="line">]</span><br><span class="line">Explanation:</span><br><span class="line">The above output corresponds to the 5 unique BST&apos;s shown below:</span><br><span class="line"></span><br><span class="line">   1         3     3      2      1</span><br><span class="line">    \       /     /      / \      \</span><br><span class="line">     3     2     1      1   3      2</span><br><span class="line">    /     /       \                 \</span><br><span class="line">   2     1         2                 3</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>等复习了二叉树再后续补充，，，</p>
+</blockquote>
+<h2 id="解答：不同的二叉搜索树II"><a href="#解答：不同的二叉搜索树II" class="headerlink" title="解答：不同的二叉搜索树II"></a>解答：不同的二叉搜索树II</h2><p>要花钱才能解锁，没有看:joy:。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+  
+</div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/LeetCode/" rel="tag"><i class="fa fa-tag"></i> LeetCode</a>
+          
+            <a href="/tags/递归/" rel="tag"><i class="fa fa-tag"></i> 递归</a>
+          
+            <a href="/tags/recursion/" rel="tag"><i class="fa fa-tag"></i> recursion</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/20/python_list_tips/" rel="next" title="Python中list的一些小技巧">
+                <i class="fa fa-chevron-left"></i> Python中list的一些小技巧
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/21/leetcode_344/" rel="prev" title="【LeetCode】344、反转字符串">
+                【LeetCode】344、反转字符串 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/image/touxiang.JPG" alt="Lesley Shi">
+            
+              <p class="site-author-name" itemprop="name">Lesley Shi</p>
+              <p class="site-description motion-element" itemprop="description">fighting~~~</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:shilixin16@163.com" title="E-Mail &rarr; mailto:shilixin16@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Overview-综述"><span class="nav-number">1.</span> <span class="nav-text">Overview 综述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一、Principle-of-Recursion-递归原理"><span class="nav-number">2.</span> <span class="nav-text">一、Principle of Recursion 递归原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#递归原理"><span class="nav-number">2.1.</span> <span class="nav-text">递归原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#示例"><span class="nav-number">2.1.1.</span> <span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习：反转字符串"><span class="nav-number">2.2.</span> <span class="nav-text">练习：反转字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解答：反转字符串"><span class="nav-number">2.3.</span> <span class="nav-text">解答：反转字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初次尝试"><span class="nav-number">2.3.1.</span> <span class="nav-text">初次尝试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#另一种分治的方法"><span class="nav-number">2.3.2.</span> <span class="nav-text">另一种分治的方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#递归函数"><span class="nav-number">2.4.</span> <span class="nav-text">递归函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#举例"><span class="nav-number">2.4.1.</span> <span class="nav-text">举例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习：两两交换链表中的节点"><span class="nav-number">2.5.</span> <span class="nav-text">练习：两两交换链表中的节点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、Recurrence-Relation-递归关系"><span class="nav-number">3.</span> <span class="nav-text">二、Recurrence Relation 递归关系</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#递归关系"><span class="nav-number">3.1.</span> <span class="nav-text">递归关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#示例：杨辉三角"><span class="nav-number">3.1.1.</span> <span class="nav-text">示例：杨辉三角</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习：杨辉三角"><span class="nav-number">3.2.</span> <span class="nav-text">练习：杨辉三角</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习：杨辉三角2"><span class="nav-number">3.3.</span> <span class="nav-text">练习：杨辉三角2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习：反转链表"><span class="nav-number">3.4.</span> <span class="nav-text">练习：反转链表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解答：反转链表"><span class="nav-number">3.5.</span> <span class="nav-text">解答：反转链表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法1、迭代法"><span class="nav-number">3.5.1.</span> <span class="nav-text">方法1、迭代法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法2、递归法"><span class="nav-number">3.5.2.</span> <span class="nav-text">方法2、递归法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、Memoization-缓存计算"><span class="nav-number">4.</span> <span class="nav-text">三、Memoization 缓存计算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#递归中的重复计算"><span class="nav-number">4.1.</span> <span class="nav-text">递归中的重复计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存计算"><span class="nav-number">4.1.1.</span> <span class="nav-text">缓存计算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习：斐波那契数"><span class="nav-number">4.2.</span> <span class="nav-text">练习：斐波那契数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习：爬楼梯"><span class="nav-number">4.3.</span> <span class="nav-text">练习：爬楼梯</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解答：爬楼梯"><span class="nav-number">4.4.</span> <span class="nav-text">解答：爬楼梯</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法1：暴力法"><span class="nav-number">4.4.1.</span> <span class="nav-text">方法1：暴力法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法2：采用缓存计算的递归法"><span class="nav-number">4.4.2.</span> <span class="nav-text">方法2：采用缓存计算的递归法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法3：动态规划"><span class="nav-number">4.4.3.</span> <span class="nav-text">方法3：动态规划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法4：斐波那契数法"><span class="nav-number">4.4.4.</span> <span class="nav-text">方法4：斐波那契数法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法5：Binets-Method-（比奈法？）使用矩阵的方法"><span class="nav-number">4.4.5.</span> <span class="nav-text">方法5：Binets Method （比奈法？）使用矩阵的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法6、斐波那契公式"><span class="nav-number">4.4.6.</span> <span class="nav-text">方法6、斐波那契公式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、Complexity-Analysis-复杂度分析"><span class="nav-number">5.</span> <span class="nav-text">四、Complexity Analysis 复杂度分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#时间复杂度——递归"><span class="nav-number">5.1.</span> <span class="nav-text">时间复杂度——递归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#举例-1"><span class="nav-number">5.1.1.</span> <span class="nav-text">举例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行树"><span class="nav-number">5.1.2.</span> <span class="nav-text">执行树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存计算-1"><span class="nav-number">5.1.3.</span> <span class="nav-text">缓存计算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#空间复杂度——递归"><span class="nav-number">5.2.</span> <span class="nav-text">空间复杂度——递归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#递归相关的空间"><span class="nav-number">5.2.1.</span> <span class="nav-text">递归相关的空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非递归相关的空间"><span class="nav-number">5.2.2.</span> <span class="nav-text">非递归相关的空间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尾递归"><span class="nav-number">5.3.</span> <span class="nav-text">尾递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习：二叉树的最大深度"><span class="nav-number">5.4.</span> <span class="nav-text">练习：二叉树的最大深度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解答：二叉树的最大深度"><span class="nav-number">5.5.</span> <span class="nav-text">解答：二叉树的最大深度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习：Pow-x-n"><span class="nav-number">5.6.</span> <span class="nav-text">练习：Pow(x, n)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解答：Pow-x-n"><span class="nav-number">5.7.</span> <span class="nav-text">解答：Pow(x, n)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、Conclusion-总结"><span class="nav-number">6.</span> <span class="nav-text">五、Conclusion 总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#总结——递归-1"><span class="nav-number">6.1.</span> <span class="nav-text">总结——递归-1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#后续"><span class="nav-number">6.1.1.</span> <span class="nav-text">后续</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习：合并两个有序链表"><span class="nav-number">6.2.</span> <span class="nav-text">练习：合并两个有序链表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解答：合并两个有序链表"><span class="nav-number">6.3.</span> <span class="nav-text">解答：合并两个有序链表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习：第k个语法符号"><span class="nav-number">6.4.</span> <span class="nav-text">练习：第k个语法符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解答：第k个语法符号"><span class="nav-number">6.5.</span> <span class="nav-text">解答：第k个语法符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习：不同的二叉搜索树II"><span class="nav-number">6.6.</span> <span class="nav-text">练习：不同的二叉搜索树II</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解答：不同的二叉搜索树II"><span class="nav-number">6.7.</span> <span class="nav-text">解答：不同的二叉搜索树II</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lesley Shi</span>
+
+  
+
+  
+</div>
+
+<!-- 隐藏底部 由hexo强力驱动，主题next
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+-->
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共35.5k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+  
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+
+<script src="//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'rj24gpfj5X7r5bXpsBTb1Hm5-gzGzoHsz',
+    appKey: 'tkke5f1SGYEVh8claojD4gVU',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+</script>
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+  <script>
+    
+    
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
