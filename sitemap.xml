@@ -2,30 +2,44 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://lesley0416.github.io/2019/04/15/leetcode_explore_queue_stack/</loc>
+    
+    <lastmod>2019-05-02T08:37:33.102Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://lesley0416.github.io/2019/04/02/leetcode_explore_binary_tree/</loc>
+    
+    <lastmod>2019-04-09T07:28:26.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://lesley0416.github.io/2019/03/26/leetcode_779/</loc>
     
-    <lastmod>2019-03-27T14:13:18.084Z</lastmod>
+    <lastmod>2019-03-27T14:13:18.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://lesley0416.github.io/2019/03/21/leetcode_explore_recursion/</loc>
     
-    <lastmod>2019-03-27T14:08:40.112Z</lastmod>
+    <lastmod>2019-03-27T14:08:40.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://lesley0416.github.io/2019/03/22/leetcode_119/</loc>
     
-    <lastmod>2019-03-27T13:48:31.387Z</lastmod>
+    <lastmod>2019-03-27T13:48:30.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://lesley0416.github.io/2019/03/22/leetcode_206/</loc>
     
-    <lastmod>2019-03-27T13:43:32.334Z</lastmod>
+    <lastmod>2019-03-27T13:43:32.000Z</lastmod>
     
   </url>
   
@@ -88,14 +102,14 @@
   <url>
     <loc>https://lesley0416.github.io/2019/03/19/python_zip/</loc>
     
-    <lastmod>2019-03-20T14:30:00.261Z</lastmod>
+    <lastmod>2019-03-20T14:30:00.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://lesley0416.github.io/2019/03/01/HMM_IM/</loc>
     
-    <lastmod>2019-03-20T14:08:02.885Z</lastmod>
+    <lastmod>2019-03-20T14:08:02.000Z</lastmod>
     
   </url>
   
@@ -109,70 +123,70 @@
   <url>
     <loc>https://lesley0416.github.io/2019/03/14/leetcode_121/</loc>
     
-    <lastmod>2019-03-20T14:07:28.187Z</lastmod>
+    <lastmod>2019-03-20T14:07:28.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://lesley0416.github.io/2019/03/13/leetcode_937/</loc>
     
-    <lastmod>2019-03-20T14:07:11.520Z</lastmod>
+    <lastmod>2019-03-20T14:07:10.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://lesley0416.github.io/2019/03/12/leetcode_936/</loc>
     
-    <lastmod>2019-03-20T14:07:00.959Z</lastmod>
+    <lastmod>2019-03-20T14:07:00.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://lesley0416.github.io/2019/03/04/leetcode_599/</loc>
     
-    <lastmod>2019-03-20T14:06:47.861Z</lastmod>
+    <lastmod>2019-03-20T14:06:46.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://lesley0416.github.io/2019/03/13/leetcode_414/</loc>
     
-    <lastmod>2019-03-20T14:06:31.384Z</lastmod>
+    <lastmod>2019-03-20T14:06:30.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://lesley0416.github.io/2019/03/15/leetcode_213/</loc>
     
-    <lastmod>2019-03-20T14:06:13.538Z</lastmod>
+    <lastmod>2019-03-20T14:06:12.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://lesley0416.github.io/2019/03/19/leetcode_5/</loc>
     
-    <lastmod>2019-03-20T14:06:09.839Z</lastmod>
+    <lastmod>2019-03-20T14:06:08.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://lesley0416.github.io/2019/03/15/leetcode_198/</loc>
     
-    <lastmod>2019-03-20T14:06:00.019Z</lastmod>
+    <lastmod>2019-03-20T14:06:00.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://lesley0416.github.io/2019/03/13/leetcode_136/</loc>
     
-    <lastmod>2019-03-20T14:05:27.990Z</lastmod>
+    <lastmod>2019-03-20T14:05:26.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://lesley0416.github.io/2019/03/13/leetcode_53/</loc>
     
-    <lastmod>2019-03-20T14:05:10.355Z</lastmod>
+    <lastmod>2019-03-20T14:05:10.000Z</lastmod>
     
   </url>
   
@@ -186,42 +200,42 @@
   <url>
     <loc>https://lesley0416.github.io/2019/03/13/python_lambda_sorted/</loc>
     
-    <lastmod>2019-03-13T15:22:23.650Z</lastmod>
+    <lastmod>2019-03-13T15:22:22.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://lesley0416.github.io/2019/03/04/jupyter_timeit/</loc>
     
-    <lastmod>2019-03-13T15:21:24.362Z</lastmod>
+    <lastmod>2019-03-13T15:21:24.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://lesley0416.github.io/2019/03/04/fasterpython/</loc>
     
-    <lastmod>2019-03-13T15:21:14.369Z</lastmod>
+    <lastmod>2019-03-13T15:21:14.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://lesley0416.github.io/2019/03/07/weiyunsuan/</loc>
     
-    <lastmod>2019-03-13T14:45:03.123Z</lastmod>
+    <lastmod>2019-03-13T14:45:02.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://lesley0416.github.io/2019/02/27/myHello/</loc>
     
-    <lastmod>2019-03-04T14:31:58.588Z</lastmod>
+    <lastmod>2019-03-04T14:31:58.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://lesley0416.github.io/2019/02/27/hello-world/</loc>
     
-    <lastmod>2019-03-04T14:29:42.370Z</lastmod>
+    <lastmod>2019-03-04T14:29:42.000Z</lastmod>
     
   </url>
   
