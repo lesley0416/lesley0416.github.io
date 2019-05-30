@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lesley0416.github.io/"/>
-  <updated>2019-05-30T09:34:58.000Z</updated>
+  <updated>2019-05-30T15:22:24.188Z</updated>
   <id>https://lesley0416.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>cs224n-2017笔记：第一讲 Introduction to NLP and Deep Learning</title>
+    <link href="https://lesley0416.github.io/2019/05/30/cs224n_2017_1/"/>
+    <id>https://lesley0416.github.io/2019/05/30/cs224n_2017_1/</id>
+    <published>2019-05-30T01:30:50.000Z</published>
+    <updated>2019-05-30T15:22:24.188Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>斯坦福cs224n-2017 winter笔记</p><p><a href="https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1174/syllabus.html" target="_blank" rel="noopener">课程链接</a></p></blockquote><a id="more"></a><h1 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h1><p><img src="/2019/05/30/cs224n_2017_1/plan.jpg"></p><h1 id="什么是NLP"><a href="#什么是NLP" class="headerlink" title="什么是NLP"></a>什么是NLP</h1><p>自然语言处理（NLP）是一门计算机科学、人工智能和语言学的交叉学科。</p><p>NLP的目的是处理或者“理解”自然语言，从而完成一些有意义的任务，如订票、购物、QA等等。</p><p>完全理解和表达语言的意思是非常困难的，perfect language understanding is AI-complete。</p><h2 id="NLP涉及的层次"><a href="#NLP涉及的层次" class="headerlink" title="NLP涉及的层次"></a>NLP涉及的层次</h2><p><img src="/2019/05/30/cs224n_2017_1/levels.jpg"></p><p>输入主要有两个来源：语音和文本。所以第一级是语音识别和OCR或分词，接下来是形态学，再下面是句法分析和语义分析，最后是discourse processing，需要根据上文语境理解下文。</p><p>这门课主要集中在画圈的三个部分，中间的两个最为重要。</p><h2 id="NLP应用"><a href="#NLP应用" class="headerlink" title="NLP应用"></a>NLP应用</h2><p>一个小子集：拼写检查、关键词检索、文本挖掘、文本分类、机器翻译、复杂对话系统等。</p><p>在工业界的应用，包括搜索、广告投放、自动/辅助翻译、情感/舆情分析、语音识别、聊天机器人等等。</p><h2 id="人类语言的特殊之处"><a href="#人类语言的特殊之处" class="headerlink" title="人类语言的特殊之处"></a>人类语言的特殊之处</h2><p>人类语言是离散的、明确的符号系统，但又允许出现各种变种（如颜文字、随意的拼写错误等）。</p><p>语言符号有多种形式，但不同的形式中意义保持不变。</p><p>虽然人类语言是明确的符号系统，但是大脑编码似乎是连续的激活值上的模式，符号传输到大脑的过程是通过连续的声光信号。另外，巨大的词表会导致数据稀疏（sparsity），不利于机器学习，所以我们希望去探索一种连续编码的模式。</p><h1 id="什么是DL"><a href="#什么是DL" class="headerlink" title="什么是DL"></a>什么是DL</h1><p>深度学习（DL）是机器学习的一个子集。</p><p>传统的机器学习方法，大多是人类对专业问题理解很透彻，然后人工设计输入特征，比如地名和机构名识别的特征模板（Finkel et al., 2010）。之后将特征交给某个机器学习算法，比如线性分类器等，算法为这些特征找到合适的权重，将误差优化到最小。</p><p><img src="/2019/05/30/cs224n_2017_1/ml.jpg"></p><p>在这个过程中，是人类一直在学习，而机器只是进行了数值优化的工作。</p><p>而<strong>深度学习是表示学习的一部分，试图自动的学习原始输入的多层特征表示。</strong></p><h2 id="DL的历史"><a href="#DL的历史" class="headerlink" title="DL的历史"></a>DL的历史</h2><p><img src="/2019/05/30/cs224n_2017_1/history.jpg"></p><h2 id="为啥研究DL"><a href="#为啥研究DL" class="headerlink" title="为啥研究DL"></a>为啥研究DL</h2><h2 id="语音识别中的DL"><a href="#语音识别中的DL" class="headerlink" title="语音识别中的DL"></a>语音识别中的DL</h2><p>突破性研究参考 <a href="https://s3.amazonaws.com/academia.edu.documents/34691735/dbn4lvcsr-transaslp.pdf?AWSAccessKeyId=AKIAIWOWYYGZ2Y53UL3A&amp;Expires=1559198118&amp;Signature=8zpJsrWYA5L5Dtp8zFN2DQAXnB0%3D&amp;response-content-disposition=inline%3B%20filename%3DContext-Dependent_Pre-Trained_Deep_Neura.pdf" target="_blank" rel="noopener">Context-Dependent Pre-Trained Deep Neural Networks for Large-Vocabulary Speech Recognition</a></p><h2 id="计算机视觉中的DL"><a href="#计算机视觉中的DL" class="headerlink" title="计算机视觉中的DL"></a>计算机视觉中的DL</h2><p>突破性研究参考 <a href="http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf" target="_blank" rel="noopener">ImageNet Classification with Deep Convolutional Neural Networks</a></p><h1 id="为什么NLP很难"><a href="#为什么NLP很难" class="headerlink" title="为什么NLP很难"></a>为什么NLP很难</h1><p>人类语言充满歧义，人类语言的解读依赖于现实世界、常识以及上下文等。</p><h1 id="Deep-NLP-Deep-Learning-NLP"><a href="#Deep-NLP-Deep-Learning-NLP" class="headerlink" title="Deep NLP = Deep Learning + NLP"></a>Deep NLP = Deep Learning + NLP</h1><p>用深度学习的方法解决NLP问题，提高了很多方面的效果：</p><ul><li>层次：语音、词汇、语法、语义</li><li>工具：词性标注、命名实体识别、句法分析</li><li>应用：机器翻译、情感分析、对话系统、问答系统</li></ul><h2 id="NLP表示层级：形态级别"><a href="#NLP表示层级：形态级别" class="headerlink" title="NLP表示层级：形态级别"></a>NLP表示层级：形态级别</h2><p>传统方法在形态级别的表示是词素：</p><p><img src="/2019/05/30/cs224n_2017_1/morphemes_ml.jpg"></p><p>深度学习中把词素用向量表示，多个词素向量构成相同维度、语义更丰富的词向量：</p><p><img src="/2019/05/30/cs224n_2017_1/morphemes_dl.jpg" style="zoom:60%"></p><h2 id="NLP工具：句法分析"><a href="#NLP工具：句法分析" class="headerlink" title="NLP工具：句法分析"></a>NLP工具：句法分析</h2><p><img src="/2019/05/30/cs224n_2017_1/parsing.jpg"></p><p>神经网络能够准确的进行句法分析，判断句子结构，参考 <a href="https://www.aclweb.org/anthology/D14-1082" target="_blank" rel="noopener">A Fast and Accurate Dependency Parser using Neural Networks</a> </p><h2 id="NLP表示层级：语义级别"><a href="#NLP表示层级：语义级别" class="headerlink" title="NLP表示层级：语义级别"></a>NLP表示层级：语义级别</h2><p>传统方法是手写的大量规则函数，称为<code>Lambda calculus</code>，没有语言的相似性或模糊性的概念：</p><p><img src="/2019/05/30/cs224n_2017_1/lambda_calculus.jpg" style="zoom:50%"></p><p>深度学习中，每个词、短语和逻辑表达都是向量，神经网络进行向量合并：</p><p><img src="/2019/05/30/cs224n_2017_1/semantics_dl.jpg" style="zoom:60%"></p><h2 id="NLP应用：情感分析"><a href="#NLP应用：情感分析" class="headerlink" title="NLP应用：情感分析"></a>NLP应用：情感分析</h2><p>传统方法是通过大量的人工搜集情感极性词典，在词袋模型上做分类器。</p><p>深度学习使用RNN解决这个问题（同样可用于形态学、语法、逻辑语义问题）：</p><p><img src="/2019/05/30/cs224n_2017_1/sentiment_analysis.jpg"></p><p>上图并不是RNN的工作流程，仅是为了方便理解。</p><h2 id="NLP应用：QA系统"><a href="#NLP应用：QA系统" class="headerlink" title="NLP应用：QA系统"></a>NLP应用：QA系统</h2><p>传统方法是通过总结大量的特征工程，编写大量逻辑规则，如正则表达式之类：</p><p><img src="/2019/05/30/cs224n_2017_1/qa_ml.jpg"></p><p>深度学习方法仍然采用和前面提到的类似的深度学习框架，将事实存储在向量中：</p><p><img src="/2019/05/30/cs224n_2017_1/qa_dl.jpg"></p><h2 id="NLP应用：对话系统"><a href="#NLP应用：对话系统" class="headerlink" title="NLP应用：对话系统"></a>NLP应用：对话系统</h2><p>一个成功的案例是Gmail的自动回复系统。</p><p>这是神经语言模型（Neural Language Models）的一次成功应用，神经语言模型是基于RNN的：</p><p><img src="/2019/05/30/cs224n_2017_1/nlm.jpg" style="zoom:50%"></p><h2 id="NLP应用：机器翻译"><a href="#NLP应用：机器翻译" class="headerlink" title="NLP应用：机器翻译"></a>NLP应用：机器翻译</h2><p>传统方法在很多层级上都做过尝试，传统的MT系统是非常庞大复杂的，并且有试图寻找一种通用的中介语来作为源语和目标语之间的桥梁。</p><p>而深度学习方法，即神经机器翻译（Neural Machine Translation，NMT），将源语映射为向量，然后由向量构造目标语（参考<a href="https://arxiv.org/abs/1409.3215" target="_blank" rel="noopener">Sutskever et al. 2014</a>，<a href="https://arxiv.org/abs/1409.0473" target="_blank" rel="noopener">Bahdanau et al. 2014</a>，<a href="https://arxiv.org/abs/1604.00788" target="_blank" rel="noopener">Luong and Manning 2016</a>）：</p><p><img src="/2019/05/30/cs224n_2017_1/nmt.jpg"></p><h2 id="总结：所有层级表示都是向量"><a href="#总结：所有层级表示都是向量" class="headerlink" title="总结：所有层级表示都是向量"></a>总结：所有层级表示都是向量</h2><p>深度学习的根本强项在于，将所有的语言形式用向量表达，通过一些变形操作又可以将向量变成矩阵或更高阶的阵列（即张量tensor），所以向量是一种具有强大表达能力的灵活的数据结构。</p><h1 id="附"><a href="#附" class="headerlink" title="附"></a>附</h1><p>词向量，一般想正经做点儿东西的话，怎么也得300维、1000维或者更多维这样的级别。</p><p>试图将词向量按照高维空间表示的含义映射到二维空间上的常用方法：PCA（主成分分析），t-SNE（一种非线性降维），但低维投影还是会遗漏大量信息。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;斯坦福cs224n-2017 winter笔记&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1174/syllabus.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;课程链接&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="深度学习" scheme="https://lesley0416.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="cs224n-2017" scheme="https://lesley0416.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/cs224n-2017/"/>
+    
+    
+      <category term="cs224n" scheme="https://lesley0416.github.io/tags/cs224n/"/>
+    
+      <category term="深度学习" scheme="https://lesley0416.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>拼音输入法实现&amp;文本服务框架TSF相关知识点记录</title>
@@ -41,36 +70,6 @@
       <category term="文本服务框架" scheme="https://lesley0416.github.io/tags/%E6%96%87%E6%9C%AC%E6%9C%8D%E5%8A%A1%E6%A1%86%E6%9E%B6/"/>
     
       <category term="输入法" scheme="https://lesley0416.github.io/tags/%E8%BE%93%E5%85%A5%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>cs224n-2017笔记：第一讲 Introduction to NLP and Deep Learning</title>
-    <link href="https://lesley0416.github.io/2019/05/29/cs224n_2017_1/"/>
-    <id>https://lesley0416.github.io/2019/05/29/cs224n_2017_1/</id>
-    <published>2019-05-29T01:30:50.000Z</published>
-    <updated>2019-05-30T15:18:00.807Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>斯坦福cs224n-2017 winter笔记</p><p><a href="https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1174/syllabus.html" target="_blank" rel="noopener">课程链接</a></p><p>难度：简单</p></blockquote><a id="more"></a><h1 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h1><p><img src="/2019/05/29/cs224n_2017_1/plan.jpg"></p><h1 id="什么是NLP"><a href="#什么是NLP" class="headerlink" title="什么是NLP"></a>什么是NLP</h1><p>自然语言处理（NLP）是一门计算机科学、人工智能和语言学的交叉学科。</p><p>NLP的目的是处理或者“理解”自然语言，从而完成一些有意义的任务，如订票、购物、QA等等。</p><p>完全理解和表达语言的意思是非常困难的，perfect language understanding is AI-complete。</p><h2 id="NLP涉及的层次"><a href="#NLP涉及的层次" class="headerlink" title="NLP涉及的层次"></a>NLP涉及的层次</h2><p><img src="/2019/05/29/cs224n_2017_1/levels.jpg"></p><p>输入主要有两个来源：语音和文本。所以第一级是语音识别和OCR或分词，接下来是形态学，再下面是句法分析和语义分析，最后是discourse processing，需要根据上文语境理解下文。</p><p>这门课主要集中在画圈的三个部分，中间的两个最为重要。</p><h2 id="NLP应用"><a href="#NLP应用" class="headerlink" title="NLP应用"></a>NLP应用</h2><p>一个小子集：拼写检查、关键词检索、文本挖掘、文本分类、机器翻译、复杂对话系统等。</p><p>在工业界的应用，包括搜索、广告投放、自动/辅助翻译、情感/舆情分析、语音识别、聊天机器人等等。</p><h2 id="人类语言的特殊之处"><a href="#人类语言的特殊之处" class="headerlink" title="人类语言的特殊之处"></a>人类语言的特殊之处</h2><p>人类语言是离散的、明确的符号系统，但又允许出现各种变种（如颜文字、随意的拼写错误等）。</p><p>语言符号有多种形式，但不同的形式中意义保持不变。</p><p>虽然人类语言是明确的符号系统，但是大脑编码似乎是连续的激活值上的模式，符号传输到大脑的过程是通过连续的声光信号。另外，巨大的词表会导致数据稀疏（sparsity），不利于机器学习，所以我们希望去探索一种连续编码的模式。</p><h1 id="什么是DL"><a href="#什么是DL" class="headerlink" title="什么是DL"></a>什么是DL</h1><p>深度学习（DL）是机器学习的一个子集。</p><p>传统的机器学习方法，大多是人类对专业问题理解很透彻，然后人工设计输入特征，比如地名和机构名识别的特征模板（Finkel et al., 2010）。之后将特征交给某个机器学习算法，比如线性分类器等，算法为这些特征找到合适的权重，将误差优化到最小。</p><p><img src="/2019/05/29/cs224n_2017_1/ml.jpg"></p><p>在这个过程中，是人类一直在学习，而机器只是进行了数值优化的工作。</p><p>而<strong>深度学习是表示学习的一部分，试图自动的学习原始输入的多层特征表示。</strong></p><h2 id="DL的历史"><a href="#DL的历史" class="headerlink" title="DL的历史"></a>DL的历史</h2><p><img src="/2019/05/29/cs224n_2017_1/history.jpg"></p><h2 id="为啥研究DL"><a href="#为啥研究DL" class="headerlink" title="为啥研究DL"></a>为啥研究DL</h2><h2 id="语音识别中的DL"><a href="#语音识别中的DL" class="headerlink" title="语音识别中的DL"></a>语音识别中的DL</h2><p>突破性研究参考 <a href="https://s3.amazonaws.com/academia.edu.documents/34691735/dbn4lvcsr-transaslp.pdf?AWSAccessKeyId=AKIAIWOWYYGZ2Y53UL3A&amp;Expires=1559198118&amp;Signature=8zpJsrWYA5L5Dtp8zFN2DQAXnB0%3D&amp;response-content-disposition=inline%3B%20filename%3DContext-Dependent_Pre-Trained_Deep_Neura.pdf" target="_blank" rel="noopener">Context-Dependent Pre-Trained Deep Neural Networks for Large-Vocabulary Speech Recognition</a></p><h2 id="计算机视觉中的DL"><a href="#计算机视觉中的DL" class="headerlink" title="计算机视觉中的DL"></a>计算机视觉中的DL</h2><p>突破性研究参考 <a href="http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf" target="_blank" rel="noopener">ImageNet Classification with Deep Convolutional Neural Networks</a></p><h1 id="为什么NLP很难"><a href="#为什么NLP很难" class="headerlink" title="为什么NLP很难"></a>为什么NLP很难</h1><p>人类语言充满歧义，人类语言的解读依赖于现实世界、常识以及上下文等。</p><h1 id="Deep-NLP-Deep-Learning-NLP"><a href="#Deep-NLP-Deep-Learning-NLP" class="headerlink" title="Deep NLP = Deep Learning + NLP"></a>Deep NLP = Deep Learning + NLP</h1><p>用深度学习的方法解决NLP问题，提高了很多方面的效果：</p><ul><li>层次：语音、词汇、语法、语义</li><li>工具：词性标注、命名实体识别、句法分析</li><li>应用：机器翻译、情感分析、对话系统、问答系统</li></ul><h2 id="NLP表示层级：形态级别"><a href="#NLP表示层级：形态级别" class="headerlink" title="NLP表示层级：形态级别"></a>NLP表示层级：形态级别</h2><p>传统方法在形态级别的表示是词素：</p><p><img src="/2019/05/29/cs224n_2017_1/morphemes_ml.jpg"></p><p>深度学习中把词素用向量表示，多个词素向量构成相同维度、语义更丰富的词向量：</p><p><img src="/2019/05/29/cs224n_2017_1/morphemes_dl.jpg" style="zoom:60%"></p><h2 id="NLP工具：句法分析"><a href="#NLP工具：句法分析" class="headerlink" title="NLP工具：句法分析"></a>NLP工具：句法分析</h2><p><img src="/2019/05/29/cs224n_2017_1/parsing.jpg"></p><p>神经网络能够准确的进行句法分析，判断句子结构，参考 <a href="https://www.aclweb.org/anthology/D14-1082" target="_blank" rel="noopener">A Fast and Accurate Dependency Parser using Neural Networks</a> </p><h2 id="NLP表示层级：语义级别"><a href="#NLP表示层级：语义级别" class="headerlink" title="NLP表示层级：语义级别"></a>NLP表示层级：语义级别</h2><p>传统方法是手写的大量规则函数，称为<code>Lambda calculus</code>，没有语言的相似性或模糊性的概念：</p><p><img src="/2019/05/29/cs224n_2017_1/lambda_calculus.jpg" style="zoom:50%"></p><p>深度学习中，每个词、短语和逻辑表达都是向量，神经网络进行向量合并：</p><p><img src="/2019/05/29/cs224n_2017_1/semantics_dl.jpg" style="zoom:60%"></p><h2 id="NLP应用：情感分析"><a href="#NLP应用：情感分析" class="headerlink" title="NLP应用：情感分析"></a>NLP应用：情感分析</h2><p>传统方法是通过大量的人工搜集情感极性词典，在词袋模型上做分类器。</p><p>深度学习使用RNN解决这个问题（同样可用于形态学、语法、逻辑语义问题）：</p><p><img src="/2019/05/29/cs224n_2017_1/sentiment_analysis.jpg"></p><p>上图并不是RNN的工作流程，仅是为了方便理解。</p><h2 id="NLP应用：QA系统"><a href="#NLP应用：QA系统" class="headerlink" title="NLP应用：QA系统"></a>NLP应用：QA系统</h2><p>传统方法是通过总结大量的特征工程，编写大量逻辑规则，如正则表达式之类：</p><p><img src="/2019/05/29/cs224n_2017_1/qa_ml.jpg"></p><p>深度学习方法仍然采用和前面提到的类似的深度学习框架，将事实存储在向量中：</p><p><img src="/2019/05/29/cs224n_2017_1/qa_dl.jpg"></p><h2 id="NLP应用：对话系统"><a href="#NLP应用：对话系统" class="headerlink" title="NLP应用：对话系统"></a>NLP应用：对话系统</h2><p>一个成功的案例是Gmail的自动回复系统。</p><p>这是神经语言模型（Neural Language Models）的一次成功应用，神经语言模型是基于RNN的：</p><p><img src="/2019/05/29/cs224n_2017_1/nlm.jpg" style="zoom:50%"></p><h2 id="NLP应用：机器翻译"><a href="#NLP应用：机器翻译" class="headerlink" title="NLP应用：机器翻译"></a>NLP应用：机器翻译</h2><p>传统方法在很多层级上都做过尝试，传统的MT系统是非常庞大复杂的，并且有试图寻找一种通用的中介语来作为源语和目标语之间的桥梁。</p><p>而深度学习方法，即神经机器翻译（Neural Machine Translation，NMT），将源语映射为向量，然后由向量构造目标语（参考<a href="https://arxiv.org/abs/1409.3215" target="_blank" rel="noopener">Sutskever et al. 2014</a>，<a href="https://arxiv.org/abs/1409.0473" target="_blank" rel="noopener">Bahdanau et al. 2014</a>，<a href="https://arxiv.org/abs/1604.00788" target="_blank" rel="noopener">Luong and Manning 2016</a>）：</p><p><img src="/2019/05/29/cs224n_2017_1/nmt.jpg"></p><h2 id="总结：所有层级表示都是向量"><a href="#总结：所有层级表示都是向量" class="headerlink" title="总结：所有层级表示都是向量"></a>总结：所有层级表示都是向量</h2><p>深度学习的根本强项在于，将所有的语言形式用向量表达，通过一些变形操作又可以将向量变成矩阵或更高阶的阵列（即张量tensor），所以向量是一种具有强大表达能力的灵活的数据结构。</p><h1 id="附"><a href="#附" class="headerlink" title="附"></a>附</h1><p>词向量，一般想正经做点儿东西的话，怎么也得300维、1000维或者更多维这样的级别。</p><p>试图将词向量按照高维空间表示的含义映射到二维空间上的常用方法：PCA（主成分分析），t-SNE（一种非线性降维），但低维投影还是会遗漏大量信息。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;斯坦福cs224n-2017 winter笔记&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1174/syllabus.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;课程链接&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;难度：简单&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="深度学习" scheme="https://lesley0416.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-      <category term="cs224n-2017" scheme="https://lesley0416.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/cs224n-2017/"/>
-    
-    
-      <category term="cs224n" scheme="https://lesley0416.github.io/tags/cs224n/"/>
-    
-      <category term="深度学习" scheme="https://lesley0416.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
@@ -335,15 +334,15 @@
     
       <category term="LeetCode" scheme="https://lesley0416.github.io/tags/LeetCode/"/>
     
+      <category term="递归" scheme="https://lesley0416.github.io/tags/%E9%80%92%E5%BD%92/"/>
+    
+      <category term="recursion" scheme="https://lesley0416.github.io/tags/recursion/"/>
+    
       <category term="树" scheme="https://lesley0416.github.io/tags/%E6%A0%91/"/>
     
       <category term="深度优先搜索" scheme="https://lesley0416.github.io/tags/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/"/>
     
       <category term="二叉树" scheme="https://lesley0416.github.io/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/"/>
-    
-      <category term="递归" scheme="https://lesley0416.github.io/tags/%E9%80%92%E5%BD%92/"/>
-    
-      <category term="recursion" scheme="https://lesley0416.github.io/tags/recursion/"/>
     
   </entry>
   
@@ -370,11 +369,11 @@
     
       <category term="LeetCode" scheme="https://lesley0416.github.io/tags/LeetCode/"/>
     
+      <category term="数组" scheme="https://lesley0416.github.io/tags/%E6%95%B0%E7%BB%84/"/>
+    
       <category term="递归" scheme="https://lesley0416.github.io/tags/%E9%80%92%E5%BD%92/"/>
     
       <category term="recursion" scheme="https://lesley0416.github.io/tags/recursion/"/>
-    
-      <category term="数组" scheme="https://lesley0416.github.io/tags/%E6%95%B0%E7%BB%84/"/>
     
       <category term="斐波那契数列" scheme="https://lesley0416.github.io/tags/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/"/>
     
@@ -404,9 +403,9 @@
       <category term="Python" scheme="https://lesley0416.github.io/categories/Python/"/>
     
     
-      <category term="decorator" scheme="https://lesley0416.github.io/tags/decorator/"/>
-    
       <category term="Python" scheme="https://lesley0416.github.io/tags/Python/"/>
+    
+      <category term="decorator" scheme="https://lesley0416.github.io/tags/decorator/"/>
     
       <category term="设计模式" scheme="https://lesley0416.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
@@ -470,11 +469,11 @@
     
       <category term="LeetCode" scheme="https://lesley0416.github.io/tags/LeetCode/"/>
     
+      <category term="数组" scheme="https://lesley0416.github.io/tags/%E6%95%B0%E7%BB%84/"/>
+    
       <category term="递归" scheme="https://lesley0416.github.io/tags/%E9%80%92%E5%BD%92/"/>
     
       <category term="recursion" scheme="https://lesley0416.github.io/tags/recursion/"/>
-    
-      <category term="数组" scheme="https://lesley0416.github.io/tags/%E6%95%B0%E7%BB%84/"/>
     
   </entry>
   
@@ -501,11 +500,11 @@
     
       <category term="LeetCode" scheme="https://lesley0416.github.io/tags/LeetCode/"/>
     
+      <category term="数组" scheme="https://lesley0416.github.io/tags/%E6%95%B0%E7%BB%84/"/>
+    
       <category term="递归" scheme="https://lesley0416.github.io/tags/%E9%80%92%E5%BD%92/"/>
     
       <category term="recursion" scheme="https://lesley0416.github.io/tags/recursion/"/>
-    
-      <category term="数组" scheme="https://lesley0416.github.io/tags/%E6%95%B0%E7%BB%84/"/>
     
   </entry>
   
