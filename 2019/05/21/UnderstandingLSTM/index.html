@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="pufZm21A3BmHUXXeFbh5D4nwCt7ZDl8GQkMO23QOsJc">
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="kygZ90QCYp">
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="翻译自 Understanding LSTM Networks 部分内容有点直译，领会精神，，，">
+<meta name="keywords" content="LSTM,RNN,循环神经网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】Understanding LSTM Networks">
+<meta property="og:url" content="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/index.html">
+<meta property="og:site_name" content="Lesley&#39;s blog">
+<meta property="og:description" content="翻译自 Understanding LSTM Networks 部分内容有点直译，领会精神，，，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/RNN-rolled.png">
+<meta property="og:image" content="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/RNN-unrolled.png">
+<meta property="og:image" content="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/RNN-shorttermdepdencies.png">
+<meta property="og:image" content="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/RNN-longtermdependencies.png">
+<meta property="og:image" content="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/LSTM3-SimpleRNN.png">
+<meta property="og:image" content="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/LSTM3-chain.png">
+<meta property="og:image" content="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/LSTM2-notation.png">
+<meta property="og:image" content="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/LSTM3-C-line.png">
+<meta property="og:image" content="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/LSTM3-gate.png">
+<meta property="og:image" content="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/LSTM3-focus-f.png">
+<meta property="og:image" content="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/LSTM3-focus-i.png">
+<meta property="og:image" content="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/LSTM3-focus-temp.png">
+<meta property="og:image" content="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/LSTM3-focus-temp2.png">
+<meta property="og:image" content="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/LSTM3-var-peepholes.png">
+<meta property="og:image" content="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/LSTM3-var-tied.png">
+<meta property="og:image" content="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/LSTM3-var-GRU.png">
+<meta property="og:updated_time" content="2019-05-21T07:27:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】Understanding LSTM Networks">
+<meta name="twitter:description" content="翻译自 Understanding LSTM Networks 部分内容有点直译，领会精神，，，">
+<meta name="twitter:image" content="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/RNN-rolled.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Lesley's blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【译】Understanding LSTM Networks | Lesley's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/lesley0416" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lesley's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home //首页"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user //关于"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags //标签"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th //分类"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive //归档"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lesley Shi">
+      <meta itemprop="description" content="fighting~~~">
+      <meta itemprop="image" content="/image/touxiang.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lesley's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【译】Understanding LSTM Networks
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-21 14:27:50 / 修改时间：15:27:30" itemprop="dateCreated datePublished" datetime="2019-05-21T14:27:50+08:00">2019-05-21</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/05/21/UnderstandingLSTM/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/05/21/UnderstandingLSTM/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/05/21/UnderstandingLSTM/" class="leancloud_visitors" data-flag-title="【译】Understanding LSTM Networks">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>翻译自 <a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="noopener">Understanding LSTM Networks</a></p>
+<p>部分内容有点直译，领会精神，，，</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="循环神经网络"><a href="#循环神经网络" class="headerlink" title="循环神经网络"></a>循环神经网络</h1><p>人类不会每秒都从头开始新的想法。正如阅读这篇文章时，我们会基于对上文的理解，去理解当前的文字。我们不会抛开所有去重新开始理解。也就是说，我们的思考是具有连续性的。</p>
+<p>传统的神经网络的一个主要缺点就是做不到“具有持续性”这一点。例如，假设我们想要对电影中某个时间点所发生的事件进行分类，目前，我们尚不清楚如何使用传统的神经网络，来完成“利用该时间点的前续内容进行推导并得到后续时间点发生的事情”这一过程。</p>
+<p>循环神经网络（RNN，Recurrent Neural Networks）解决了这个问题。RNN是带有循环的网络，允许信息的持久化。</p>
+<p><img src="/2019/05/21/UnderstandingLSTM/RNN-rolled.png" style="zoom:50%"></p>
+<p>图示为带有循环的RNN。</p>
+<p>在上图中，神经网络的一个chunk, $A$，接受输入$x_t$，并输出$h_t$。循环允许信息从网络中的一个步骤传递到下一个步骤。</p>
+<p>这些循环使得RNN看起来有点神秘。但事实上，RNN并不是完全不同于普通的神经网络。RNN可以认为是同一个网络的多个副本，每一个副本都将信息传递给下一个。想象，如果将RNN的循环展开，如下图：</p>
+<p><img src="/2019/05/21/UnderstandingLSTM/RNN-unrolled.png" style="zoom:50%"></p>
+<p>图示为展开的RNN。</p>
+<p>这种链式结构表明，RNN和序列及列表密切相关，是用于序列及列表结构数据的神经网络的一种自然结构。</p>
+<p>在过去几年里，RNN在很多问题上都有令人难以置信的成功应用，如语音识别、语言模型、机器翻译、图像字幕等等。关于RNN效果的讨论可以参考Andrej Karpathy的文章，<a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/" target="_blank" rel="noopener">The Unreasonable Effectiveness of Recurrent Neural Networks</a> 。</p>
+<p>RNN取得上述成功的关键在于LSTM的使用，LSTM是RNN中的一个特殊结构，在很多任务上，都优于普通的RNN。RNN上几乎所有难以置信的效果有是基于LSTM实现的。本文将对LSTM进行探讨。</p>
+<h1 id="长期依赖问题"><a href="#长期依赖问题" class="headerlink" title="长期依赖问题"></a>长期依赖问题</h1><p>RNN的诉求之一就是能够将先前的信息连接到当前任务，如通过先前的视频片段可以理解当前的视频片段。如果RNN可以做到这一点，那网络将会非常有效。RNN是否可以呢？视情况而定。</p>
+<p>有时，我们只需要通过最近的信息就可以完成当前的任务。例如，对于一个通过前一个词来预测下一个词的语言模型。如果我们希望预测<code>the clouds are in the sky</code>这句话的最后一个单词<code>sky</code>，我们不需要更多的上下文，很明显最后一个单词就应该是<code>sky</code>。在这种情况下，相关信息之间的距离很小，RNN可以学到过去的信息并加以使用。</p>
+<p><img src="/2019/05/21/UnderstandingLSTM/RNN-shorttermdepdencies.png" style="zoom:30%"></p>
+<p>但是也有一些需要更多上下文的情况。假设我们希望预测片段<code>I grew up in France… I speak fluent French.</code>的最后一个单词。通过距离最近的信息我们可以推测最后一个词可能是一种语言的名称，但如果我们想确定到底是哪一种语言，就需要距离更远的关于<code>France</code>的上文信息。可见，相关信息之间的距离以及所需的信息点跨度是完全有可能非常大的。</p>
+<p>不幸的是，随着跨度的增大，RNN对于先前信息的感知能力会下降。</p>
+<p><img src="/2019/05/21/UnderstandingLSTM/RNN-longtermdependencies.png" style="zoom:30%"></p>
+<p>理论上，RNN绝对可以处理这种长期依赖问题。我们可以通过仔细的调整相应参数来解决这种形式的小问题。但很不幸，在实践中，RNN似乎不能很好的处理这类情况。关于这个问题，<a href="http://people.idsia.ch/~juergen/SeppHochreiter1991ThesisAdvisorSchmidhuber.pdf" target="_blank" rel="noopener">Hochreiter(1991)[German]</a> 和 <a href="http://ai.dinfo.unifi.it/paolo/ps/tnn-94-gradient.pdf" target="_blank" rel="noopener">Bengio, et al. (1994)</a> 已经进行了深入的探讨，并发现了RNN之所以难以解决该类问题的一些很根本的原因。</p>
+<p>好在，LSTM并没有上述问题。</p>
+<h1 id="LSTM网络"><a href="#LSTM网络" class="headerlink" title="LSTM网络"></a>LSTM网络</h1><p>长短时记忆网络（Long Short Term Memory networks，LSTM）是RNN的一种特例，能够解决长期依赖的问题。LSTM由 <a href="http://www.bioinf.jku.at/publications/older/2604.pdf" target="_blank" rel="noopener">Hochreiter &amp; Schmidhuber (1997)</a> 提出，并在之后的工作中被大家扩展及推广。LSTM在很多问题上表现都非常好，因此被广泛使用。</p>
+<p>LSTM是明确为了避免长期依赖的问题而设计的。对信息的长时间记录是LSTM的默认行为，而不需要进行努力的学习来获取。</p>
+<p>所有的RNN都有链式的形式来重复神经网络的某个模块。在标准的RNN中，这个重复的模块可能结构非常简单，例如只是一个$tanh​$层。</p>
+<p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-SimpleRNN.png" style="zoom:30%"></p>
+<p>图示：标准RNN中的重复模块包含一个单一的tanh层</p>
+<p>LSTM也有这种链式结构，但是其中重复模块的结构相对复杂。不再是一个单一的神经网络层，而是四个，以一种非常特殊的形式进行交互。</p>
+<p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-chain.png" style="zoom:30%"></p>
+<p>图示：LSTM的重复模块包含四个交互层</p>
+<p>不用担心细节是如何进行的。我们后面会一步一步了解LSTM。现在，先熟悉接下来即将使用到的一些符号。</p>
+<p><img src="/2019/05/21/UnderstandingLSTM/LSTM2-notation.png" style="zoom:50%"></p>
+<p>在上图中，从一个节点的输出到另一个节点的输入，每一行都有一个完整的向量。粉色圆圈表示点态操作（点态指向量计算后得到的向量），如向量加法，黄色方框表示神经网络层。箭头合并表示向量合并，箭头分叉表示向量复制到不同位置。</p>
+<h1 id="LSTMs背后的核心思想"><a href="#LSTMs背后的核心思想" class="headerlink" title="LSTMs背后的核心思想"></a>LSTMs背后的核心思想</h1><p>LSTMs的关键在于<code>cell state</code>（细胞状态？），即下图横穿顶部的水平线。</p>
+<p><strong>Cell state</strong>像传送带一样，横穿整个链路，但只有很少的线性交互。所以信息可以很容易的传递并且不被改变。</p>
+<p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-C-line.png" style="zoom:50%"></p>
+<p>LSTM可以从cell state上添加或删除信息，这种功能是由一种叫<code>gates</code>的结构仔细调控的。</p>
+<p><strong>Gates</strong>是一种选择性让信息通过的方法，由一个sigmoid神经网络层和一个点态乘法操作组成。</p>
+<p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-gate.png" style="zoom:50%"></p>
+<p><strong>sigmoid层</strong>输出值在0~1之间，描述了每个组件可以通过多少。0表示全部不许通过，1表示全部可以通过。</p>
+<p>一个LSTM有三个这样的gates，来保护和控制cell state。</p>
+<h1 id="LSTM的详细原理"><a href="#LSTM的详细原理" class="headerlink" title="LSTM的详细原理"></a>LSTM的详细原理</h1><p>LSTM的第一步是<strong>决定要哪些信息可以继续通过cell state（就是决定丢掉哪些信息）</strong>。这个决定是由一个叫做<strong>遗忘门，forget gate layer</strong>的sigmoid层决定的。遗忘门的输入是$h_{t-1}$和$x_t $，输出一个0~1之间的值（输出内容是一个和$C_{t-1}$同维度的0/1向量），表示在cell state $C_{t-1}$ 中每部分内容通过的比重。1表示全部保留，0表示全部放弃。</p>
+<p>回到上文我们提到的基于<strong>所有</strong>前文来预测接下来内容的语言模型的例子。在这个问题中，cell state 可以包含当前主语的性别信息（<strong>保留信息</strong>），所以可以使用正确的代词。当我们开始一个新的主语时，我们会想要忘掉前一个主语的性别信息（<strong>遗忘信息</strong>）。</p>
+<p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-focus-f.png" style="zoom:40%"></p>
+<p>接下来的一步是决定<strong>要在cell state中新增哪些信息</strong>。主要包括两部分。首先，由一个叫做<strong>input gate layer</strong>的sigmoid层决定要更新哪些维度的信息。还有一个<strong>tanh层</strong>生成一个新的可以被新增到state中的候选向量$\tilde{C}_t​$。之后，我们将这两层进行合并，从而对state进行更新。</p>
+<p>在我们的语言模型的例子中，我们将新主语的性别信息加入到cell state中，替代遗忘掉的旧的性别信息。</p>
+<p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-focus-i.png" style="zoom:40%"></p>
+<p>现在，我们将旧的cell state，更新到新的 cell state，即把$C_{t-1}$ 更新为$C_t$。上述步骤已经描述了具体要做的内容，只需要实际实现即可。</p>
+<p>我们将<strong>旧的state乘以 $f_t$ </strong>，来遗忘掉决定忘掉的内容。然后<strong>再加上 $i_t\times \tilde{C}_t$ </strong>，这是新的候选向量，取决于我们决定对state值更新多少。</p>
+<p>在语言模型的例子中，就是我们要丢掉旧主语的性别信息，并且按照上述步骤所描述的，添加新的性别信息。</p>
+<p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-focus-temp.png" style="zoom:40%"></p>
+<p>最后，我们需要决定将要输出什么。输出取决于cell state，但是是一个过滤后的版本。首先，我们通过一个sigmoid层（<strong>output gate</strong>）决定要输出cell state的哪些部分，以及对应的比例。然后，将cell state通过一个tanh层（将值映射到-1~1之间）后，和sigmoid层的输出相乘，从而得到我们想要的输出。</p>
+<p>对于语言模型的例子中，当刚刚看到一个主语的时候，接下来想要输出一个动词的时候，这个动词就和主语的信息相关了。例如，根据主语是单数还是复数形式，来决定动词应该采用什么格式来加入到后续内容中。</p>
+<p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-focus-temp2.png" style="zoom:40%"></p>
+<h1 id="LSTM的变种"><a href="#LSTM的变种" class="headerlink" title="LSTM的变种"></a>LSTM的变种</h1><p>到目前为止所描述的都是普通的LSTM。但是，不是所有的LSTMs都和上文描述的一样。实际上，每篇涉及到LSTMs的论文，都会有一些轻微的改动。通常改动都很小，但也有必要了解一些。</p>
+<p>一个流行的LSTM变种，是由<a href="ftp://ftp.idsia.ch/pub/juergen/TimeCount-IJCNN2000.pdf" target="_blank" rel="noopener">Gers &amp; Schmidhuber (2000)</a> 提出的，加入了一个<code>peephole connections</code>。意味着，每一个gate层，都可以用cell state做输入。</p>
+<p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-var-peepholes.png" style="zoom:40%"></p>
+<p>上图对所有的gates都增加了peepholes，但是在很多论文中，是对有些门加peepholes，有些门不加。</p>
+<p>另一个变种是将遗忘门和输入门组合使用。不同于单独决定要遗忘和要新增的信息，而是将两个信息放在一起决定。只有当某个维度有新信息加入时，才需要遗忘掉旧的信息。只有当遗忘掉旧的信息时，才新增新的信息。</p>
+<p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-var-tied.png" style="zoom:40%"></p>
+<p>LSTM另一个更厉害的变种是<strong>门控循环单元GRU（Gated Recurrent Unit）</strong>，由<a href="https://arxiv.org/pdf/1406.1078v3.pdf" target="_blank" rel="noopener">Cho, et al. (2014)</a> 提出。GRU将遗忘门和输入门组合成一个单独的更新门<strong>update gate</strong>。同时，将cell state和隐藏状态hidden state进行合并，并做了一些其他修改。最终得到的模型要比标准的LSTM模型更简单，并且广受欢迎。</p>
+<p>在GRU中，只有两个门：<strong>重置门“reset gate”和更新门“update gate”</strong>。</p>
+<p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-var-GRU.png" style="zoom:40%"></p>
+<p>上图中，$r_t$  表示重置门，$z_t$ 表示更新门。重置门决定是否将之前的state遗忘。当 $r_t$ 趋于0的时候，前一个时刻的state信息 $h_{t-1}$ 会被遗忘，隐藏状态 $\tilde{h}_t$ 会被重置为当前的输入信息。更新门决定是否要将隐藏状态更新为新的状态 $\tilde{h}_t$ ，作用相当于合并了LSTM中的遗忘门和输入门。</p>
+<p><strong>GRU和LSTM简单比较一下：</strong></p>
+<ol>
+<li>GRU少一个门，同时也少了cell state  $C_t$ ；</li>
+<li>在LSTM中，通过遗忘门和输入门控制信息的遗忘和输入；GRU则通过重置门来控制是否要保留原来hidden state的信息，但是不再限制当前信息的输入；</li>
+<li>在LSTM中，虽然得到了新的cell state  $C_t$ ，但是不能直接输出，而是要经过一个过滤处理；同样，在GRU中，虽然也得到了新的hidden state  $\tilde{h}_t$ ，但是不能直接输出，而是通过更新门来控制最后的输出。</li>
+</ol>
+<p>这些只是LSTM的几个有名的变种。还有很多其他变种，如<a href="https://arxiv.org/pdf/1508.03790v2.pdf" target="_blank" rel="noopener">Depth Gated RNNs by Yao, et al. (2015)</a> 。也有一些完全不同的处理长期依赖问题的方法，如<a href="https://arxiv.org/pdf/1402.3511v1.pdf" target="_blank" rel="noopener">Clockwork RNNs by Koutnik, et al. (2014)</a> 。</p>
+<p>哪种变种更好呢？这些不同有什么影响呢？<a href="https://arxiv.org/pdf/1503.04069.pdf" target="_blank" rel="noopener">Greff, et al. (2015)</a> 对这些流行的变种进行了非常好的对比，发现他们都是一致的。<a href="http://proceedings.mlr.press/v37/jozefowicz15.pdf" target="_blank" rel="noopener">Jozefowicz, et al. (2015)</a> 在测试了一万多种RNN结构后，发现其中一些在特定任务上效果要好于LSTMs（该论文值得推荐）。</p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>在上文提到的一些使用RNN达到的非常显著的成果。本质上都是通过LSTMs实现的。在很多任务上，LSTM确实表现非常好。</p>
+<p>LSTM的一系列公式看起来很吓人，希望通过本文的逐步解释能使其便于理解一些。</p>
+<p>LSTMs是RNNs的一个巨大进步。很自然的想到，是否有另一个巨大进步？研究者的普遍共识是：有，确实有下一步，就是 <strong>attention</strong>。<strong>Attention的思想是让RNN的每一步都从一些更大的信息集合中采集信息</strong>。例如，如果你使用RNN来为图片创造标题时，可能会选择部分图片来查找其输出的每一个词。实际上，<a href="https://arxiv.org/pdf/1502.03044v2.pdf" target="_blank" rel="noopener">Xu, et al. (2015)</a> 做了这部分工作，如果想要了解attention的话，这篇论文可以作为一个很好的起点。已经有很多使用attention得到很好效果的应用，但大部分似乎是比较偏僻的方向。</p>
+<p>Attention并不是RNN研究的唯一兴奋点。例如，<a href="https://arxiv.org/pdf/1507.01526v1.pdf" target="_blank" rel="noopener">Kalchbrenner, et al. (2015)</a> 提出的Grid LSTMs似乎也很有前途。另外，在生成式模型中使用RNN，如 <a href="https://arxiv.org/pdf/1502.04623.pdf" target="_blank" rel="noopener">Gregor, et al. (2015)</a> 、<a href="https://arxiv.org/pdf/1506.02216v3.pdf" target="_blank" rel="noopener">Chung, et al. (2015)</a> 或者 <a href="https://arxiv.org/pdf/1411.7610v3.pdf" target="_blank" rel="noopener">Bayer &amp; Osendorfer (2015)</a> ，看起来也很有趣。过去几年是RNN令人兴奋的时期，接下来几年相信会更好。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+  
+</div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/LSTM/" rel="tag"><i class="fa fa-tag"></i> LSTM</a>
+          
+            <a href="/tags/RNN/" rel="tag"><i class="fa fa-tag"></i> RNN</a>
+          
+            <a href="/tags/循环神经网络/" rel="tag"><i class="fa fa-tag"></i> 循环神经网络</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/04/leetcode_explore_array_string/" rel="next" title="【LeetCode】Explore：Array & String 数组 & 字符串">
+                <i class="fa fa-chevron-left"></i> 【LeetCode】Explore：Array & String 数组 & 字符串
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/29/TSF/" rel="prev" title="拼音输入法实现&文本服务框架TSF相关知识点记录">
+                拼音输入法实现&文本服务框架TSF相关知识点记录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/image/touxiang.JPG" alt="Lesley Shi">
+            
+              <p class="site-author-name" itemprop="name">Lesley Shi</p>
+              <p class="site-description motion-element" itemprop="description">fighting~~~</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:shilixin16@163.com" title="E-Mail &rarr; mailto:shilixin16@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#循环神经网络"><span class="nav-number">1.</span> <span class="nav-text">循环神经网络</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#长期依赖问题"><span class="nav-number">2.</span> <span class="nav-text">长期依赖问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LSTM网络"><span class="nav-number">3.</span> <span class="nav-text">LSTM网络</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LSTMs背后的核心思想"><span class="nav-number">4.</span> <span class="nav-text">LSTMs背后的核心思想</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LSTM的详细原理"><span class="nav-number">5.</span> <span class="nav-text">LSTM的详细原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LSTM的变种"><span class="nav-number">6.</span> <span class="nav-text">LSTM的变种</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结论"><span class="nav-number">7.</span> <span class="nav-text">结论</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lesley Shi</span>
+
+  
+
+  
+</div>
+
+<!-- 隐藏底部 由hexo强力驱动，主题next
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+-->
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共78.2k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+  
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+
+<script src="//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'rj24gpfj5X7r5bXpsBTb1Hm5-gzGzoHsz',
+    appKey: 'tkke5f1SGYEVh8claojD4gVU',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+</script>
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+  <script>
+    
+    
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

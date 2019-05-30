@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="pufZm21A3BmHUXXeFbh5D4nwCt7ZDl8GQkMO23QOsJc">
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="kygZ90QCYp">
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="斯坦福cs224n-2017 winter笔记 课程链接 难度：简单">
+<meta name="keywords" content="cs224n,深度学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cs224n-2017笔记：第一讲 Introduction to NLP and Deep Learning">
+<meta property="og:url" content="https://lesley0416.github.io/2019/03/04/cs224n_2017-1/index.html">
+<meta property="og:site_name" content="Lesley&#39;s blog">
+<meta property="og:description" content="斯坦福cs224n-2017 winter笔记 课程链接 难度：简单">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/04/cs224n_2017-1/plan.jpg">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/04/cs224n_2017-1/levels.jpg">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/04/cs224n_2017-1/ml.jpg">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/04/cs224n_2017-1/history.jpg">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/04/cs224n_2017-1/morphemes_ml.jpg">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/04/cs224n_2017-1/morphemes_dl.jpg">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/04/cs224n_2017-1/parsing.jpg">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/04/cs224n_2017-1/lambda_calculus.jpg">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/04/cs224n_2017-1/semantics_dl.jpg">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/04/cs224n_2017-1/sentiment_analysis.jpg">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/04/cs224n_2017-1/qa_ml.jpg">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/04/cs224n_2017-1/qa_dl.jpg">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/04/cs224n_2017-1/nlm.jpg">
+<meta property="og:image" content="https://lesley0416.github.io/2019/03/04/cs224n_2017-1/nmt.jpg">
+<meta property="og:updated_time" content="2019-05-30T06:22:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cs224n-2017笔记：第一讲 Introduction to NLP and Deep Learning">
+<meta name="twitter:description" content="斯坦福cs224n-2017 winter笔记 课程链接 难度：简单">
+<meta name="twitter:image" content="https://lesley0416.github.io/2019/03/04/cs224n_2017-1/plan.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Lesley's blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="https://lesley0416.github.io/2019/03/04/cs224n_2017-1/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>cs224n-2017笔记：第一讲 Introduction to NLP and Deep Learning | Lesley's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/lesley0416" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lesley's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home //首页"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user //关于"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags //标签"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th //分类"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive //归档"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lesley0416.github.io/2019/03/04/cs224n_2017-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lesley Shi">
+      <meta itemprop="description" content="fighting~~~">
+      <meta itemprop="image" content="/image/touxiang.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lesley's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">cs224n-2017笔记：第一讲 Introduction to NLP and Deep Learning
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-04 21:30:50" itemprop="dateCreated datePublished" datetime="2019-03-04T21:30:50+08:00">2019-03-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-30 14:22:26" itemprop="dateModified" datetime="2019-05-30T14:22:26+08:00">2019-05-30</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/cs224n-2017/" itemprop="url" rel="index"><span itemprop="name">cs224n-2017</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/03/04/cs224n_2017-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/03/04/cs224n_2017-1/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/03/04/cs224n_2017-1/" class="leancloud_visitors" data-flag-title="cs224n-2017笔记：第一讲 Introduction to NLP and Deep Learning">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>斯坦福cs224n-2017 winter笔记</p>
+<p><a href="https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1174/syllabus.html" target="_blank" rel="noopener">课程链接</a></p>
+<p>难度：简单</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h1><p><img src="/2019/03/04/cs224n_2017-1/plan.jpg"></p>
+<h1 id="什么是NLP"><a href="#什么是NLP" class="headerlink" title="什么是NLP"></a>什么是NLP</h1><p>自然语言处理（NLP）是一门计算机科学、人工智能和语言学的交叉学科。</p>
+<p>NLP的目的是处理或者“理解”自然语言，从而完成一些有意义的任务，如订票、购物、QA等等。</p>
+<p>完全理解和表达语言的意思是非常困难的，perfect language understanding is AI-complete。</p>
+<h2 id="NLP涉及的层次"><a href="#NLP涉及的层次" class="headerlink" title="NLP涉及的层次"></a>NLP涉及的层次</h2><p><img src="/2019/03/04/cs224n_2017-1/levels.jpg"></p>
+<p>输入主要有两个来源：语音和文本。所以第一级是语音识别和OCR或分词，接下来是形态学，再下面是句法分析和语义分析，最后是discourse processing，需要根据上文语境理解下文。</p>
+<p>这门课主要集中在画圈的三个部分，中间的两个最为重要。</p>
+<h2 id="NLP应用"><a href="#NLP应用" class="headerlink" title="NLP应用"></a>NLP应用</h2><p>一个小子集：拼写检查、关键词检索、文本挖掘、文本分类、机器翻译、复杂对话系统等。</p>
+<p>在工业界的应用，包括搜索、广告投放、自动/辅助翻译、情感/舆情分析、语音识别、聊天机器人等等。</p>
+<h2 id="人类语言的特殊之处"><a href="#人类语言的特殊之处" class="headerlink" title="人类语言的特殊之处"></a>人类语言的特殊之处</h2><p>人类语言是离散的、明确的符号系统，但又允许出现各种变种（如颜文字、随意的拼写错误等）。</p>
+<p>语言符号有多种形式，但不同的形式中意义保持不变。</p>
+<p>虽然人类语言是明确的符号系统，但是大脑编码似乎是连续的激活值上的模式，符号传输到大脑的过程是通过连续的声光信号。另外，巨大的词表会导致数据稀疏（sparsity），不利于机器学习，所以我们希望去探索一种连续编码的模式。</p>
+<h1 id="什么是DL"><a href="#什么是DL" class="headerlink" title="什么是DL"></a>什么是DL</h1><p>深度学习（DL）是机器学习的一个子集。</p>
+<p>传统的机器学习方法，大多是人类对专业问题理解很透彻，然后人工设计输入特征，比如地名和机构名识别的特征模板（Finkel et al., 2010）。之后将特征交给某个机器学习算法，比如线性分类器等，算法为这些特征找到合适的权重，将误差优化到最小。</p>
+<p><img src="/2019/03/04/cs224n_2017-1/ml.jpg"></p>
+<p>在这个过程中，是人类一直在学习，而机器只是进行了数值优化的工作。</p>
+<p>而<strong>深度学习是表示学习的一部分，试图自动的学习原始输入的多层特征表示。</strong></p>
+<h2 id="DL的历史"><a href="#DL的历史" class="headerlink" title="DL的历史"></a>DL的历史</h2><p><img src="/2019/03/04/cs224n_2017-1/history.jpg"></p>
+<h2 id="为啥研究DL"><a href="#为啥研究DL" class="headerlink" title="为啥研究DL"></a>为啥研究DL</h2><h2 id="语音识别中的DL"><a href="#语音识别中的DL" class="headerlink" title="语音识别中的DL"></a>语音识别中的DL</h2><p>突破性研究参考 <a href="https://s3.amazonaws.com/academia.edu.documents/34691735/dbn4lvcsr-transaslp.pdf?AWSAccessKeyId=AKIAIWOWYYGZ2Y53UL3A&amp;Expires=1559198118&amp;Signature=8zpJsrWYA5L5Dtp8zFN2DQAXnB0%3D&amp;response-content-disposition=inline%3B%20filename%3DContext-Dependent_Pre-Trained_Deep_Neura.pdf" target="_blank" rel="noopener">Context-Dependent Pre-Trained Deep Neural Networks for Large-Vocabulary Speech Recognition</a></p>
+<h2 id="计算机视觉中的DL"><a href="#计算机视觉中的DL" class="headerlink" title="计算机视觉中的DL"></a>计算机视觉中的DL</h2><p>突破性研究参考 <a href="http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf" target="_blank" rel="noopener">ImageNet Classification with Deep Convolutional Neural Networks</a></p>
+<h1 id="为什么NLP很难"><a href="#为什么NLP很难" class="headerlink" title="为什么NLP很难"></a>为什么NLP很难</h1><p>人类语言充满歧义，人类语言的解读依赖于现实世界、常识以及上下文等。</p>
+<h1 id="Deep-NLP-Deep-Learning-NLP"><a href="#Deep-NLP-Deep-Learning-NLP" class="headerlink" title="Deep NLP = Deep Learning + NLP"></a>Deep NLP = Deep Learning + NLP</h1><p>用深度学习的方法解决NLP问题，提高了很多方面的效果：</p>
+<ul>
+<li>层次：语音、词汇、语法、语义</li>
+<li>工具：词性标注、命名实体识别、句法分析</li>
+<li>应用：机器翻译、情感分析、对话系统、问答系统</li>
+</ul>
+<h2 id="NLP表示层级：形态级别"><a href="#NLP表示层级：形态级别" class="headerlink" title="NLP表示层级：形态级别"></a>NLP表示层级：形态级别</h2><p>传统方法在形态级别的表示是词素：</p>
+<p><img src="/2019/03/04/cs224n_2017-1/morphemes_ml.jpg"></p>
+<p>深度学习中把词素用向量表示，多个词素向量构成相同维度、语义更丰富的词向量：</p>
+<p><img src="/2019/03/04/cs224n_2017-1/morphemes_dl.jpg" style="zoom:60%"></p>
+<h2 id="NLP工具：句法分析"><a href="#NLP工具：句法分析" class="headerlink" title="NLP工具：句法分析"></a>NLP工具：句法分析</h2><p><img src="/2019/03/04/cs224n_2017-1/parsing.jpg"></p>
+<p>神经网络能够准确的进行句法分析，判断句子结构，参考 <a href="https://www.aclweb.org/anthology/D14-1082" target="_blank" rel="noopener">A Fast and Accurate Dependency Parser using Neural Networks</a> </p>
+<h2 id="NLP表示层级：语义级别"><a href="#NLP表示层级：语义级别" class="headerlink" title="NLP表示层级：语义级别"></a>NLP表示层级：语义级别</h2><p>传统方法是手写的大量规则函数，称为<code>Lambda calculus</code>，没有语言的相似性或模糊性的概念：</p>
+<p><img src="/2019/03/04/cs224n_2017-1/lambda_calculus.jpg" style="zoom:50%"></p>
+<p>深度学习中，每个词、短语和逻辑表达都是向量，神经网络进行向量合并：</p>
+<p><img src="/2019/03/04/cs224n_2017-1/semantics_dl.jpg" style="zoom:60%"></p>
+<h2 id="NLP应用：情感分析"><a href="#NLP应用：情感分析" class="headerlink" title="NLP应用：情感分析"></a>NLP应用：情感分析</h2><p>传统方法是通过大量的人工搜集情感极性词典，在词袋模型上做分类器。</p>
+<p>深度学习使用RNN解决这个问题（同样可用于形态学、语法、逻辑语义问题）：</p>
+<p><img src="/2019/03/04/cs224n_2017-1/sentiment_analysis.jpg"></p>
+<p>上图并不是RNN的工作流程，仅是为了方便理解。</p>
+<h2 id="NLP应用：QA系统"><a href="#NLP应用：QA系统" class="headerlink" title="NLP应用：QA系统"></a>NLP应用：QA系统</h2><p>传统方法是通过总结大量的特征工程，编写大量逻辑规则，如正则表达式之类：</p>
+<p><img src="/2019/03/04/cs224n_2017-1/qa_ml.jpg"></p>
+<p>深度学习方法仍然采用和前面提到的类似的深度学习框架，将事实存储在向量中：</p>
+<p><img src="/2019/03/04/cs224n_2017-1/qa_dl.jpg"></p>
+<h2 id="NLP应用：对话系统"><a href="#NLP应用：对话系统" class="headerlink" title="NLP应用：对话系统"></a>NLP应用：对话系统</h2><p>一个成功的案例是Gmail的自动回复系统。</p>
+<p>这是神经语言模型（Neural Language Models）的一次成功应用，神经语言模型是基于RNN的：</p>
+<p><img src="/2019/03/04/cs224n_2017-1/nlm.jpg" style="zoom:50%"></p>
+<h2 id="NLP应用：机器翻译"><a href="#NLP应用：机器翻译" class="headerlink" title="NLP应用：机器翻译"></a>NLP应用：机器翻译</h2><p>传统方法在很多层级上都做过尝试，传统的MT系统是非常庞大复杂的，并且有试图寻找一种通用的中介语来作为源语和目标语之间的桥梁。</p>
+<p>而深度学习方法，即神经机器翻译（Neural Machine Translation，NMT），将源语映射为向量，然后由向量构造目标语（参考<a href="https://arxiv.org/abs/1409.3215" target="_blank" rel="noopener">Sutskever et al. 2014</a>，<a href="https://arxiv.org/abs/1409.0473" target="_blank" rel="noopener">Bahdanau et al. 2014</a>，<a href="https://arxiv.org/abs/1604.00788" target="_blank" rel="noopener">Luong and Manning 2016</a>）：</p>
+<p><img src="/2019/03/04/cs224n_2017-1/nmt.jpg"></p>
+<h2 id="总结：所有层级表示都是向量"><a href="#总结：所有层级表示都是向量" class="headerlink" title="总结：所有层级表示都是向量"></a>总结：所有层级表示都是向量</h2><p>深度学习的根本强项在于，将所有的语言形式用向量表达，通过一些变形操作又可以将向量变成矩阵或更高阶的阵列（即张量tensor），所以向量是一种具有强大表达能力的灵活的数据结构。</p>
+<h1 id="附"><a href="#附" class="headerlink" title="附"></a>附</h1><p>词向量，一般想正经做点儿东西的话，怎么也得300维、1000维或者更多维这样的级别。</p>
+<p>试图将词向量按照高维空间表示的含义映射到二维空间上的常用方法：PCA（主成分分析），t-SNE（一种非线性降维），但低维投影还是会遗漏大量信息。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+  
+</div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/cs224n/" rel="tag"><i class="fa fa-tag"></i> cs224n</a>
+          
+            <a href="/tags/深度学习/" rel="tag"><i class="fa fa-tag"></i> 深度学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/04/leetcode_599/" rel="next" title="【LeetCode】599、两个列表的最小索引总和">
+                <i class="fa fa-chevron-left"></i> 【LeetCode】599、两个列表的最小索引总和
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/04/jupyter_timeit/" rel="prev" title="%time,%timeit魔法命令">
+                %time,%timeit魔法命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/image/touxiang.JPG" alt="Lesley Shi">
+            
+              <p class="site-author-name" itemprop="name">Lesley Shi</p>
+              <p class="site-description motion-element" itemprop="description">fighting~~~</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:shilixin16@163.com" title="E-Mail &rarr; mailto:shilixin16@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主要内容"><span class="nav-number">1.</span> <span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是NLP"><span class="nav-number">2.</span> <span class="nav-text">什么是NLP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#NLP涉及的层次"><span class="nav-number">2.1.</span> <span class="nav-text">NLP涉及的层次</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NLP应用"><span class="nav-number">2.2.</span> <span class="nav-text">NLP应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#人类语言的特殊之处"><span class="nav-number">2.3.</span> <span class="nav-text">人类语言的特殊之处</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是DL"><span class="nav-number">3.</span> <span class="nav-text">什么是DL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DL的历史"><span class="nav-number">3.1.</span> <span class="nav-text">DL的历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为啥研究DL"><span class="nav-number">3.2.</span> <span class="nav-text">为啥研究DL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语音识别中的DL"><span class="nav-number">3.3.</span> <span class="nav-text">语音识别中的DL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机视觉中的DL"><span class="nav-number">3.4.</span> <span class="nav-text">计算机视觉中的DL</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么NLP很难"><span class="nav-number">4.</span> <span class="nav-text">为什么NLP很难</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Deep-NLP-Deep-Learning-NLP"><span class="nav-number">5.</span> <span class="nav-text">Deep NLP = Deep Learning + NLP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#NLP表示层级：形态级别"><span class="nav-number">5.1.</span> <span class="nav-text">NLP表示层级：形态级别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NLP工具：句法分析"><span class="nav-number">5.2.</span> <span class="nav-text">NLP工具：句法分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NLP表示层级：语义级别"><span class="nav-number">5.3.</span> <span class="nav-text">NLP表示层级：语义级别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NLP应用：情感分析"><span class="nav-number">5.4.</span> <span class="nav-text">NLP应用：情感分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NLP应用：QA系统"><span class="nav-number">5.5.</span> <span class="nav-text">NLP应用：QA系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NLP应用：对话系统"><span class="nav-number">5.6.</span> <span class="nav-text">NLP应用：对话系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NLP应用：机器翻译"><span class="nav-number">5.7.</span> <span class="nav-text">NLP应用：机器翻译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结：所有层级表示都是向量"><span class="nav-number">5.8.</span> <span class="nav-text">总结：所有层级表示都是向量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附"><span class="nav-number">6.</span> <span class="nav-text">附</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lesley Shi</span>
+
+  
+
+  
+</div>
+
+<!-- 隐藏底部 由hexo强力驱动，主题next
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+-->
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共78.2k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+  
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+
+<script src="//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'rj24gpfj5X7r5bXpsBTb1Hm5-gzGzoHsz',
+    appKey: 'tkke5f1SGYEVh8claojD4gVU',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+</script>
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+  <script>
+    
+    
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
