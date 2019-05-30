@@ -78,7 +78,7 @@
     <link href="https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/"/>
     <id>https://lesley0416.github.io/2019/05/21/UnderstandingLSTM/</id>
     <published>2019-05-21T06:27:50.000Z</published>
-    <updated>2019-05-21T07:27:30.000Z</updated>
+    <updated>2019-05-30T15:27:03.171Z</updated>
     
     <content type="html"><![CDATA[<blockquote><p>翻译自 <a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="noopener">Understanding LSTM Networks</a></p><p>部分内容有点直译，领会精神，，，</p></blockquote><a id="more"></a><h1 id="循环神经网络"><a href="#循环神经网络" class="headerlink" title="循环神经网络"></a>循环神经网络</h1><p>人类不会每秒都从头开始新的想法。正如阅读这篇文章时，我们会基于对上文的理解，去理解当前的文字。我们不会抛开所有去重新开始理解。也就是说，我们的思考是具有连续性的。</p><p>传统的神经网络的一个主要缺点就是做不到“具有持续性”这一点。例如，假设我们想要对电影中某个时间点所发生的事件进行分类，目前，我们尚不清楚如何使用传统的神经网络，来完成“利用该时间点的前续内容进行推导并得到后续时间点发生的事情”这一过程。</p><p>循环神经网络（RNN，Recurrent Neural Networks）解决了这个问题。RNN是带有循环的网络，允许信息的持久化。</p><p><img src="/2019/05/21/UnderstandingLSTM/RNN-rolled.png" style="zoom:50%"></p><p>图示为带有循环的RNN。</p><p>在上图中，神经网络的一个chunk, $A$，接受输入$x_t$，并输出$h_t$。循环允许信息从网络中的一个步骤传递到下一个步骤。</p><p>这些循环使得RNN看起来有点神秘。但事实上，RNN并不是完全不同于普通的神经网络。RNN可以认为是同一个网络的多个副本，每一个副本都将信息传递给下一个。想象，如果将RNN的循环展开，如下图：</p><p><img src="/2019/05/21/UnderstandingLSTM/RNN-unrolled.png" style="zoom:50%"></p><p>图示为展开的RNN。</p><p>这种链式结构表明，RNN和序列及列表密切相关，是用于序列及列表结构数据的神经网络的一种自然结构。</p><p>在过去几年里，RNN在很多问题上都有令人难以置信的成功应用，如语音识别、语言模型、机器翻译、图像字幕等等。关于RNN效果的讨论可以参考Andrej Karpathy的文章，<a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/" target="_blank" rel="noopener">The Unreasonable Effectiveness of Recurrent Neural Networks</a> 。</p><p>RNN取得上述成功的关键在于LSTM的使用，LSTM是RNN中的一个特殊结构，在很多任务上，都优于普通的RNN。RNN上几乎所有难以置信的效果有是基于LSTM实现的。本文将对LSTM进行探讨。</p><h1 id="长期依赖问题"><a href="#长期依赖问题" class="headerlink" title="长期依赖问题"></a>长期依赖问题</h1><p>RNN的诉求之一就是能够将先前的信息连接到当前任务，如通过先前的视频片段可以理解当前的视频片段。如果RNN可以做到这一点，那网络将会非常有效。RNN是否可以呢？视情况而定。</p><p>有时，我们只需要通过最近的信息就可以完成当前的任务。例如，对于一个通过前一个词来预测下一个词的语言模型。如果我们希望预测<code>the clouds are in the sky</code>这句话的最后一个单词<code>sky</code>，我们不需要更多的上下文，很明显最后一个单词就应该是<code>sky</code>。在这种情况下，相关信息之间的距离很小，RNN可以学到过去的信息并加以使用。</p><p><img src="/2019/05/21/UnderstandingLSTM/RNN-shorttermdepdencies.png" style="zoom:30%"></p><p>但是也有一些需要更多上下文的情况。假设我们希望预测片段<code>I grew up in France… I speak fluent French.</code>的最后一个单词。通过距离最近的信息我们可以推测最后一个词可能是一种语言的名称，但如果我们想确定到底是哪一种语言，就需要距离更远的关于<code>France</code>的上文信息。可见，相关信息之间的距离以及所需的信息点跨度是完全有可能非常大的。</p><p>不幸的是，随着跨度的增大，RNN对于先前信息的感知能力会下降。</p><p><img src="/2019/05/21/UnderstandingLSTM/RNN-longtermdependencies.png" style="zoom:30%"></p><p>理论上，RNN绝对可以处理这种长期依赖问题。我们可以通过仔细的调整相应参数来解决这种形式的小问题。但很不幸，在实践中，RNN似乎不能很好的处理这类情况。关于这个问题，<a href="http://people.idsia.ch/~juergen/SeppHochreiter1991ThesisAdvisorSchmidhuber.pdf" target="_blank" rel="noopener">Hochreiter(1991)[German]</a> 和 <a href="http://ai.dinfo.unifi.it/paolo/ps/tnn-94-gradient.pdf" target="_blank" rel="noopener">Bengio, et al. (1994)</a> 已经进行了深入的探讨，并发现了RNN之所以难以解决该类问题的一些很根本的原因。</p><p>好在，LSTM并没有上述问题。</p><h1 id="LSTM网络"><a href="#LSTM网络" class="headerlink" title="LSTM网络"></a>LSTM网络</h1><p>长短时记忆网络（Long Short Term Memory networks，LSTM）是RNN的一种特例，能够解决长期依赖的问题。LSTM由 <a href="http://www.bioinf.jku.at/publications/older/2604.pdf" target="_blank" rel="noopener">Hochreiter &amp; Schmidhuber (1997)</a> 提出，并在之后的工作中被大家扩展及推广。LSTM在很多问题上表现都非常好，因此被广泛使用。</p><p>LSTM是明确为了避免长期依赖的问题而设计的。对信息的长时间记录是LSTM的默认行为，而不需要进行努力的学习来获取。</p><p>所有的RNN都有链式的形式来重复神经网络的某个模块。在标准的RNN中，这个重复的模块可能结构非常简单，例如只是一个$tanh​$层。</p><p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-SimpleRNN.png" style="zoom:30%"></p><p>图示：标准RNN中的重复模块包含一个单一的tanh层</p><p>LSTM也有这种链式结构，但是其中重复模块的结构相对复杂。不再是一个单一的神经网络层，而是四个，以一种非常特殊的形式进行交互。</p><p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-chain.png" style="zoom:30%"></p><p>图示：LSTM的重复模块包含四个交互层</p><p>不用担心细节是如何进行的。我们后面会一步一步了解LSTM。现在，先熟悉接下来即将使用到的一些符号。</p><p><img src="/2019/05/21/UnderstandingLSTM/LSTM2-notation.png" style="zoom:50%"></p><p>在上图中，从一个节点的输出到另一个节点的输入，每一行都有一个完整的向量。粉色圆圈表示点态操作（点态指向量计算后得到的向量），如向量加法，黄色方框表示神经网络层。箭头合并表示向量合并，箭头分叉表示向量复制到不同位置。</p><h1 id="LSTMs背后的核心思想"><a href="#LSTMs背后的核心思想" class="headerlink" title="LSTMs背后的核心思想"></a>LSTMs背后的核心思想</h1><p>LSTMs的关键在于<code>cell state</code>（细胞状态？），即下图横穿顶部的水平线。</p><p><strong>Cell state</strong>像传送带一样，横穿整个链路，但只有很少的线性交互。所以信息可以很容易的传递并且不被改变。</p><p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-C-line.png" style="zoom:50%"></p><p>LSTM可以从cell state上添加或删除信息，这种功能是由一种叫<code>gates</code>的结构仔细调控的。</p><p><strong>Gates</strong>是一种选择性让信息通过的方法，由一个sigmoid神经网络层和一个点态乘法操作组成。</p><p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-gate.png" style="zoom:50%"></p><p><strong>sigmoid层</strong>输出值在0~1之间，描述了每个组件可以通过多少。0表示全部不许通过，1表示全部可以通过。</p><p>一个LSTM有三个这样的gates，来保护和控制cell state。</p><h1 id="LSTM的详细原理"><a href="#LSTM的详细原理" class="headerlink" title="LSTM的详细原理"></a>LSTM的详细原理</h1><p>LSTM的第一步是<strong>决定要哪些信息可以继续通过cell state（就是决定丢掉哪些信息）</strong>。这个决定是由一个叫做<strong>遗忘门，forget gate layer</strong>的sigmoid层决定的。遗忘门的输入是$h_{t-1}$和$x_t $，输出一个0~1之间的值（输出内容是一个和$C_{t-1}$同维度的0/1向量），表示在cell state $C_{t-1}$ 中每部分内容通过的比重。1表示全部保留，0表示全部放弃。</p><p>回到上文我们提到的基于<strong>所有</strong>前文来预测接下来内容的语言模型的例子。在这个问题中，cell state 可以包含当前主语的性别信息（<strong>保留信息</strong>），所以可以使用正确的代词。当我们开始一个新的主语时，我们会想要忘掉前一个主语的性别信息（<strong>遗忘信息</strong>）。</p><p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-focus-f.png" style="zoom:40%"></p><p>接下来的一步是决定<strong>要在cell state中新增哪些信息</strong>。主要包括两部分。首先，由一个叫做<strong>input gate layer</strong>的sigmoid层决定要更新哪些维度的信息。还有一个<strong>tanh层</strong>生成一个新的可以被新增到state中的候选向量$\tilde{C}_t​$。之后，我们将这两层进行合并，从而对state进行更新。</p><p>在我们的语言模型的例子中，我们将新主语的性别信息加入到cell state中，替代遗忘掉的旧的性别信息。</p><p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-focus-i.png" style="zoom:40%"></p><p>现在，我们将旧的cell state，更新到新的 cell state，即把$C_{t-1}$ 更新为$C_t$。上述步骤已经描述了具体要做的内容，只需要实际实现即可。</p><p>我们将<strong>旧的state乘以 $f_t$ </strong>，来遗忘掉决定忘掉的内容。然后<strong>再加上 $i_t\times \tilde{C}_t$ </strong>，这是新的候选向量，取决于我们决定对state值更新多少。</p><p>在语言模型的例子中，就是我们要丢掉旧主语的性别信息，并且按照上述步骤所描述的，添加新的性别信息。</p><p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-focus-temp.png" style="zoom:40%"></p><p>最后，我们需要决定将要输出什么。输出取决于cell state，但是是一个过滤后的版本。首先，我们通过一个sigmoid层（<strong>output gate</strong>）决定要输出cell state的哪些部分，以及对应的比例。然后，将cell state通过一个tanh层（将值映射到-1~1之间）后，和sigmoid层的输出相乘，从而得到我们想要的输出。</p><p>对于语言模型的例子中，当刚刚看到一个主语的时候，接下来想要输出一个动词的时候，这个动词就和主语的信息相关了。例如，根据主语是单数还是复数形式，来决定动词应该采用什么格式来加入到后续内容中。</p><p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-focus-temp2.png" style="zoom:40%"></p><h1 id="LSTM的变种"><a href="#LSTM的变种" class="headerlink" title="LSTM的变种"></a>LSTM的变种</h1><p>到目前为止所描述的都是普通的LSTM。但是，不是所有的LSTMs都和上文描述的一样。实际上，每篇涉及到LSTMs的论文，都会有一些轻微的改动。通常改动都很小，但也有必要了解一些。</p><p>一个流行的LSTM变种，是由<a href="ftp://ftp.idsia.ch/pub/juergen/TimeCount-IJCNN2000.pdf" target="_blank" rel="noopener">Gers &amp; Schmidhuber (2000)</a> 提出的，加入了一个<code>peephole connections</code>。意味着，每一个gate层，都可以用cell state做输入。</p><p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-var-peepholes.png" style="zoom:40%"></p><p>上图对所有的gates都增加了peepholes，但是在很多论文中，是对有些门加peepholes，有些门不加。</p><p>另一个变种是将遗忘门和输入门组合使用。不同于单独决定要遗忘和要新增的信息，而是将两个信息放在一起决定。只有当某个维度有新信息加入时，才需要遗忘掉旧的信息。只有当遗忘掉旧的信息时，才新增新的信息。</p><p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-var-tied.png" style="zoom:40%"></p><p>LSTM另一个更厉害的变种是<strong>门控循环单元GRU（Gated Recurrent Unit）</strong>，由<a href="https://arxiv.org/pdf/1406.1078v3.pdf" target="_blank" rel="noopener">Cho, et al. (2014)</a> 提出。GRU将遗忘门和输入门组合成一个单独的更新门<strong>update gate</strong>。同时，将cell state和隐藏状态hidden state进行合并，并做了一些其他修改。最终得到的模型要比标准的LSTM模型更简单，并且广受欢迎。</p><p>在GRU中，只有两个门：<strong>重置门“reset gate”和更新门“update gate”</strong>。</p><p><img src="/2019/05/21/UnderstandingLSTM/LSTM3-var-GRU.png" style="zoom:40%"></p><p>上图中，$r_t$  表示重置门，$z_t$ 表示更新门。重置门决定是否将之前的state遗忘。当 $r_t$ 趋于0的时候，前一个时刻的state信息 $h_{t-1}$ 会被遗忘，隐藏状态 $\tilde{h}_t$ 会被重置为当前的输入信息。更新门决定是否要将隐藏状态更新为新的状态 $\tilde{h}_t$ ，作用相当于合并了LSTM中的遗忘门和输入门。</p><p><strong>GRU和LSTM简单比较一下：</strong></p><ol><li>GRU少一个门，同时也少了cell state  $C_t$ ；</li><li>在LSTM中，通过遗忘门和输入门控制信息的遗忘和输入；GRU则通过重置门来控制是否要保留原来hidden state的信息，但是不再限制当前信息的输入；</li><li>在LSTM中，虽然得到了新的cell state  $C_t$ ，但是不能直接输出，而是要经过一个过滤处理；同样，在GRU中，虽然也得到了新的hidden state  $\tilde{h}_t$ ，但是不能直接输出，而是通过更新门来控制最后的输出。</li></ol><p>这些只是LSTM的几个有名的变种。还有很多其他变种，如<a href="https://arxiv.org/pdf/1508.03790v2.pdf" target="_blank" rel="noopener">Depth Gated RNNs by Yao, et al. (2015)</a> 。也有一些完全不同的处理长期依赖问题的方法，如<a href="https://arxiv.org/pdf/1402.3511v1.pdf" target="_blank" rel="noopener">Clockwork RNNs by Koutnik, et al. (2014)</a> 。</p><p>哪种变种更好呢？这些不同有什么影响呢？<a href="https://arxiv.org/pdf/1503.04069.pdf" target="_blank" rel="noopener">Greff, et al. (2015)</a> 对这些流行的变种进行了非常好的对比，发现他们都是一致的。<a href="http://proceedings.mlr.press/v37/jozefowicz15.pdf" target="_blank" rel="noopener">Jozefowicz, et al. (2015)</a> 在测试了一万多种RNN结构后，发现其中一些在特定任务上效果要好于LSTMs（该论文值得推荐）。</p><h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>在上文提到的一些使用RNN达到的非常显著的成果。本质上都是通过LSTMs实现的。在很多任务上，LSTM确实表现非常好。</p><p>LSTM的一系列公式看起来很吓人，希望通过本文的逐步解释能使其便于理解一些。</p><p>LSTMs是RNNs的一个巨大进步。很自然的想到，是否有另一个巨大进步？研究者的普遍共识是：有，确实有下一步，就是 <strong>attention</strong>。<strong>Attention的思想是让RNN的每一步都从一些更大的信息集合中采集信息</strong>。例如，如果你使用RNN来为图片创造标题时，可能会选择部分图片来查找其输出的每一个词。实际上，<a href="https://arxiv.org/pdf/1502.03044v2.pdf" target="_blank" rel="noopener">Xu, et al. (2015)</a> 做了这部分工作，如果想要了解attention的话，这篇论文可以作为一个很好的起点。已经有很多使用attention得到很好效果的应用，但大部分似乎是比较偏僻的方向。</p><p>Attention并不是RNN研究的唯一兴奋点。例如，<a href="https://arxiv.org/pdf/1507.01526v1.pdf" target="_blank" rel="noopener">Kalchbrenner, et al. (2015)</a> 提出的Grid LSTMs似乎也很有前途。另外，在生成式模型中使用RNN，如 <a href="https://arxiv.org/pdf/1502.04623.pdf" target="_blank" rel="noopener">Gregor, et al. (2015)</a> 、<a href="https://arxiv.org/pdf/1506.02216v3.pdf" target="_blank" rel="noopener">Chung, et al. (2015)</a> 或者 <a href="https://arxiv.org/pdf/1411.7610v3.pdf" target="_blank" rel="noopener">Bayer &amp; Osendorfer (2015)</a> ，看起来也很有趣。过去几年是RNN令人兴奋的时期，接下来几年相信会更好。</p>]]></content>
     
@@ -91,7 +91,7 @@
     
     </summary>
     
-      <category term="算法" scheme="https://lesley0416.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+      <category term="深度学习" scheme="https://lesley0416.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
     
       <category term="LSTM" scheme="https://lesley0416.github.io/tags/LSTM/"/>
@@ -334,15 +334,15 @@
     
       <category term="LeetCode" scheme="https://lesley0416.github.io/tags/LeetCode/"/>
     
-      <category term="递归" scheme="https://lesley0416.github.io/tags/%E9%80%92%E5%BD%92/"/>
-    
-      <category term="recursion" scheme="https://lesley0416.github.io/tags/recursion/"/>
-    
       <category term="树" scheme="https://lesley0416.github.io/tags/%E6%A0%91/"/>
     
       <category term="深度优先搜索" scheme="https://lesley0416.github.io/tags/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/"/>
     
       <category term="二叉树" scheme="https://lesley0416.github.io/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/"/>
+    
+      <category term="递归" scheme="https://lesley0416.github.io/tags/%E9%80%92%E5%BD%92/"/>
+    
+      <category term="recursion" scheme="https://lesley0416.github.io/tags/recursion/"/>
     
   </entry>
   
@@ -369,11 +369,11 @@
     
       <category term="LeetCode" scheme="https://lesley0416.github.io/tags/LeetCode/"/>
     
-      <category term="数组" scheme="https://lesley0416.github.io/tags/%E6%95%B0%E7%BB%84/"/>
-    
       <category term="递归" scheme="https://lesley0416.github.io/tags/%E9%80%92%E5%BD%92/"/>
     
       <category term="recursion" scheme="https://lesley0416.github.io/tags/recursion/"/>
+    
+      <category term="数组" scheme="https://lesley0416.github.io/tags/%E6%95%B0%E7%BB%84/"/>
     
       <category term="斐波那契数列" scheme="https://lesley0416.github.io/tags/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/"/>
     
@@ -403,9 +403,9 @@
       <category term="Python" scheme="https://lesley0416.github.io/categories/Python/"/>
     
     
-      <category term="Python" scheme="https://lesley0416.github.io/tags/Python/"/>
-    
       <category term="decorator" scheme="https://lesley0416.github.io/tags/decorator/"/>
+    
+      <category term="Python" scheme="https://lesley0416.github.io/tags/Python/"/>
     
       <category term="设计模式" scheme="https://lesley0416.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
@@ -469,11 +469,11 @@
     
       <category term="LeetCode" scheme="https://lesley0416.github.io/tags/LeetCode/"/>
     
-      <category term="数组" scheme="https://lesley0416.github.io/tags/%E6%95%B0%E7%BB%84/"/>
-    
       <category term="递归" scheme="https://lesley0416.github.io/tags/%E9%80%92%E5%BD%92/"/>
     
       <category term="recursion" scheme="https://lesley0416.github.io/tags/recursion/"/>
+    
+      <category term="数组" scheme="https://lesley0416.github.io/tags/%E6%95%B0%E7%BB%84/"/>
     
   </entry>
   
@@ -500,11 +500,11 @@
     
       <category term="LeetCode" scheme="https://lesley0416.github.io/tags/LeetCode/"/>
     
-      <category term="数组" scheme="https://lesley0416.github.io/tags/%E6%95%B0%E7%BB%84/"/>
-    
       <category term="递归" scheme="https://lesley0416.github.io/tags/%E9%80%92%E5%BD%92/"/>
     
       <category term="recursion" scheme="https://lesley0416.github.io/tags/recursion/"/>
+    
+      <category term="数组" scheme="https://lesley0416.github.io/tags/%E6%95%B0%E7%BB%84/"/>
     
   </entry>
   

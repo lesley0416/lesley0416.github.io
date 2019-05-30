@@ -31,7 +31,7 @@
     <url>%2F2019%2F05%2F21%2FUnderstandingLSTM%2F</url>
     <content type="text"><![CDATA[翻译自 Understanding LSTM Networks 部分内容有点直译，领会精神，，， 循环神经网络人类不会每秒都从头开始新的想法。正如阅读这篇文章时，我们会基于对上文的理解，去理解当前的文字。我们不会抛开所有去重新开始理解。也就是说，我们的思考是具有连续性的。 传统的神经网络的一个主要缺点就是做不到“具有持续性”这一点。例如，假设我们想要对电影中某个时间点所发生的事件进行分类，目前，我们尚不清楚如何使用传统的神经网络，来完成“利用该时间点的前续内容进行推导并得到后续时间点发生的事情”这一过程。 循环神经网络（RNN，Recurrent Neural Networks）解决了这个问题。RNN是带有循环的网络，允许信息的持久化。 图示为带有循环的RNN。 在上图中，神经网络的一个chunk, $A$，接受输入$x_t$，并输出$h_t$。循环允许信息从网络中的一个步骤传递到下一个步骤。 这些循环使得RNN看起来有点神秘。但事实上，RNN并不是完全不同于普通的神经网络。RNN可以认为是同一个网络的多个副本，每一个副本都将信息传递给下一个。想象，如果将RNN的循环展开，如下图： 图示为展开的RNN。 这种链式结构表明，RNN和序列及列表密切相关，是用于序列及列表结构数据的神经网络的一种自然结构。 在过去几年里，RNN在很多问题上都有令人难以置信的成功应用，如语音识别、语言模型、机器翻译、图像字幕等等。关于RNN效果的讨论可以参考Andrej Karpathy的文章，The Unreasonable Effectiveness of Recurrent Neural Networks 。 RNN取得上述成功的关键在于LSTM的使用，LSTM是RNN中的一个特殊结构，在很多任务上，都优于普通的RNN。RNN上几乎所有难以置信的效果有是基于LSTM实现的。本文将对LSTM进行探讨。 长期依赖问题RNN的诉求之一就是能够将先前的信息连接到当前任务，如通过先前的视频片段可以理解当前的视频片段。如果RNN可以做到这一点，那网络将会非常有效。RNN是否可以呢？视情况而定。 有时，我们只需要通过最近的信息就可以完成当前的任务。例如，对于一个通过前一个词来预测下一个词的语言模型。如果我们希望预测the clouds are in the sky这句话的最后一个单词sky，我们不需要更多的上下文，很明显最后一个单词就应该是sky。在这种情况下，相关信息之间的距离很小，RNN可以学到过去的信息并加以使用。 但是也有一些需要更多上下文的情况。假设我们希望预测片段I grew up in France… I speak fluent French.的最后一个单词。通过距离最近的信息我们可以推测最后一个词可能是一种语言的名称，但如果我们想确定到底是哪一种语言，就需要距离更远的关于France的上文信息。可见，相关信息之间的距离以及所需的信息点跨度是完全有可能非常大的。 不幸的是，随着跨度的增大，RNN对于先前信息的感知能力会下降。 理论上，RNN绝对可以处理这种长期依赖问题。我们可以通过仔细的调整相应参数来解决这种形式的小问题。但很不幸，在实践中，RNN似乎不能很好的处理这类情况。关于这个问题，Hochreiter(1991)[German] 和 Bengio, et al. (1994) 已经进行了深入的探讨，并发现了RNN之所以难以解决该类问题的一些很根本的原因。 好在，LSTM并没有上述问题。 LSTM网络长短时记忆网络（Long Short Term Memory networks，LSTM）是RNN的一种特例，能够解决长期依赖的问题。LSTM由 Hochreiter &amp; Schmidhuber (1997) 提出，并在之后的工作中被大家扩展及推广。LSTM在很多问题上表现都非常好，因此被广泛使用。 LSTM是明确为了避免长期依赖的问题而设计的。对信息的长时间记录是LSTM的默认行为，而不需要进行努力的学习来获取。 所有的RNN都有链式的形式来重复神经网络的某个模块。在标准的RNN中，这个重复的模块可能结构非常简单，例如只是一个$tanh​$层。 图示：标准RNN中的重复模块包含一个单一的tanh层 LSTM也有这种链式结构，但是其中重复模块的结构相对复杂。不再是一个单一的神经网络层，而是四个，以一种非常特殊的形式进行交互。 图示：LSTM的重复模块包含四个交互层 不用担心细节是如何进行的。我们后面会一步一步了解LSTM。现在，先熟悉接下来即将使用到的一些符号。 在上图中，从一个节点的输出到另一个节点的输入，每一行都有一个完整的向量。粉色圆圈表示点态操作（点态指向量计算后得到的向量），如向量加法，黄色方框表示神经网络层。箭头合并表示向量合并，箭头分叉表示向量复制到不同位置。 LSTMs背后的核心思想LSTMs的关键在于cell state（细胞状态？），即下图横穿顶部的水平线。 Cell state像传送带一样，横穿整个链路，但只有很少的线性交互。所以信息可以很容易的传递并且不被改变。 LSTM可以从cell state上添加或删除信息，这种功能是由一种叫gates的结构仔细调控的。 Gates是一种选择性让信息通过的方法，由一个sigmoid神经网络层和一个点态乘法操作组成。 sigmoid层输出值在0~1之间，描述了每个组件可以通过多少。0表示全部不许通过，1表示全部可以通过。 一个LSTM有三个这样的gates，来保护和控制cell state。 LSTM的详细原理LSTM的第一步是决定要哪些信息可以继续通过cell state（就是决定丢掉哪些信息）。这个决定是由一个叫做遗忘门，forget gate layer的sigmoid层决定的。遗忘门的输入是$h_{t-1}$和$x_t $，输出一个0~1之间的值（输出内容是一个和$C_{t-1}$同维度的0/1向量），表示在cell state $C_{t-1}$ 中每部分内容通过的比重。1表示全部保留，0表示全部放弃。 回到上文我们提到的基于所有前文来预测接下来内容的语言模型的例子。在这个问题中，cell state 可以包含当前主语的性别信息（保留信息），所以可以使用正确的代词。当我们开始一个新的主语时，我们会想要忘掉前一个主语的性别信息（遗忘信息）。 接下来的一步是决定要在cell state中新增哪些信息。主要包括两部分。首先，由一个叫做input gate layer的sigmoid层决定要更新哪些维度的信息。还有一个tanh层生成一个新的可以被新增到state中的候选向量$\tilde{C}_t​$。之后，我们将这两层进行合并，从而对state进行更新。 在我们的语言模型的例子中，我们将新主语的性别信息加入到cell state中，替代遗忘掉的旧的性别信息。 现在，我们将旧的cell state，更新到新的 cell state，即把$C_{t-1}$ 更新为$C_t$。上述步骤已经描述了具体要做的内容，只需要实际实现即可。 我们将旧的state乘以 $f_t$ ，来遗忘掉决定忘掉的内容。然后再加上 $i_t\times \tilde{C}_t$ ，这是新的候选向量，取决于我们决定对state值更新多少。 在语言模型的例子中，就是我们要丢掉旧主语的性别信息，并且按照上述步骤所描述的，添加新的性别信息。 最后，我们需要决定将要输出什么。输出取决于cell state，但是是一个过滤后的版本。首先，我们通过一个sigmoid层（output gate）决定要输出cell state的哪些部分，以及对应的比例。然后，将cell state通过一个tanh层（将值映射到-1~1之间）后，和sigmoid层的输出相乘，从而得到我们想要的输出。 对于语言模型的例子中，当刚刚看到一个主语的时候，接下来想要输出一个动词的时候，这个动词就和主语的信息相关了。例如，根据主语是单数还是复数形式，来决定动词应该采用什么格式来加入到后续内容中。 LSTM的变种到目前为止所描述的都是普通的LSTM。但是，不是所有的LSTMs都和上文描述的一样。实际上，每篇涉及到LSTMs的论文，都会有一些轻微的改动。通常改动都很小，但也有必要了解一些。 一个流行的LSTM变种，是由Gers &amp; Schmidhuber (2000) 提出的，加入了一个peephole connections。意味着，每一个gate层，都可以用cell state做输入。 上图对所有的gates都增加了peepholes，但是在很多论文中，是对有些门加peepholes，有些门不加。 另一个变种是将遗忘门和输入门组合使用。不同于单独决定要遗忘和要新增的信息，而是将两个信息放在一起决定。只有当某个维度有新信息加入时，才需要遗忘掉旧的信息。只有当遗忘掉旧的信息时，才新增新的信息。 LSTM另一个更厉害的变种是门控循环单元GRU（Gated Recurrent Unit），由Cho, et al. (2014) 提出。GRU将遗忘门和输入门组合成一个单独的更新门update gate。同时，将cell state和隐藏状态hidden state进行合并，并做了一些其他修改。最终得到的模型要比标准的LSTM模型更简单，并且广受欢迎。 在GRU中，只有两个门：重置门“reset gate”和更新门“update gate”。 上图中，$r_t$ 表示重置门，$z_t$ 表示更新门。重置门决定是否将之前的state遗忘。当 $r_t$ 趋于0的时候，前一个时刻的state信息 $h_{t-1}$ 会被遗忘，隐藏状态 $\tilde{h}_t$ 会被重置为当前的输入信息。更新门决定是否要将隐藏状态更新为新的状态 $\tilde{h}_t$ ，作用相当于合并了LSTM中的遗忘门和输入门。 GRU和LSTM简单比较一下： GRU少一个门，同时也少了cell state $C_t$ ； 在LSTM中，通过遗忘门和输入门控制信息的遗忘和输入；GRU则通过重置门来控制是否要保留原来hidden state的信息，但是不再限制当前信息的输入； 在LSTM中，虽然得到了新的cell state $C_t$ ，但是不能直接输出，而是要经过一个过滤处理；同样，在GRU中，虽然也得到了新的hidden state $\tilde{h}_t$ ，但是不能直接输出，而是通过更新门来控制最后的输出。 这些只是LSTM的几个有名的变种。还有很多其他变种，如Depth Gated RNNs by Yao, et al. (2015) 。也有一些完全不同的处理长期依赖问题的方法，如Clockwork RNNs by Koutnik, et al. (2014) 。 哪种变种更好呢？这些不同有什么影响呢？Greff, et al. (2015) 对这些流行的变种进行了非常好的对比，发现他们都是一致的。Jozefowicz, et al. (2015) 在测试了一万多种RNN结构后，发现其中一些在特定任务上效果要好于LSTMs（该论文值得推荐）。 结论在上文提到的一些使用RNN达到的非常显著的成果。本质上都是通过LSTMs实现的。在很多任务上，LSTM确实表现非常好。 LSTM的一系列公式看起来很吓人，希望通过本文的逐步解释能使其便于理解一些。 LSTMs是RNNs的一个巨大进步。很自然的想到，是否有另一个巨大进步？研究者的普遍共识是：有，确实有下一步，就是 attention。Attention的思想是让RNN的每一步都从一些更大的信息集合中采集信息。例如，如果你使用RNN来为图片创造标题时，可能会选择部分图片来查找其输出的每一个词。实际上，Xu, et al. (2015) 做了这部分工作，如果想要了解attention的话，这篇论文可以作为一个很好的起点。已经有很多使用attention得到很好效果的应用，但大部分似乎是比较偏僻的方向。 Attention并不是RNN研究的唯一兴奋点。例如，Kalchbrenner, et al. (2015) 提出的Grid LSTMs似乎也很有前途。另外，在生成式模型中使用RNN，如 Gregor, et al. (2015) 、Chung, et al. (2015) 或者 Bayer &amp; Osendorfer (2015) ，看起来也很有趣。过去几年是RNN令人兴奋的时期，接下来几年相信会更好。]]></content>
       <categories>
-        <category>算法</category>
+        <category>深度学习</category>
       </categories>
       <tags>
         <tag>LSTM</tag>
@@ -143,11 +143,11 @@
       </categories>
       <tags>
         <tag>LeetCode</tag>
-        <tag>递归</tag>
-        <tag>recursion</tag>
         <tag>树</tag>
         <tag>深度优先搜索</tag>
         <tag>二叉树</tag>
+        <tag>递归</tag>
+        <tag>recursion</tag>
       </tags>
   </entry>
   <entry>
@@ -159,9 +159,9 @@
       </categories>
       <tags>
         <tag>LeetCode</tag>
-        <tag>数组</tag>
         <tag>递归</tag>
         <tag>recursion</tag>
+        <tag>数组</tag>
         <tag>斐波那契数列</tag>
       </tags>
   </entry>
@@ -173,8 +173,8 @@
         <category>Python</category>
       </categories>
       <tags>
-        <tag>Python</tag>
         <tag>decorator</tag>
+        <tag>Python</tag>
         <tag>设计模式</tag>
       </tags>
   </entry>
@@ -203,9 +203,9 @@
       </categories>
       <tags>
         <tag>LeetCode</tag>
-        <tag>数组</tag>
         <tag>递归</tag>
         <tag>recursion</tag>
+        <tag>数组</tag>
       </tags>
   </entry>
   <entry>
@@ -217,9 +217,9 @@
       </categories>
       <tags>
         <tag>LeetCode</tag>
-        <tag>数组</tag>
         <tag>递归</tag>
         <tag>recursion</tag>
+        <tag>数组</tag>
       </tags>
   </entry>
   <entry>
@@ -456,18 +456,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[若干Python性能优化小tips]]></title>
-    <url>%2F2019%2F03%2F04%2Ffasterpython%2F</url>
-    <content type="text"><![CDATA[若干简单易实现的Python性能优化小tips。 部分参考：https://segmentfault.com/a/1190000000666603 一些tips在刷题过程确实得到验证，尚有一些未验证但在实际简单测试中效率有提升。 优化算法时间复杂度 不论什么语言，算法的时间复杂度对程序的执行效率都有决定性影响，在Python中可以通过选择合适的数据结构来优化时间复杂度，如list和set查找指定元素的时间复杂度分别为O(n)和O(1)。同时，可以根据具体情况，采用分治、贪心、动态规划等算法思想。（不过优化算法有些有时候也不是很容易实现，，，） 在算法的常见时间复杂度上排序如下： O(1)]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>性能优化</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[%time,%timeit魔法命令]]></title>
     <url>%2F2019%2F03%2F04%2Fjupyter_timeit%2F</url>
     <content type="text"><![CDATA[在Jupyter-notebook中有几个用于计时的魔法命令%time、%%time、%timeit、%%timeit，可以非常简单的获取部分代码的运行耗时。 所有以%开头的方法，都是所谓的魔法命令（Magic function），也就是IPython内置的一些方法。魔法方法要区分%和%%，以%开头的叫做line magic，是专门针对一行的命令，以%%开头的叫做cell magic，是针对多行（一个cell）的命令。 以%%开头的魔法命令，必须放在一个cell的第一行，并且统计该cell中剩余的所有代码。分别来看： %time 给出当前行的代码运行一次所花费的时间； 123456a,b = 1,2%time a,b = b,a# output:# CPU times: user 2 µs, sys: 1 µs, total: 3 µs# Wall time: 5.01 µs 其中： user：表示执行用户代码（内核外）消耗的CPU时间； sys：表示进程在内核中消耗的CPU时间； 所以，CPU总耗时看total即可，也就是uset和sys之和。 Wall time是最终总耗时，包括IO、排队的耗时，也就是感知到的总耗时。 Wall time $&lt;$ CPU 表明进程是计算密集型（CPU bound），利用多核处理器的并行执行优势； Wall time $\approx$ CPU 表明进程是计算密集型，未并行执行； Wall time $&gt;​$ CPU 表明进程是I/O密集型（I/O bound），多核并行执行优势并不明显； %%time 给出当前cell的代码运行一次所花费的时间； 1234567%%timea,b = 1,2a,b = b,a# output:# CPU times: user 2 µs, sys: 1e+03 ns, total: 3 µs# Wall time: 5.96 µs %timeit -n 1000 给出当前行的代码运行n次所花费的时间（取最快三次的平均用时）； 1234%timeit -n 10000 c = pow(2,20)# output:# 10000 loops, best of 3: 198 ns per loop %%timeit -n 1000 给出当前cell的代码运行n次所花费的时间（取最快三次的平均用时）； 12345678%%timeit -n 10000a,b = 1,2c=aa=bb=c# output:# 10000 loops, best of 3: 68.5 ns per loop]]></content>
@@ -477,6 +465,18 @@
       <tags>
         <tag>Python</tag>
         <tag>计时</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[若干Python性能优化小tips]]></title>
+    <url>%2F2019%2F03%2F04%2Ffasterpython%2F</url>
+    <content type="text"><![CDATA[若干简单易实现的Python性能优化小tips。 部分参考：https://segmentfault.com/a/1190000000666603 一些tips在刷题过程确实得到验证，尚有一些未验证但在实际简单测试中效率有提升。 优化算法时间复杂度 不论什么语言，算法的时间复杂度对程序的执行效率都有决定性影响，在Python中可以通过选择合适的数据结构来优化时间复杂度，如list和set查找指定元素的时间复杂度分别为O(n)和O(1)。同时，可以根据具体情况，采用分治、贪心、动态规划等算法思想。（不过优化算法有些有时候也不是很容易实现，，，） 在算法的常见时间复杂度上排序如下： O(1)]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>性能优化</tag>
       </tags>
   </entry>
   <entry>
